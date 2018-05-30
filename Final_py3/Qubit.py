@@ -25,6 +25,8 @@ The instances of the Qubit class have the following methods:
 - bra()       	   - return the bra vector of the qubit 
 '''
 
+# pylint: disable=E1101
+
 import logging
 import math
 import numpy
@@ -114,18 +116,16 @@ class Qubit(object):
     def measure(self):
         ''' measure the qubit '''
 
-        treshold = random.uniform(0, 1)
-        
-        if treshold <= abs(self.__alpha) ** 2:
+        RESULT = numpy.random.choice([0, 1], p=[self.__alpha, self.__beta])
+        if RESULT == 0:
             self.__alpha = 1
             self.__beta = 0
-            print('|0>')
-            return 0
         else:
             self.__alpha = 0
             self.__beta = 1
-            print('|1>')
-            return 1
+        
+        print('|' + str(RESULT) + '>')
+        return RESULT
 
     def ket(self):
         ''' return the ket vector of the qubit '''
