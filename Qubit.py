@@ -18,11 +18,11 @@ The instances of the Qubit class have the following methods:
 - get_alpha()      - getter of alpha
 - get_beta()       - getter of beta
 - set_parameters() - setter of alpha, beta
-- check()     	   - check that |alpha|^2 + |beta|^2 = 1
-- show()      	   - qubit representation
-- measure()   	   - measure the qubit
-- ket()       	   - return the ket vector of the qubit
-- bra()       	   - return the bra vector of the qubit 
+- check()          - check that |alpha|^2 + |beta|^2 = 1
+- show()           - qubit representation
+- measure()        - measure the qubit
+- ket()            - return the ket vector of the qubit
+- bra()            - return the bra vector of the qubit
 '''
 
 # pylint: disable=E1101

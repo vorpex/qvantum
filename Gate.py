@@ -41,7 +41,8 @@ class Gate(object):
             return qubit
         
         else:
-            logging.warning('Invalid input! Not in Qubit class. Please use instance of Qubit class.')
+            logging.warning('Invalid input! Not in Qubit class. ' +\
+            'Please use instance of Qubit class.')
 
     def get_name(self):
         ''' getter of the name of the gate '''
@@ -66,7 +67,7 @@ class Gate(object):
     def set_matrix(self, matrix):
         ''' setter of the matrix of the gate's matrix '''
     
-        if isinstance(matrix, (numpy.ndarray)):
+        if isinstance(matrix, numpy.ndarray):
             if matrix.shape[0] == matrix.shape[1]:
                 IDENTITY = numpy.identity(matrix.shape[0])
                 MATRIX = matrix * matrix.conjugate().transpose()
@@ -218,11 +219,57 @@ class Pi8(Gate):
         ''' initialize Pi/8 gate '''
 
         Gate.__init__(self)
-        super().set_name(unicodedata.lookup('GREEK CAPITAL LETTER PI') + '/8')
+        super().set_name(unicodedata.lookup('GREEK SMALL LETTER PI') + '/8')
         super().set_matrix(numpy.matrix([
             [1, 0], \
             [0, complex(math.cos(math.pi/4), math.sin(math.pi/4))]
             ]))
+    
+    def set_name(self, name):
+        ''' setter of the name of the gate '''
+
+        pass
+    
+    def set_matrix(self, matrix):
+        ''' setter of the matrix of the Hadamard gate's matrix '''
+
+        pass
+
+class CNOT(Gate):
+    ''' Controlled-Not gate class '''
+
+    def __init__(self):
+        ''' initialize Controlled-Not gate '''
+
+        Gate.__init__(self)
+        super().set_name('Controlled-Not')
+        super().set_matrix(numpy.matrix([
+            [1, 0, 0, 0], \
+            [0, 1, 0, 0],
+            [0, 0, 0, 1],
+            [0, 0, 1, 0]
+            ]))
+    
+    def __call__(self, control_qubit, target_qubit):
+        ''' call the gate on qubit '''
+
+        if isinstance(control_qubit, Qubit.Qubit) and isinstance(target_qubit, Qubit.Qubit):
+            coeff_list = []
+            for i in range(control_qubit.ket().shape[0]):
+
+                for j in range(target_qubit.ket().shape[0]):
+
+                    coeff_list.append(control_qubit.ket()[i] * target_qubit.ket()[j])
+            
+            state = numpy.array(coeff_list)
+            state.shape = (control_qubit.ket().shape[0] + target_qubit.ket().shape[0], 1)
+            state = self.get_matrix() * state
+
+            return state
+        
+        else:
+            logging.warning('Invalid input! Not in Qubit class. ' +\
+            'Please use instances of Qubit class.')
     
     def set_name(self, name):
         ''' setter of the name of the gate '''
@@ -250,3 +297,9 @@ print(H.get_size())
 print('\n')
 
 print(Pi8().get_name())
+
+print('\n')
+
+q1 = Qubit.Qubit(0, 1)
+q2 = Qubit.Qubit(1 / math.sqrt(2), -1 / math.sqrt(2))
+print(CNOT()(q1, q2))
