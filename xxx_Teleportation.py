@@ -6,11 +6,7 @@ import Gate
 import Layer
 import Circuit
 
-import logging
-
-logging.disable(30)
-
-q = Qubit.Qubit()
+q = Qubit.Random_Qubit()
 q1 = Qubit.Qubit(1, 0)
 q2 = Qubit.Qubit(1, 0)
 
@@ -18,49 +14,36 @@ print(q.show())
 
 r = Register.Register([q1, q2])
 
-l1 = Layer.Layer([Gate.Hadamard(), Gate.Gate()])
-l2 = Layer.Layer([Gate.CNOT(1, 2)])
+l0 = Layer.Layer([Gate.Hadamard(), Gate.Gate()])
+l1 = Layer.Layer([Gate.CNOT(0, 1)])
 
-c1 = Circuit.Circuit([l1, l2])
+c0 = Circuit.Circuit([l0, l1])
+c0.run(r)
+
+r.insert_qubit(q, 0)
+
+l2 = Layer.Layer([Gate.CNOT(0, 1), Gate.Gate()])
+l3 = Layer.Layer([Gate.Hadamard(), Gate.Gate(), Gate.Gate()])
+
+c1 = Circuit.Circuit([l2, l3])
 c1.run(r)
 
-r.insert_qubit(q, 1)
-
-l3 = Layer.Layer([Gate.CNOT(1, 2), Gate.Gate()])
-l4 = Layer.Layer([Gate.Hadamard(), Gate.Gate(), Gate.Gate()])
-
-c2 = Circuit.Circuit([l3, l4])
-c2.run(r)
-
-m1 = r.measure(1)
-m2 = r.measure(2)
+m0 = r.measure_nth_qubit(0)
+m1 = r.measure_nth_qubit(1)
 
 # print(r.show())
 
 XM2 = Gate.PauliX()
-XM2.power(m2)
+XM2.power(m1)
 ZM1 = Gate.PauliZ()
-ZM1.power(m1)
+ZM1.power(m0)
 
-# 1. solution #####################################################################################
-# 219. line in Register: del self.__state_vector[item]
+l4 = Layer.Layer([Gate.Gate(), Gate.Gate(), XM2])
+l5 = Layer.Layer([Gate.Gate(), Gate.Gate(), ZM1])
 
-# Q = Qubit.Qubit(r.get_parameters()[0], r.get_parameters()[1])
+c2 = Circuit.Circuit([l4, l5])
+c2.run(r)
 
-# XM2(Q)
-# ZM1(Q)
-
-# print(Q.show())
-
-# 2. solution #####################################################################################
-# 219. line in Register: self.__state_vector[item] = 0
-
-l5 = Layer.Layer([Gate.Gate(), Gate.Gate(), XM2])
-l6 = Layer.Layer([Gate.Gate(), Gate.Gate(), ZM1])
-
-c3 = Circuit.Circuit([l5, l6])
-c3.run(r)
-
-r.delete_qubit(1)
-r.delete_qubit(1)
+r.delete_qubit(0)
+r.delete_qubit(0)
 print(r.show())

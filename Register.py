@@ -11,26 +11,31 @@ via Wikipedia: https://en.wikipedia.org/wiki/Quantum_register
 
 The instances of the Register class have the following methods:
 
-- __init__()       - initialize register
-# - get_coeff_list() - getter of the coefficients of the Qubits
-- get_state_nr()   - getter of the number of the possible states
-- get_qubit_nr()   - getter of the number of qubits in the register
-- get_parameters() - getter of the parameters
-- set_parameters() - setter of the parameters
-- check()          - check if the square sum of the absolute values of the elements of the state 
-                     vector equals to 1
-- show()           - register representation
-- measure()        - measure the qubit(s) of the register
-- ket()            - return the ket vector of the register
-- bra()            - return the bra vector of the register
-- delete_qubit()   - delete qubit from register
-- insert_qubit()   - insert qubit into register
+- __init__()          - initialize register
+- get_coeff_list()    - getter of the coefficients of the qubits
+- get_state_number()  - getter of the number of the possible states
+- get_qubit_number()  - getter of the number of qubits in the register
+- get_nth_state()     - getter of the n-th state
+- get_amplitudes()    - getter of the amplitudes
+- set_amplitudes()    - setter of the amplitudes
+- check()             - check if the square sum of the absolute values of the elements of the state 
+                        vector equals to 1
+- show()              - register representation
+- measure_register()  - measure whole register
+- measure_nth_qubit() - measure the n-th qubit
+- ket()               - return the ket vector of the register
+- bra()               - return the bra vector of the register
+- delete_qubit()      - delete qubit from register
+- insert_qubit()      - insert qubit into register
 '''
+
+# dict(sorted(self.__gate_list.items()))
+#   - shall we use that often?
+#   - the order is important: how does the dicitonary work?
 
 # pylint: disable=E1101
 
 import itertools
-import logging
 import math
 import numpy
 import random
@@ -40,37 +45,15 @@ import unicodedata
 class Register(object):
     ''' register class '''
 
-    def __init__(self, qubit_list=None, qubit_nr=None):
+    def __init__(self, qubit_list):
         ''' initialize register '''
 
-        if (qubit_list is None and qubit_nr is None) or \
-        (qubit_list is None and isinstance(qubit_nr, int) and qubit_nr >= 2) or \
-        (qubit_nr is None and all(isinstance(q, Qubit.Qubit) for q in qubit_list) and \
-        isinstance(qubit_list, list) and len(qubit_list) >= 2):
-            if qubit_list is None and qubit_nr is None:
-                logging.warning('Due to empty argument random Register of 3 Qubits was created.')
-                qubit_list = [Qubit.Qubit(), Qubit.Qubit(), Qubit.Qubit()]
-            
-            if qubit_list is None and qubit_nr is not None:
-                logging.warning('Nr of desired Qubits was given. Random Register created.')
-                qubit_list = []
-                for i in range(qubit_nr):
-
-                    qubit_list.append(Qubit.Qubit())
-            
-            self.__coeff_list = []
-            for qubit in qubit_list:
-
-                self.__coeff_list.append([qubit.get_alpha(), qubit.get_beta()])
+        if len(qubit_list) >= 2:            
+            self.__coeff_list = [[qubit.get_alpha(), qubit.get_beta()] for qubit in qubit_list]
 
             states = list(itertools.product(range(2), repeat=len(qubit_list)))
-            STATES = []
-            for i in range(len(states)):
-
-                STATES.append(''.join(map(str, states[i])))
-
+            STATES = [''.join(map(str, states[i])) for i in range(len(states))]
             STATES.sort()
-            
             COEFFS = []
             for STATE in STATES:
 
@@ -89,71 +72,53 @@ class Register(object):
             self.__state_vector = dict(sorted(self.__state_vector.items()))
 
         else:
-            logging.warning('Invalid input! Please use no arguments or list of Qubits ' +\
-            'or the number of desired Qubits (at least 2).')
+            raise ValueError('Invalid input! Qubit list must contain at least 2 Qubit.')
 
-    # def get_coeff_list(self):
-    #     ''' getter of the coefficients of the Qubits '''
+    def get_coeff_list(self):
+        ''' getter of the coefficients of the qubits '''
 
-    #     return self.__coeff_list
+        return self.__coeff_list
     
-    def get_state_nr(self):
+    def get_state_number(self):
         ''' getter of the number of the possible states '''
 
-        return int(len(list(self.__state_vector.keys())))
+        return int(len(self.__state_vector))
     
-    def get_qubit_nr(self):
+    def get_qubit_number(self):
         ''' getter of the number of qubits in the register '''
 
-        return int(math.log2(self.get_state_nr()))
+        return int(math.log2(self.get_state_number()))
     
-    def get_states(self, nr_state=None):
-        ''' getter of the states '''
+    def get_nth_state(self, nth):
+        ''' getter of the n-th state '''
 
-        if nr_state is None:
-            return list(self.__state_vector.keys())
+        return list(self.__state_vector.keys())[nth]
 
-        elif isinstance(nr_state, int) and nr_state >= 1 and nr_state <= self.get_state_nr():
-            return list(self.__state_vector.keys())[nr_state - 1]
+    def get_amplitudes(self, nth=None):
+        ''' getter of the amplitudes '''
 
-        else:
-            logging.warning('Invalid input! Argument shall be None or integer between 1 and ' +\
-            str(self.get_state_nr()))
-
-    def get_parameters(self, nr_state=None):
-        ''' getter of the parameters '''
-
-        if nr_state is None:
+        if nth is None:
             return list(self.__state_vector.values())
 
-        elif isinstance(nr_state, int) and nr_state >= 1 and nr_state <= self.get_state_nr():
-            return list(self.__state_vector.values())[nr_state - 1]
-
         else:
-            logging.warning('Invalid input! Argument shall be None or integer between 1 and ' +\
-            str(self.get_state_nr()))
+            return list(self.__state_vector.values())[nth]
     
-    def set_parameters(self, coeff_list):
-        ''' setter of the parameters '''
+    def set_amplitudes(self, amp_list):
+        ''' setter of the amplitudes '''
 
-        if len(coeff_list) == self.get_state_nr() \
-        and isinstance(coeff_list, numpy.ndarray) \
-        and round(numpy.sum(numpy.square(numpy.absolute(coeff_list))) - 1, 10) == 0:
-
-            # self.__coeff_list = coeff_list
-
+        if len(amp_list) == self.get_state_number() \
+        and round(numpy.sum(numpy.square(numpy.absolute(amp_list))) - 1, 10) == 0:
             i = 0
             self.__state_vector = dict(sorted(self.__state_vector.items()))
             for key in self.__state_vector:
 
-                self.__state_vector[key] = coeff_list[i]
+                self.__state_vector[key] = amp_list[i]
                 i = i + 1
 
         else:
-            logging.warning('Invalid input! Please use numpy.ndarray as argument. Length of ' +\
-            'array has to be ' + str(self.get_state_nr()) + '. Make sure' +\
-            ' that the absolute square sum of the coefficients equals to 1. Register remained ' +\
-            'the same.')
+            raise ValueError('Invalid input! The amplitudes list must be the same size as the ' +\
+            'number of the possible states and the square sum of the absolute value of the ' +\
+            'amplitudes must be equal to 1.')
     
     def check(self):
         ''' check if the square sum of the absolute values of the elements of the state vector 
@@ -164,7 +129,7 @@ class Register(object):
             return 1
 
         else:
-            return round(numpy.sum(numpy.square(numpy.absolute(state_vector))), 10)
+            return 0
 
     def show(self):
         ''' register representation '''
@@ -182,53 +147,48 @@ class Register(object):
 
         return state_string
 
-    def measure(self, nr_qubit=None):
-        ''' measure the qubit(s) of the register '''
+    def measure_register(self):
+        ''' measure whole register '''
 
-        if nr_qubit is None:
-            RESULT = numpy.random.choice(list(self.__state_vector.keys()), \
+        RESULT = numpy.random.choice(list(self.__state_vector.keys()), \
             p=list(numpy.square(numpy.absolute(numpy.array(list(self.__state_vector.values()))))))
-            for key in self.__state_vector:
+        for key in self.__state_vector:
 
-                if key == RESULT:
-                    self.__state_vector[key] = 1
+            if key == RESULT:
+                self.__state_vector[key] = 1
 
-                else:
-                    self.__state_vector[key] = 0
-            
-            logging.warning('No Qubit was specified, whole register is measured.')
-            # print('|' + RESULT + '>')
-            return int(RESULT)
+            else:
+                self.__state_vector[key] = 0
 
-        elif isinstance(nr_qubit, int) \
-        and nr_qubit >= 1 and nr_qubit <= self.get_qubit_nr():
-            result0 = []
-            for key in self.__state_vector:
+        # print('|' + RESULT + '>')
+        return int(RESULT)
+    
+    def measure_nth_qubit(self, nth):
+        ''' measure the n-th qubit '''
 
-                if key[nr_qubit - 1] == '0':
-                    result0.append(self.__state_vector[key])
-            
-            prob0 = numpy.sum(numpy.square(numpy.absolute(numpy.array(result0))))
-            RESULT = numpy.random.choice([0, 1], p=[prob0, 1 - prob0])
-            
-            for item in list(self.__state_vector.keys()):
+        result0 = []
+        for key in self.__state_vector:
 
-                if item[nr_qubit - 1] != str(RESULT):
-                    self.__state_vector[item] = 0
-            
-            renorm = numpy.sum(numpy.square(numpy.absolute(numpy.array(\
-                list(self.__state_vector.values())))))
-            self.__state_vector = dict(sorted(self.__state_vector.items()))
-            for key in self.__state_vector:
+            if key[nth] == '0':
+                result0.append(self.__state_vector[key])
+        
+        prob0 = numpy.sum(numpy.square(numpy.absolute(numpy.array(result0))))
+        RESULT = numpy.random.choice([0, 1], p=[prob0, 1 - prob0])
+        
+        for item in list(self.__state_vector.keys()):
 
-                self.__state_vector[key] = self.__state_vector[key] / math.sqrt(renorm)
+            if item[nth] != str(RESULT):
+                self.__state_vector[item] = 0
+        
+        renorm = numpy.sum(numpy.square(numpy.absolute(numpy.array( \
+            list(self.__state_vector.values())))))
+        self.__state_vector = dict(sorted(self.__state_vector.items()))
+        for key in self.__state_vector:
 
-            # print('|' + str(RESULT) + '>')
-            return int(RESULT)
+            self.__state_vector[key] = self.__state_vector[key] / math.sqrt(renorm)
 
-        else:
-            logging.warning('Invalid input! Argument shall be None or integer between 1 and ' +\
-            str(self.get_qubit_nr()))
+        # print('|' + str(RESULT) + '>')
+        return int(RESULT)
     
     def ket(self):
         ''' return the ket vector of the register '''
@@ -243,22 +203,15 @@ class Register(object):
         bra = self.ket().transpose()
         return bra
     
-    def delete_qubit(self, nr_qubit=None):
+    def delete_qubit(self, nr):
         ''' delete qubit from register '''
 
-        if nr_qubit is None or (isinstance(nr_qubit, int) \
-        and nr_qubit >= 1 and nr_qubit <= self.get_qubit_nr()):
-            if nr_qubit is None:
-                nr_qubit = self.get_qubit_nr()
-                logging.warning('Argument is None therefor Qubit is going to be deleted from ' +\
-                'the end of list.')
-            
-            self.__state_vector = dict(sorted(self.__state_vector.items()))
+        if nr >= 0 and nr <= self.get_qubit_number() - 1:
             KEYS =[]
             for key in self.__state_vector:
 
                 list_key = list(key)
-                list_key.pop(nr_qubit - 1)
+                list_key.pop(nr)
                 KEYS.append(''.join(list_key))
             
             VALUES = list(self.__state_vector.values())
@@ -275,47 +228,31 @@ class Register(object):
             self.__state_vector = dict(sorted(self.__state_vector.items()))
             for key in self.__state_vector:
 
-                if self.__coeff_list[nr_qubit - 1][0] == -1 * self.__coeff_list[nr_qubit - 1][1]:
+                if self.__coeff_list[nr][0] == -1 * self.__coeff_list[nr][1]:
                     self.__state_vector[key] = 1
                 # Qubit.Qubit(-1 / math.sqrt(2), 1 / math.sqrt(2)) causes problem
                 else:
                     self.__state_vector[key] = self.__state_vector[key] / \
-                    (self.__coeff_list[nr_qubit - 1][0] + self.__coeff_list[nr_qubit - 1][1])
+                        (self.__coeff_list[nr][0] + self.__coeff_list[nr][1])
 
         else:
-            logging.warning('Invalid input! Argument shall be None or integer between 1 and ' +\
-            str(self.get_qubit_nr()))
+            raise ValueError('Invalid input! Parameter must be greater or equal to 0 and ' +\
+            'less or equal to ' + str(self.get_qubit_number() - 1) + '.')
     
-    def insert_qubit(self, qubit=None, nr_qubit=None):
+    def insert_qubit(self, qubit, nr):
         ''' insert qubit into register '''
 
-        if (qubit is None and nr_qubit is None) or \
-        (qubit is None and isinstance(nr_qubit, int) \
-        and nr_qubit >= 1 and nr_qubit <= self.get_qubit_nr() + 1) or \
-        (isinstance(qubit, Qubit.Qubit) and nr_qubit is None) or \
-        (isinstance(qubit, Qubit.Qubit) and isinstance(nr_qubit, int) \
-        and nr_qubit >= 1 and nr_qubit <= self.get_qubit_nr() + 1):
-            if qubit is None:
-                qubit = Qubit.Qubit()
-                logging.warning('Argument for Qubit is None therefor random Qubit is going to ' +\
-                'be inserted.')
-            
-            if nr_qubit is None:
-                nr_qubit = self.get_qubit_nr() + 1
-                logging.warning('Argument is None therefor Qubit is going to be inserted at ' +\
-                'the end of list.')
-            
+        if nr >= 0 and nr <= self.get_qubit_number():
             qubit_keys = ['0', '1']
             qubit_values = [qubit.get_alpha(), qubit.get_beta()]
-            self.__state_vector = dict(sorted(self.__state_vector.items()))
             keys = list(self.__state_vector.keys())
             values = list(self.__state_vector.values())
             state_dict = {}
-            for i in range(self.get_state_nr()):
+            for i in range(self.get_state_number()):
                 for j in range(2):
 
-                    state_dict[keys[i][:nr_qubit - 1] + qubit_keys[j] + keys[i][nr_qubit - 1:]] = \
-                    values[i] * qubit_values[j]
+                    state_dict[keys[i][:nr] + qubit_keys[j] + keys[i][nr:]] = \
+                        values[i] * qubit_values[j]
             
             state_dict = dict(sorted(state_dict.items()))
 
@@ -328,5 +265,5 @@ class Register(object):
             self.__state_vector = STATE_DICT
 
         else:
-            logging.warning('Invalid input! Argument shall be None or integer between 1 and ' +\
-            str(self.get_qubit_nr() + 1))
+            raise ValueError('Invalid input! Parameter must be greater or equal to 0 and ' +\
+            'less or equal to ' + str(self.get_qubit_number()) + '.')

@@ -1,33 +1,27 @@
 '''
 Qubit class
 
-Using Qubit class, the user can create qubit objects. When creating a qubit object, the parameters
-must satisfy that |alpha|^2 + |beta|^2 = 1. Parameters can have the following types:
-
-- None
-- int
-- float
-- complex
-
-If the specified parameters are of the wrong types or do not meet the above criterion or
-the type of both of the parameters is None, then the qubit object is randomly generated.
+Using Qubit class, the user can create qubit objects. When creating a qubit object, the amplitudes
+must satisfy that |alpha|^2 + |beta|^2 = 1.
 
 The instances of the Qubit class have the following methods:
 
 - __init__()       - initialize qubit
 - get_alpha()      - getter of alpha
 - get_beta()       - getter of beta
-- set_parameters() - setter of alpha, beta
+- set_amplitudes() - setter of alpha, beta
 - check()          - check that |alpha|^2 + |beta|^2 = 1
 - show()           - qubit representation
 - measure()        - measure the qubit
 - ket()            - return the ket vector of the qubit
 - bra()            - return the bra vector of the qubit
+
+The Random_Qubit class is the same like the Qubit class the only difference that an instance of the
+class is created with random amplitudes (alpha, beta). They share the same methods.
 '''
 
 # pylint: disable=E1101
 
-import logging
 import math
 import numpy
 import random
@@ -36,42 +30,16 @@ import unicodedata
 class Qubit(object):
     ''' qubit class '''
 
-    def __init__(self, alpha=None, beta=None):
+    def __init__(self, alpha, beta):
         ''' initialize qubit '''
 
-        if isinstance(alpha, (int, float, complex)) \
-        and isinstance(beta, (int, float, complex)) \
-        and round(abs(alpha) ** 2 + abs(beta) ** 2 - 1, 10) == 0:
-             self.__alpha = complex(alpha.real, alpha.imag)
-             self.__beta = complex(beta.real, beta.imag)
-
-        elif isinstance(alpha, (int, float, complex)) \
-        and beta is None \
-        and abs(alpha) ** 2 <= 1:
-             self.__alpha = alpha
-             self.__beta = math.sqrt(1 - abs(alpha) ** 2)
-
-        elif alpha is None \
-        and isinstance(beta, (int, float, complex)) \
-        and abs(beta) ** 2 <= 1:
-             self.__alpha = math.sqrt(1 - abs(beta) ** 2)
-             self.__beta = beta
-
+        if round(abs(alpha) ** 2 + abs(beta) ** 2 - 1, 10) == 0:
+            self.__alpha = alpha
+            self.__beta = beta
+        
         else:
-            if alpha is not None or beta is not None:
-                logging.warning('Invalid input! Please use the following types: None, int, ' +\
-                'float or complex. Make sure that |alpha|\u00b2 + |beta|\u00b2 = 1. Qubit is ' +\
-                'randomly generated.')
-            
-            ALPHA = random.uniform(0, 1)
-
-            alpha1 = random.choice([-1, 1]) * math.sqrt(random.uniform(0, ALPHA))
-            alpha2 = random.choice([-1, 1]) * math.sqrt(ALPHA - alpha1 ** 2)
-            self.__alpha = complex(alpha1, alpha2)
-
-            beta1 = random.choice([-1, 1]) * math.sqrt(random.uniform(0, 1 - ALPHA))
-            beta2 = random.choice([-1, 1]) * math.sqrt(1 - ALPHA - beta1 ** 2)
-            self.__beta = complex(beta1, beta2)
+            raise ValueError('Invalid input! Alpha and beta must statisfy: ' +\
+            '|alpha|\u00b2 + |beta|\u00b2 = 1')
 
     def get_alpha(self):
         ''' getter of alpha '''
@@ -83,19 +51,16 @@ class Qubit(object):
 
         return self.__beta
 
-    def set_parameters(self, alpha_value, beta_value):
+    def set_amplitudes(self, alpha, beta):
         ''' setter of alpha, beta '''
 
-        if isinstance(alpha_value, (int, float, complex)) \
-        and isinstance(beta_value, (int, float, complex)) \
-        and round(abs(alpha_value) ** 2 + abs(beta_value) ** 2 - 1, 10) == 0:
-            self.__alpha = alpha_value
-            self.__beta = beta_value
+        if round(abs(alpha) ** 2 + abs(beta) ** 2 - 1, 10) == 0:
+            self.__alpha = alpha
+            self.__beta = beta
         
         else:
-            logging.warning('Invalid input! Please use the following types: None, int, ' +\
-            'float or complex. Make sure that |alpha|\u00b2 + |beta|\u00b2 = 1. Qubit ' +\
-            'remained the same.')
+            raise ValueError('Invalid input! Alpha and beta must statisfy: ' +\
+            '|alpha|\u00b2 + |beta|\u00b2 = 1')
 
     def check(self):
         ''' check that |alpha|^2 + |beta|^2 = 1 '''
@@ -104,7 +69,7 @@ class Qubit(object):
             return 1
 
         else:
-            return round(abs(self.__alpha) ** 2 + abs(self.__beta) ** 2, 10)
+            return 0
 
     def show(self):
         ''' qubit representation '''
@@ -127,7 +92,7 @@ class Qubit(object):
             self.__beta = 1
         
         # print('|' + str(RESULT) + '>')
-        return RESULT
+        return int(RESULT)
 
     def ket(self):
         ''' return the ket vector of the qubit '''
@@ -141,3 +106,21 @@ class Qubit(object):
 
         bra = self.ket().transpose()
         return bra
+
+class Random_Qubit(Qubit):
+    ''' random qubit class '''
+
+    def __init__(self):
+        ''' initialize random qubit '''
+
+        Qubit.__init__(self, 1, 0)
+
+        ALPHA = random.uniform(0, 1)
+        alpha1 = random.choice([-1, 1]) * math.sqrt(random.uniform(0, ALPHA))
+        alpha2 = random.choice([-1, 1]) * math.sqrt(ALPHA - alpha1 ** 2)
+
+        beta1 = random.choice([-1, 1]) * math.sqrt(random.uniform(0, 1 - ALPHA))
+        beta2 = random.choice([-1, 1]) * math.sqrt(1 - ALPHA - beta1 ** 2)
+
+        # super().set_amplitudes(complex(alpha1, alpha2), complex(beta1, beta2))
+        super(Random_Qubit, self).set_amplitudes(complex(alpha1, alpha2), complex(beta1, beta2))

@@ -17,7 +17,7 @@ r = Register.Register([q0, q1, q2, q3])
 print(r.show())
 
 l0 = Layer.Layer([Gate.Hadamard(), Gate.Hadamard(), Gate.Hadamard(), Gate.Hadamard()])
-l1 = Layer.Layer([Gate.Gate(), Gate.PauliX(), Gate.Gate(), Gate.Gate()])
+l1 = Layer.Layer([Gate.Gate(), Gate.PauliX(), Gate.PauliX(), Gate.Gate()])
 
 G2 = Gate.Gate()
 G2.set_matrix(numpy.matrix([
@@ -40,7 +40,7 @@ G2.set_matrix(numpy.matrix([
     ]))
 
 l2 = Layer.Layer([G2])
-l3 = Layer.Layer([Gate.Gate(), Gate.PauliX(), Gate.Gate(), Gate.Gate()])
+l3 = Layer.Layer([Gate.Gate(), Gate.PauliX(), Gate.PauliX(), Gate.Gate()])
 l4 = Layer.Layer([Gate.Hadamard(), Gate.Hadamard(), Gate.Hadamard(), Gate.Gate()])
 l5 = Layer.Layer([Gate.PauliX(), Gate.PauliX(), Gate.PauliX(), Gate.Gate()])
 

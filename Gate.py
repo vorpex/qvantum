@@ -30,7 +30,6 @@ The instances of the Gate class have the following methods:
 
 # pylint: disable=E1101
 
-import logging
 import math
 import numpy
 import Qubit
@@ -49,16 +48,20 @@ class Gate(object):
             [0, 1]
             ])
 
-    def __call__(self, qubit):
+    def __call__(self, qr):
         ''' call the gate on qubit '''
 
-        if isinstance(qubit, Qubit.Qubit) and self.__gate_matrix.shape[0] == 2:
-            vector = self.__gate_matrix * qubit.ket()
-            qubit.set_parameters(vector.item(0), vector.item(1))
-
+        if isinstance(qr, Qubit.Qubit) and self.get_size() == 2:
+            vector = self.__gate_matrix * qr.ket()
+            qr.set_amplitudes(vector.item(0), vector.item(1))
+        
+        elif isinstance(qr, Register.Register) and self.get_size() == qr.get_state_number():
+            vector = numpy.asarray(self.__gate_matrix * qr.ket()).flatten()
+            qr.set_amplitudes(vector)
+        
         else:
-            logging.warning('Invalid input! Not in Qubit class. ' +\
-            'Please use instance of Qubit class.')
+            raise ValueError('Invalid input! Use Qubit or Register as input with the same size ' +\
+            'as the gate')
 
     def get_name(self):
         ''' getter of the name of the gate '''
@@ -83,22 +86,18 @@ class Gate(object):
     def set_matrix(self, matrix):
         ''' setter of the matrix of the gate's matrix '''
     
-        if isinstance(matrix, numpy.ndarray):
-            if matrix.shape[0] == matrix.shape[1]:
-                IDENTITY = numpy.identity(matrix.shape[0])
-                MATRIX = matrix * matrix.conjugate().transpose()
-                if numpy.array_equal(MATRIX.round(10), IDENTITY):
-                    self.__gate_matrix = matrix
+        if matrix.shape[0] == matrix.shape[1]:
+            IDENTITY = numpy.identity(matrix.shape[0])
+            MATRIX = matrix * matrix.conjugate().transpose()
+            if numpy.array_equal(MATRIX.round(10), IDENTITY):
+                self.__gate_matrix = matrix
 
-                else:
-                    logging.warning('The matrix is not unitary! Please use a unitary matrix.')
-            
             else:
-                logging.warning('Invalid input! Matrix is not symmetric. ' +\
-                'Please use symmetric matrix.')
-
+                raise ValueError('Invalid input! Matrix is not unitary. ' +\
+                'Please use an unitary matrix.')
+        
         else:
-           logging.warning('Invalid input! Not numpy matrix. Please use numpy.ndarray.') 
+            raise ValueError('Invalid input! Please use symmetric matrix.')
 
     def unitary_check(self):
         ''' checking if the matrix of the gate is unitary '''
@@ -106,47 +105,15 @@ class Gate(object):
         IDENTITY = numpy.identity(self.__gate_matrix.shape[0])
         MATRIX = self.__gate_matrix * self.__gate_matrix.conjugate().transpose()
         if numpy.array_equal(MATRIX.round(10), IDENTITY):
-            print('The matrix is unitary.')
             return 1
         
         else:
-            logging.warning('The matrix is not unitary! Please use a unitary matrix.')
             return 0
     
     def power(self, power):
         ''' raise the matrix of the gate to the given power '''
 
-        if isinstance(power, int):
-            self.__gate_matrix = numpy.linalg.matrix_power(self.__gate_matrix, power)
-
-        else:
-            logging.warning('Invalid input! The power must be the type of integer.')
-
-class GateR(Gate):
-    ''' gate on register class '''
-
-    def __init__(self):
-        ''' initialize gate '''
-
-        Gate.__init__(self)
-        super().set_matrix(numpy.matrix([
-            [1, 0, 0, 0],
-            [0, 1, 0, 0],
-            [0, 0, 1, 0],
-            [0, 0, 0, 1]
-            ]))
-    
-    def __call__(self, register):
-        ''' call the gate on register '''
-
-        if isinstance(register, Register.Register) and \
-        register.get_state_nr() == self.get_size():
-            vector = numpy.asarray(self.get_matrix() * register.ket()).flatten()
-            register.set_parameters(vector)
-
-        else:
-            logging.warning('Invalid input! User object of Register class as argument. ' +\
-            'Size of Register and Gate must be equal.')
+        self.__gate_matrix = numpy.linalg.matrix_power(self.__gate_matrix, power)
 
 class Hadamard(Gate):
     ''' Hadamard gate class '''
@@ -155,8 +122,13 @@ class Hadamard(Gate):
         ''' initialize Hadamard gate '''
 
         Gate.__init__(self)
-        super().set_name('Hadamard')
-        super().set_matrix(numpy.matrix([
+        # super().set_name('Hadamard')
+        # super().set_matrix(numpy.matrix([
+        #     [1 / math.sqrt(2), 1 / math.sqrt(2)],
+        #     [1 / math.sqrt(2), -1 / math.sqrt(2)]
+        #     ]))
+        super(Hadamard, self).set_name('Hadamard')
+        super(Hadamard, self).set_matrix(numpy.matrix([
             [1 / math.sqrt(2), 1 / math.sqrt(2)],
             [1 / math.sqrt(2), -1 / math.sqrt(2)]
             ]))
@@ -178,8 +150,13 @@ class SquareNot(Gate):
         ''' initialize Square-Not gate '''
 
         Gate.__init__(self)
-        super().set_name('Square-Not')
-        super().set_matrix(numpy.matrix([
+        # super().set_name('Square-Not')
+        # super().set_matrix(numpy.matrix([
+        #     [1 + complex(0, 1), 1 - complex(0, 1)],
+        #     [1 - complex(0, 1), 1 + complex(0, 1)]
+        #     ]))
+        super(SquareNot, self).set_name('Square-Not')
+        super(SquareNot, self).set_matrix(numpy.matrix([
             [1 + complex(0, 1), 1 - complex(0, 1)],
             [1 - complex(0, 1), 1 + complex(0, 1)]
             ]))
@@ -201,8 +178,13 @@ class PauliX(Gate):
         ''' initialize Pauli-X gate '''
 
         Gate.__init__(self)
-        super().set_name('Pauli-X')
-        super().set_matrix(numpy.matrix([
+        # super().set_name('Pauli-X')
+        # super().set_matrix(numpy.matrix([
+        #     [0, 1],
+        #     [1, 0]
+        #     ]))
+        super(PauliX, self).set_name('Pauli-X')
+        super(PauliX, self).set_matrix(numpy.matrix([
             [0, 1],
             [1, 0]
             ]))
@@ -224,8 +206,13 @@ class PauliY(Gate):
         ''' initialize Pauli-Y gate '''
 
         Gate.__init__(self)
-        super().set_name('Pauli-Y')
-        super().set_matrix(numpy.matrix([
+        # super().set_name('Pauli-Y')
+        # super().set_matrix(numpy.matrix([
+        #     [0, complex(0, -1)],
+        #     [complex(0, 1), 0]
+        #     ]))
+        super(PauliY, self).set_name('Pauli-Y')
+        super(PauliY, self).set_matrix(numpy.matrix([
             [0, complex(0, -1)],
             [complex(0, 1), 0]
             ]))
@@ -247,8 +234,13 @@ class PauliZ(Gate):
         ''' initialize Pauli-Z gate '''
 
         Gate.__init__(self)
-        super().set_name('Pauli-Z')
-        super().set_matrix(numpy.matrix([
+        # super().set_name('Pauli-Z')
+        # super().set_matrix(numpy.matrix([
+        #     [1, 0],
+        #     [0, -1]
+        #     ]))
+        super(PauliZ, self).set_name('Pauli-Z')
+        super(PauliZ, self).set_matrix(numpy.matrix([
             [1, 0],
             [0, -1]
             ]))
@@ -270,8 +262,13 @@ class Phase(Gate):
         ''' initialize Phase gate '''
 
         Gate.__init__(self)
-        super().set_name('Phase')
-        super().set_matrix(numpy.matrix([
+        # super().set_name('Phase')
+        # super().set_matrix(numpy.matrix([
+        #     [1, 0],
+        #     [0, complex(0, 1)]
+        #     ]))
+        super(Phase, self).set_name('Phase')
+        super(Phase, self).set_matrix(numpy.matrix([
             [1, 0],
             [0, complex(0, 1)]
             ]))
@@ -293,8 +290,13 @@ class Pi8(Gate):
         ''' initialize Pi/8 gate '''
 
         Gate.__init__(self)
-        super().set_name(unicodedata.lookup('GREEK SMALL LETTER PI') + '/8')
-        super().set_matrix(numpy.matrix([
+        # super().set_name(unicodedata.lookup('GREEK SMALL LETTER PI') + '/8')
+        # super().set_matrix(numpy.matrix([
+        #     [1, 0],
+        #     [0, complex(math.cos(math.pi/4), math.sin(math.pi/4))]
+        #     ]))
+        super(Pi8, self).set_name(unicodedata.lookup('GREEK SMALL LETTER PI') + '/8')
+        super(Pi8, self).set_matrix(numpy.matrix([
             [1, 0],
             [0, complex(math.cos(math.pi/4), math.sin(math.pi/4))]
             ]))
@@ -316,23 +318,20 @@ class Swap(Gate):
         ''' initialize Swap gate '''
 
         Gate.__init__(self)
-        super().set_name('Swap')
-        super().set_matrix(numpy.matrix([
+        # super().set_name('Swap')
+        # super().set_matrix(numpy.matrix([
+        #     [1, 0, 0, 0],
+        #     [0, 0, 1, 0],
+        #     [0, 1, 0, 0],
+        #     [0, 0, 0, 1]
+        #     ]))
+        super(Swap, self).set_name('Swap')
+        super(Swap, self).set_matrix(numpy.matrix([
             [1, 0, 0, 0],
             [0, 0, 1, 0],
             [0, 1, 0, 0],
             [0, 0, 0, 1]
             ]))
-    
-    def __call__(self, register):
-        ''' call the gate on register '''
-
-        if isinstance(register, Register.Register) and register.get_qubit_nr() == 2:
-            vector = numpy.asarray(self.get_matrix() * register.ket()).flatten()
-            register.set_parameters(vector)
-
-        else:
-            logging.warning('Invalid input! Argument must be Register of two Qubits.')
     
     def set_name(self, name):
         ''' setter of the name of the gate '''
@@ -351,23 +350,20 @@ class SquareSwap(Gate):
         ''' initialize Square-Swap gate '''
 
         Gate.__init__(self)
-        super().set_name('Square-Swap')
-        super().set_matrix(numpy.matrix([
+        # super().set_name('Square-Swap')
+        # super().set_matrix(numpy.matrix([
+        #     [1, 0, 0, 0],
+        #     [0, (1 + complex(0, 1)) / 2, (1 - complex(0, 1)) / 2, 0],
+        #     [0, (1 - complex(0, 1)) / 2, (1 + complex(0, 1)) / 2, 0],
+        #     [0, 0, 0, 1]
+        #     ]))
+        super(SquareSwap, self).set_name('Square-Swap')
+        super(SquareSwap, self).set_matrix(numpy.matrix([
             [1, 0, 0, 0],
             [0, (1 + complex(0, 1)) / 2, (1 - complex(0, 1)) / 2, 0],
             [0, (1 - complex(0, 1)) / 2, (1 + complex(0, 1)) / 2, 0],
             [0, 0, 0, 1]
             ]))
-    
-    def __call__(self, register):
-        ''' call the gate on register '''
-
-        if isinstance(register, Register.Register) and register.get_qubit_nr() == 2:
-            vector = numpy.asarray(self.get_matrix() * register.ket()).flatten()
-            register.set_parameters(vector)
-
-        else:
-            logging.warning('Invalid input! Argument must be Register of two Qubits.')
     
     def set_name(self, name):
         ''' setter of the name of the gate '''
@@ -382,25 +378,22 @@ class SquareSwap(Gate):
 class CNOT(Gate):
     ''' Controlled-Not gate class '''
 
-    def __init__(self, control_qubit=None, target_qubit=None):
+    def __init__(self, control_qubit, target_qubit):
         ''' initialize Controlled-Not gate '''
 
-        if (control_qubit == 1 and target_qubit == 2) or \
-        (control_qubit == 2 and target_qubit == 1) or \
-        (control_qubit == None and target_qubit == None):
-            if control_qubit is None and target_qubit is None:
-                control_qubit = 1
-                target_qubit = 2
-                logging.warning('Control and target Qubit are None then the 1st is the control ' +\
-                'and the 2nd is the target.')
-
-            else:
-                pass
-
+        if (control_qubit == 0 and target_qubit == 1) \
+        or (control_qubit == 1 and target_qubit == 0):
             Gate.__init__(self)
-            super().set_name('Controlled-Not')
-            if control_qubit == 1 and target_qubit == 2:
-                super().set_matrix(numpy.matrix([
+            # super().set_name('Controlled-Not')
+            super(CNOT, self).set_name('Controlled-Not')
+            if control_qubit == 0 and target_qubit == 1:
+                # super().set_matrix(numpy.matrix([
+                # [1, 0, 0, 0],
+                # [0, 1, 0, 0],
+                # [0, 0, 0, 1],
+                # [0, 0, 1, 0]
+                # ]))
+                super(CNOT, self).set_matrix(numpy.matrix([
                 [1, 0, 0, 0],
                 [0, 1, 0, 0],
                 [0, 0, 0, 1],
@@ -408,7 +401,13 @@ class CNOT(Gate):
                 ]))
 
             else:
-                super().set_matrix(numpy.matrix([
+                # super().set_matrix(numpy.matrix([
+                # [1, 0, 0, 0],
+                # [0, 0, 0, 1],
+                # [0, 0, 1, 0],
+                # [0, 1, 0, 0]
+                # ]))
+                super(CNOT, self).set_matrix(numpy.matrix([
                 [1, 0, 0, 0],
                 [0, 0, 0, 1],
                 [0, 0, 1, 0],
@@ -416,18 +415,9 @@ class CNOT(Gate):
                 ]))
 
         else:
-            logging.warning('Invalid input! Use number 1, 2 (or both None) to mark the control ' +\
-            'and target Qubit.')
-
-    def __call__(self, register):
-        ''' call the gate on register '''
-
-        if isinstance(register, Register.Register) and register.get_qubit_nr() == 2:            
-            vector = numpy.asarray(self.get_matrix() * register.ket()).flatten()
-            register.set_parameters(vector)
-
-        else:
-            logging.warning('Invalid input! Argument must be Register of two Qubits.')
+            raise ValueError('Invalid input! Use number 0 and 1 to mark the control ' +\
+            'and target Qubit. (0, 1): 1st Qubit is the control and 2nd is the target. ' +\
+            '(1, 0): 2nd Qubit is the control and 1st is the target.')
 
     def set_name(self, name):
         ''' setter of the name of the gate '''
@@ -446,23 +436,20 @@ class ControlledZ(Gate):
         ''' initialize Controlled-Z gate '''
 
         Gate.__init__(self)
-        super().set_name('Controlled-Z')
-        super().set_matrix(numpy.matrix([
+        # super().set_name('Controlled-Z')
+        # super().set_matrix(numpy.matrix([
+        #     [1, 0, 0, 0],
+        #     [0, 1, 0, 0],
+        #     [0, 0, 1, 0],
+        #     [0, 0, 0, -1]
+        #     ]))
+        super(ControlledZ, self).set_name('Controlled-Z')
+        super(ControlledZ, self).set_matrix(numpy.matrix([
             [1, 0, 0, 0],
             [0, 1, 0, 0],
             [0, 0, 1, 0],
             [0, 0, 0, -1]
             ]))
-
-    def __call__(self, register):
-        ''' call the gate on register '''
-
-        if isinstance(register, Register.Register) and register.get_qubit_nr() == 2:            
-            vector = numpy.asarray(self.get_matrix() * register.ket()).flatten()
-            register.set_parameters(vector)
-
-        else:
-            logging.warning('Invalid input! Argument must be Register of two Qubits.')
 
     def set_name(self, name):
         ''' setter of the name of the gate '''
@@ -481,23 +468,20 @@ class ControlledPhase(Gate):
         ''' initialize Controlled-Phase gate '''
 
         Gate.__init__(self)
-        super().set_name('Controlled-Phase')
-        super().set_matrix(numpy.matrix([
+        # super().set_name('Controlled-Phase')
+        # super().set_matrix(numpy.matrix([
+        #     [1, 0, 0, 0],
+        #     [0, 1, 0, 0],
+        #     [0, 0, 1, 0],
+        #     [0, 0, 0, complex(0, 1)]
+        #     ]))
+        super(ControlledPhase, self).set_name('Controlled-Phase')
+        super(ControlledPhase, self).set_matrix(numpy.matrix([
             [1, 0, 0, 0],
             [0, 1, 0, 0],
             [0, 0, 1, 0],
             [0, 0, 0, complex(0, 1)]
             ]))
-
-    def __call__(self, register):
-        ''' call the gate on register '''
-
-        if isinstance(register, Register.Register) and register.get_qubit_nr() == 2:            
-            vector = numpy.asarray(self.get_matrix() * register.ket()).flatten()
-            register.set_parameters(vector)
-
-        else:
-            logging.warning('Invalid input! Argument must be Register of two Qubits.')
 
     def set_name(self, name):
         ''' setter of the name of the gate '''
@@ -515,29 +499,21 @@ class Ising(Gate):
     def __init__(self, phi):
         ''' initialize Ising gate '''
 
-        if isinstance(phi, (int, float)):
-            Gate.__init__(self)
-            super().set_name('Ising')
-            super().set_matrix(numpy.matrix([
-                [1, 0, 0, complex(0, -1) * complex(math.cos(phi), math.sin(phi))],
-                [0, 1, complex(0, -1), 0],
-                [0, complex(0, -1), 1, 0],
-                [complex(0, -1) * complex(math.cos(-1 * phi), math.sin(-1 * phi)), 0, 0, 1]
-                ]))
-
-        else:
-            logging.warning('Invalid input! Give the phase as argument in radian. ' +\
-            'Use int or float type.')
-
-    def __call__(self, register):
-        ''' call the gate on register '''
-
-        if isinstance(register, Register.Register) and register.get_qubit_nr() == 2:            
-            vector = numpy.asarray(self.get_matrix() * register.ket()).flatten()
-            register.set_parameters(vector)
-
-        else:
-            logging.warning('Invalid input! Argument must be Register of two Qubits.')
+        Gate.__init__(self)
+        # super().set_name('Ising')
+        # super().set_matrix(numpy.matrix([
+        #     [1, 0, 0, complex(0, -1) * complex(math.cos(phi), math.sin(phi))],
+        #     [0, 1, complex(0, -1), 0],
+        #     [0, complex(0, -1), 1, 0],
+        #     [complex(0, -1) * complex(math.cos(-1 * phi), math.sin(-1 * phi)), 0, 0, 1]
+        #     ]))
+        super(Ising, self).set_name('Ising')
+        super(Ising, self).set_matrix(numpy.matrix([
+            [1, 0, 0, complex(0, -1) * complex(math.cos(phi), math.sin(phi))],
+            [0, 1, complex(0, -1), 0],
+            [0, complex(0, -1), 1, 0],
+            [complex(0, -1) * complex(math.cos(-1 * phi), math.sin(-1 * phi)), 0, 0, 1]
+            ]))
 
     def set_name(self, name):
         ''' setter of the name of the gate '''
@@ -552,23 +528,25 @@ class Ising(Gate):
 class Toffoli(Gate):
     ''' Toffoli gate class '''
 
-    def __init__(self, target_qubit=None):
+    def __init__(self, target_qubit):
         ''' initialize Toffoli gate '''
 
-        if target_qubit is None or \
-        target_qubit == 1 or target_qubit == 2 or target_qubit == 3:
-            if target_qubit is None:
-                target_qubit = 3
-                logging.warning('Target Qubit is None then the 1st and 2nd are ' +\
-                'the controls and the 3rd is the target.')
-
-            else:
-                pass
-
+        if target_qubit == 0 or target_qubit == 1 or target_qubit == 2:
             Gate.__init__(self)
-            super().set_name('Toffoli')
-            if target_qubit == 3:
-                super().set_matrix(numpy.matrix([
+            # super().set_name('Toffoli')
+            super(Toffoli, self).set_name('Toffoli')
+            if target_qubit == 2:
+                # super().set_matrix(numpy.matrix([
+                #     [1, 0, 0, 0, 0, 0, 0, 0],
+                #     [0, 1, 0, 0, 0, 0, 0, 0],
+                #     [0, 0, 1, 0, 0, 0, 0, 0],
+                #     [0, 0, 0, 1, 0, 0, 0, 0],
+                #     [0, 0, 0, 0, 1, 0, 0, 0],
+                #     [0, 0, 0, 0, 0, 1, 0, 0],
+                #     [0, 0, 0, 0, 0, 0, 0, 1],
+                #     [0, 0, 0, 0, 0, 0, 1, 0]
+                #     ]))
+                super(Toffoli, self).set_matrix(numpy.matrix([
                     [1, 0, 0, 0, 0, 0, 0, 0],
                     [0, 1, 0, 0, 0, 0, 0, 0],
                     [0, 0, 1, 0, 0, 0, 0, 0],
@@ -579,8 +557,18 @@ class Toffoli(Gate):
                     [0, 0, 0, 0, 0, 0, 1, 0]
                     ]))
 
-            elif target_qubit == 2:
-                super().set_matrix(numpy.matrix([
+            elif target_qubit == 1:
+                # super().set_matrix(numpy.matrix([
+                #     [1, 0, 0, 0, 0, 0, 0, 0],
+                #     [0, 1, 0, 0, 0, 0, 0, 0],
+                #     [0, 0, 1, 0, 0, 0, 0, 0],
+                #     [0, 0, 0, 1, 0, 0, 0, 0],
+                #     [0, 0, 0, 0, 1, 0, 0, 0],
+                #     [0, 0, 0, 0, 0, 0, 0, 1],
+                #     [0, 0, 0, 0, 0, 0, 1, 0],
+                #     [0, 0, 0, 0, 0, 1, 0, 0]
+                #     ]))
+                super(Toffoli, self).set_matrix(numpy.matrix([
                     [1, 0, 0, 0, 0, 0, 0, 0],
                     [0, 1, 0, 0, 0, 0, 0, 0],
                     [0, 0, 1, 0, 0, 0, 0, 0],
@@ -592,7 +580,17 @@ class Toffoli(Gate):
                     ]))
 
             else:
-                super().set_matrix(numpy.matrix([
+                # super().set_matrix(numpy.matrix([
+                #     [1, 0, 0, 0, 0, 0, 0, 0],
+                #     [0, 1, 0, 0, 0, 0, 0, 0],
+                #     [0, 0, 1, 0, 0, 0, 0, 0],
+                #     [0, 0, 0, 0, 0, 0, 0, 1],
+                #     [0, 0, 0, 0, 1, 0, 0, 0],
+                #     [0, 0, 0, 0, 0, 1, 0, 0],
+                #     [0, 0, 0, 0, 0, 0, 1, 0],
+                #     [0, 0, 0, 1, 0, 0, 0, 0]
+                #     ]))
+                super(Toffoli, self).set_matrix(numpy.matrix([
                     [1, 0, 0, 0, 0, 0, 0, 0],
                     [0, 1, 0, 0, 0, 0, 0, 0],
                     [0, 0, 1, 0, 0, 0, 0, 0],
@@ -604,18 +602,8 @@ class Toffoli(Gate):
                     ]))
 
         else:
-            logging.warning('Invalid input! Use number 1, 2, 3 (or None) to mark the ' +\
-            'target Qubit.')
-
-    def __call__(self, register):
-        ''' call the gate on register '''
-
-        if isinstance(register, Register.Register) and register.get_qubit_nr() == 3:            
-            vector = numpy.asarray(self.get_matrix() * register.ket()).flatten()
-            register.set_parameters(vector)
-
-        else:
-            logging.warning('Invalid input! Argument must be Register of three Qubits.')
+            raise ValueError('Invalid input! Use number 0, 1, and 2 to mark the target Qubit. ' +\
+            '0: 1st Qubit is the target. 1: 2nd Qubit is the target. 2: 3rd Qubit is the target.')
 
     def set_name(self, name):
         ''' setter of the name of the gate '''
@@ -630,23 +618,25 @@ class Toffoli(Gate):
 class Fredkin(Gate):
     ''' Fredkin gate class '''
 
-    def __init__(self, control_qubit=None):
+    def __init__(self, control_qubit):
         ''' initialize Fredkin gate '''
 
-        if control_qubit is None or \
-        control_qubit == 1 or control_qubit == 2 or control_qubit == 3:
-            if control_qubit is None:
-                control_qubit = 1
-                logging.warning('Control Qubit is None then the 2nd and 3rd are ' +\
-                'the targets and the 1st is the control.')
-
-            else:
-                pass
-
+        if control_qubit == 0 or control_qubit == 1 or control_qubit == 2:
             Gate.__init__(self)
-            super().set_name('Fredkin')
-            if control_qubit == 1:
-                super().set_matrix(numpy.matrix([
+            # super().set_name('Fredkin')
+            super(Fredkin, self).set_name('Fredkin')
+            if control_qubit == 0:
+                # super().set_matrix(numpy.matrix([
+                #     [1, 0, 0, 0, 0, 0, 0, 0],
+                #     [0, 1, 0, 0, 0, 0, 0, 0],
+                #     [0, 0, 1, 0, 0, 0, 0, 0],
+                #     [0, 0, 0, 1, 0, 0, 0, 0],
+                #     [0, 0, 0, 0, 1, 0, 0, 0],
+                #     [0, 0, 0, 0, 0, 0, 1, 0],
+                #     [0, 0, 0, 0, 0, 1, 0, 0],
+                #     [0, 0, 0, 0, 0, 0, 0, 1]
+                #     ]))
+                super(Fredkin, self).set_matrix(numpy.matrix([
                     [1, 0, 0, 0, 0, 0, 0, 0],
                     [0, 1, 0, 0, 0, 0, 0, 0],
                     [0, 0, 1, 0, 0, 0, 0, 0],
@@ -657,8 +647,18 @@ class Fredkin(Gate):
                     [0, 0, 0, 0, 0, 0, 0, 1]
                     ]))
 
-            elif control_qubit == 2:
-                super().set_matrix(numpy.matrix([
+            elif control_qubit == 1:
+                # super().set_matrix(numpy.matrix([
+                #     [1, 0, 0, 0, 0, 0, 0, 0],
+                #     [0, 1, 0, 0, 0, 0, 0, 0],
+                #     [0, 0, 1, 0, 0, 0, 0, 0],
+                #     [0, 0, 0, 0, 0, 0, 1, 0],
+                #     [0, 0, 0, 0, 1, 0, 0, 0],
+                #     [0, 0, 0, 0, 0, 1, 0, 0],
+                #     [0, 0, 0, 1, 0, 0, 0, 0],
+                #     [0, 0, 0, 0, 0, 0, 0, 1]
+                #     ]))
+                super(Fredkin, self).set_matrix(numpy.matrix([
                     [1, 0, 0, 0, 0, 0, 0, 0],
                     [0, 1, 0, 0, 0, 0, 0, 0],
                     [0, 0, 1, 0, 0, 0, 0, 0],
@@ -670,7 +670,17 @@ class Fredkin(Gate):
                     ]))
 
             else:
-                super().set_matrix(numpy.matrix([
+                # super().set_matrix(numpy.matrix([
+                #     [1, 0, 0, 0, 0, 0, 0, 0],
+                #     [0, 1, 0, 0, 0, 0, 0, 0],
+                #     [0, 0, 1, 0, 0, 0, 0, 0],
+                #     [0, 0, 0, 0, 0, 1, 0, 0],
+                #     [0, 0, 0, 0, 1, 0, 0, 0],
+                #     [0, 0, 0, 1, 0, 0, 0, 0],
+                #     [0, 0, 0, 0, 0, 0, 1, 0],
+                #     [0, 0, 0, 0, 0, 0, 0, 1]
+                #     ]))
+                super(Fredkin, self).set_matrix(numpy.matrix([
                     [1, 0, 0, 0, 0, 0, 0, 0],
                     [0, 1, 0, 0, 0, 0, 0, 0],
                     [0, 0, 1, 0, 0, 0, 0, 0],
@@ -682,18 +692,9 @@ class Fredkin(Gate):
                     ]))
 
         else:
-            logging.warning('Invalid input! Use number 1, 2, 3 (or None) to mark the ' +\
-            'control Qubit.')
-
-    def __call__(self, register):
-        ''' call the gate on register '''
-
-        if isinstance(register, Register.Register) and register.get_qubit_nr() == 3:            
-            vector = numpy.asarray(self.get_matrix() * register.ket()).flatten()
-            register.set_parameters(vector)
-
-        else:
-            logging.warning('Invalid input! Argument must be Register of three Qubits.')
+            raise ValueError('Invalid input! Use number 0, 1, and 2 to mark the control Qubit. ' +\
+            '0: 1st Qubit is the control. 1: 2nd Qubit is the control. ' +\
+            '2: 3rd Qubit is the control.')
 
     def set_name(self, name):
         ''' setter of the name of the gate '''

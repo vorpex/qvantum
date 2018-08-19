@@ -60,8 +60,13 @@ l6 = Layer.Layer([G6, Gate.Gate()])
 l7 = Layer.Layer([Gate.PauliX(), Gate.PauliX(), Gate.PauliX(), Gate.Gate()])
 l8 = Layer.Layer([Gate.Hadamard(), Gate.Hadamard(), Gate.Hadamard(), Gate.Gate()])
 
-c = Circuit.Circuit([l0, l1, l2, l3, l4, l5, l6, l7, l8])
-c.run(r)
+c0 = Circuit.Circuit([l0])
+c0.run(r)
+
+c1 = Circuit.Circuit([l1, l2, l3, l4, l5, l6, l7, l8])
+for i in range(10):
+
+    c1.run(r)
 
 print(r.show())
 r.measure_nth_qubit(3)

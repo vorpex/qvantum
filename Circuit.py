@@ -10,17 +10,22 @@ The instances of the Circuit class have the following methods:
 
 - __init__()         - initialization method
 - get_layer_list()   - getter of the layers in layer list
-- get_layer_nr()     - getter of the n-th layer
-- get_circuit_size() - getter of the size of the circuit
+- get_layer_number() - getter of the number of the layers
+- get_nth_layer()    - getter of the n-th layer
+- get_circuit_size() - getter of the size of the circuit (equals to the size of the register on 
+                       which the layer is usable)
 - delete_layer()     - delete layer from circuit
 - insert_layer()     - insert layer into circuit
 - run()              - run circuit on starting register
 '''
 
+# dict(sorted(self.__gate_list.items()))
+#   - shall we use that often?
+#   - the order is important: how does the dicitonary work?
+
 # pylint: disable=E1101
 
 import Layer
-import logging
 import numpy
 import Register
 
@@ -30,99 +35,72 @@ class Circuit(object):
     def __init__(self, layer_list):
         ''' initialize circuit '''
 
-        if isinstance(layer_list, list) and all(isinstance(l, Layer.Layer) for l in layer_list) \
-        and all(layer_list[0].get_layer_size() == layer_list[i].get_layer_size() \
+        if all(layer_list[0].get_layer_size() == layer_list[i].get_layer_size() \
         for i in range(len(layer_list))):
-            RANKS = []
-            for i in range(len(layer_list)):
+            RANKS = [i for i in range(len(layer_list))]
+            LAYERS = [layer for layer in layer_list]
 
-                RANKS.append(i + 1)
-            
-            LAYERS = []
-            for layer in layer_list:
-
-                LAYERS.append(layer)
-            
             self.__layer_list = dict(zip(RANKS, LAYERS))
             self.__layer_list = dict(sorted(self.__layer_list.items()))
 
         else:
-            logging.warning('Invalid input! Argument must be list of Layer objects with same ' +\
-            'size.')
+            raise ValueError('Invalid input! Every member in the layer list must have the ' +\
+            'same size.')
 
     def get_layer_list(self):
         ''' getter of the layers in layer list '''
 
         return self.__layer_list
 
-    def get_layer_nr(self, nr_layer):
+    def get_layer_number(self):
+        ''' getter of the number of the layers '''
+
+        return int(len(self.__layer_list))
+
+    def get_nth_layer(self, nth_layer):
         ''' getter of the n-th layer '''
 
-        if isinstance(nr_layer, int) and nr_layer >= 1 and nr_layer <= len(self.__layer_list):
-            return self.__layer_list[nr_layer]
-
-        else:
-            logging.warning('Invalid input! Argument must be between 1 and ' +\
-            str(len(self.__layer_list)))
+        return self.__layer_list[nth_layer]
     
     def get_circuit_size(self):
-        ''' getter of the size of the circuit '''
+        ''' getter of the size of the circuit (equals to the size of the register on which the 
+        layer is usable) '''
 
-        return len(self.__layer_list)
+        return int(self.__layer_list[0].get_layer_size())
 
-    def delete_layer(self, nr_layer=None):
+    def delete_layer(self, nr):
         ''' delete layer from circuit '''
 
-        if nr_layer is None or (isinstance(nr_layer, int) and \
-        nr_layer >= 1 and nr_layer <= self.get_circuit_size()):
-            if nr_layer is None:
-                nr_layer = self.get_circuit_size()
-                logging.warning('Argument is None therefor Layer is going to be deleted from ' +\
-                'the end of list.')
-            
+        if nr >= 0 and nr <= len(self.__layer_list) - 1:
             for key in list(self.__layer_list.keys()):
 
-                if int(key) == nr_layer:
+                if int(key) == nr:
                     del self.__layer_list[key]
 
-            self.__layer_list = dict(sorted(self.__layer_list.items()))
-            RANKS = []
-            for i in range(len(self.__layer_list)):
-
-                RANKS.append(i + 1)
-            
+            RANKS = [i for i in range(len(self.__layer_list))]
             LAYERS = list(self.__layer_list.values())
+
             self.__layer_list = dict(zip(RANKS, LAYERS))
             self.__layer_list = dict(sorted(self.__layer_list.items()))
 
         else:
-            logging.warning('Invalid input! Argument shall be None or integer between 1 and ' +\
-            str(self.get_circuit_size()))
+            raise ValueError('Invalid input! Parameter must be greater or equal to 0 and ' +\
+            'less or equal to ' + str(len(self.__layer_list) - 1) + '.')
 
-    def insert_layer(self, layer, nr_layer=None):
+    def insert_layer(self, layer, nr):
         ''' insert layer into circuit '''
 
-        if isinstance(layer, Layer.Layer) and (nr_layer is None or (isinstance(nr_layer, int) and \
-        nr_layer >= 1 and nr_layer <= self.get_circuit_size() + 1)):
-            if nr_layer is None:
-                nr_layer = self.get_circuit_size() + 1
-                logging.warning('Argument is None therefor Layer is going to be instered at ' +\
-                'the end of list.')
-            
-            self.__layer_list = dict(sorted(self.__layer_list.items()))
-            RANKS = []
-            for i in range(len(self.__layer_list) + 1):
-
-                RANKS.append(i + 1)
-            
+        if nr >= 0 and nr <= len(self.__layer_list) \
+        and layer.get_layer_size() == self.get_circuit_size():
+            RANKS = [i for i in range(len(self.__layer_list) + 1)]
             VALUES = list(self.__layer_list.values())
             LAYERS = []
             for i in range(len(self.__layer_list) + 1):
 
-                if i + 1 < nr_layer:
+                if i < nr:
                     LAYERS.append(VALUES[i])
 
-                elif i + 1 == nr_layer:
+                elif i == nr:
                     LAYERS.append(layer)
 
                 else:
@@ -132,20 +110,19 @@ class Circuit(object):
             self.__layer_list = dict(sorted(self.__layer_list.items()))
 
         else:
-            logging.warning('Invalid input! Argument shall be a Gate and an integer between 1 ' +\
-            'and ' + str(self.get_circuit_size() + 1))
+            raise ValueError('Invalid input! Layer and Circuit size must be the same. ' +\
+            'Parameter must be greater or equal to 0 and less or equal to ' +\
+            str(len(self.__layer_list)) + '.')
 
     def run(self, register):
         ''' run circuit on starting register '''
 
-        if isinstance(register, Register.Register) and \
-        register.get_qubit_nr() == self.__layer_list[1].get_layer_size():
-            for key in dict(sorted(self.__layer_list.items())):
+        if register.get_qubit_number() == self.get_circuit_size():
+            for key in self.__layer_list:
 
-                vector = numpy.asarray(self.__layer_list[key].get_layer_matrix() *\
-                register.ket()).flatten()
-                register.set_parameters(vector)
+                vector = numpy.asarray(self.__layer_list[key].get_layer_matrix() * \
+                    register.ket()).flatten()
+                register.set_amplitudes(vector)
 
         else:
-            logging.warning('Invalid input! Argument must be a Register with the same size of ' +\
-            'the Layers.')
+            raise ValueError('Invalid input! Register must be the same size as the Layers.')
