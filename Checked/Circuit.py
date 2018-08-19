@@ -77,7 +77,6 @@ class Circuit(object):
                 if int(key) == nr:
                     del self.__layer_list[key]
 
-            self.__layer_list = dict(sorted(self.__layer_list.items()))
             RANKS = [i for i in range(len(self.__layer_list))]
             LAYERS = list(self.__layer_list.values())
 
@@ -93,7 +92,6 @@ class Circuit(object):
 
         if nr >= 0 and nr <= len(self.__layer_list) \
         and layer.get_layer_size() == self.get_circuit_size():
-            self.__layer_list = dict(sorted(self.__layer_list.items()))
             RANKS = [i for i in range(len(self.__layer_list) + 1)]
             VALUES = list(self.__layer_list.values())
             LAYERS = []
@@ -120,7 +118,7 @@ class Circuit(object):
         ''' run circuit on starting register '''
 
         if register.get_qubit_nr() == self.get_circuit_size():
-            for key in dict(sorted(self.__layer_list.items())):
+            for key in self.__layer_list:
 
                 vector = numpy.asarray(self.__layer_list[key].get_layer_matrix() * \
                     register.ket()).flatten()

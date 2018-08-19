@@ -252,7 +252,6 @@ class Register(object):
         if nr >= 0 and nr <= self.get_qubit_number():
             qubit_keys = ['0', '1']
             qubit_values = [qubit.get_alpha(), qubit.get_beta()]
-            self.__state_vector = dict(sorted(self.__state_vector.items()))
             keys = list(self.__state_vector.keys())
             values = list(self.__state_vector.values())
             state_dict = {}

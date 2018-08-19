@@ -92,7 +92,6 @@ class Layer(object):
                 if int(key) == nr:
                     del self.__gate_list[key]
 
-            self.__gate_list = dict(sorted(self.__gate_list.items()))
             RANKS = [i for i in range(len(self.__gate_list))]            
             GATES = list(self.__gate_list.values())
 
@@ -106,8 +105,7 @@ class Layer(object):
     def insert_gate(self, gate, nr):
         ''' insert gate into layer '''
 
-        if nr >= 0 and nr <= len(self.__gate_list):        
-            self.__gate_list = dict(sorted(self.__gate_list.items()))
+        if nr >= 0 and nr <= len(self.__gate_list):
             RANKS = [i for i in range(len(self.__gate_list) + 1)]            
             VALUES = list(self.__gate_list.values())
             GATES = []
