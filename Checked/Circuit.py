@@ -117,7 +117,7 @@ class Circuit(object):
     def run(self, register):
         ''' run circuit on starting register '''
 
-        if register.get_qubit_nr() == self.get_circuit_size():
+        if register.get_qubit_number() == self.get_circuit_size():
             for key in self.__layer_list:
 
                 vector = numpy.asarray(self.__layer_list[key].get_layer_matrix() * \

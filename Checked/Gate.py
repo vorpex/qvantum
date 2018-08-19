@@ -55,7 +55,7 @@ class Gate(object):
             vector = self.__gate_matrix * qr.ket()
             qr.set_amplitudes(vector.item(0), vector.item(1))
         
-        elif isinstance(qr, Register.Register) and self.get_size() == qr.get_state_nr():
+        elif isinstance(qr, Register.Register) and self.get_size() == qr.get_state_number():
             vector = numpy.asarray(self.__gate_matrix * qr.ket()).flatten()
             qr.set_amplitudes(vector)
         
@@ -381,12 +381,12 @@ class CNOT(Gate):
     def __init__(self, control_qubit, target_qubit):
         ''' initialize Controlled-Not gate '''
 
-        if (control_qubit == 1 and target_qubit == 2) \
-        or (control_qubit == 2 and target_qubit == 1):
+        if (control_qubit == 0 and target_qubit == 1) \
+        or (control_qubit == 1 and target_qubit == 0):
             Gate.__init__(self)
             # super().set_name('Controlled-Not')
             super(CNOT, self).set_name('Controlled-Not')
-            if control_qubit == 1 and target_qubit == 2:
+            if control_qubit == 0 and target_qubit == 1:
                 # super().set_matrix(numpy.matrix([
                 # [1, 0, 0, 0],
                 # [0, 1, 0, 0],
@@ -415,9 +415,9 @@ class CNOT(Gate):
                 ]))
 
         else:
-            raise ValueError('Invalid input! Use number 1 and 2 to mark the control ' +\
-            'and target Qubit. (1, 2): 1st Qubit is the control and 2nd is the target. ' +\
-            '(2, 1): 2nd Qubit is the control and 1st is the target.')
+            raise ValueError('Invalid input! Use number 0 and 1 to mark the control ' +\
+            'and target Qubit. (0, 1): 1st Qubit is the control and 2nd is the target. ' +\
+            '(1, 0): 2nd Qubit is the control and 1st is the target.')
 
     def set_name(self, name):
         ''' setter of the name of the gate '''
@@ -531,11 +531,11 @@ class Toffoli(Gate):
     def __init__(self, target_qubit):
         ''' initialize Toffoli gate '''
 
-        if target_qubit == 1 or target_qubit == 2 or target_qubit == 3:
+        if target_qubit == 0 or target_qubit == 1 or target_qubit == 2:
             Gate.__init__(self)
             # super().set_name('Toffoli')
             super(Toffoli, self).set_name('Toffoli')
-            if target_qubit == 3:
+            if target_qubit == 2:
                 # super().set_matrix(numpy.matrix([
                 #     [1, 0, 0, 0, 0, 0, 0, 0],
                 #     [0, 1, 0, 0, 0, 0, 0, 0],
@@ -557,7 +557,7 @@ class Toffoli(Gate):
                     [0, 0, 0, 0, 0, 0, 1, 0]
                     ]))
 
-            elif target_qubit == 2:
+            elif target_qubit == 1:
                 # super().set_matrix(numpy.matrix([
                 #     [1, 0, 0, 0, 0, 0, 0, 0],
                 #     [0, 1, 0, 0, 0, 0, 0, 0],
@@ -602,8 +602,8 @@ class Toffoli(Gate):
                     ]))
 
         else:
-            raise ValueError('Invalid input! Use number 1, 2, and 3 to mark the target Qubit. ' +\
-            '1: 1st Qubit is the target. 2: 2nd Qubit is the target. 3: 3rd Qubit is the target.')
+            raise ValueError('Invalid input! Use number 0, 1, and 2 to mark the target Qubit. ' +\
+            '0: 1st Qubit is the target. 1: 2nd Qubit is the target. 2: 3rd Qubit is the target.')
 
     def set_name(self, name):
         ''' setter of the name of the gate '''
@@ -621,11 +621,11 @@ class Fredkin(Gate):
     def __init__(self, control_qubit):
         ''' initialize Fredkin gate '''
 
-        if control_qubit == 1 or control_qubit == 2 or control_qubit == 3:
+        if control_qubit == 0 or control_qubit == 1 or control_qubit == 2:
             Gate.__init__(self)
             # super().set_name('Fredkin')
             super(Fredkin, self).set_name('Fredkin')
-            if control_qubit == 1:
+            if control_qubit == 0:
                 # super().set_matrix(numpy.matrix([
                 #     [1, 0, 0, 0, 0, 0, 0, 0],
                 #     [0, 1, 0, 0, 0, 0, 0, 0],
@@ -647,7 +647,7 @@ class Fredkin(Gate):
                     [0, 0, 0, 0, 0, 0, 0, 1]
                     ]))
 
-            elif control_qubit == 2:
+            elif control_qubit == 1:
                 # super().set_matrix(numpy.matrix([
                 #     [1, 0, 0, 0, 0, 0, 0, 0],
                 #     [0, 1, 0, 0, 0, 0, 0, 0],
@@ -692,9 +692,9 @@ class Fredkin(Gate):
                     ]))
 
         else:
-            raise ValueError('Invalid input! Use number 1, 2, and 3 to mark the control Qubit. ' +\
-            '1: 1st Qubit is the control. 2: 2nd Qubit is the control. ' +\
-            '3: 3rd Qubit is the control.')
+            raise ValueError('Invalid input! Use number 0, 1, and 2 to mark the control Qubit. ' +\
+            '0: 1st Qubit is the control. 1: 2nd Qubit is the control. ' +\
+            '2: 3rd Qubit is the control.')
 
     def set_name(self, name):
         ''' setter of the name of the gate '''
