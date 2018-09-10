@@ -39,8 +39,8 @@ class Circuit(object):
             self.__layer_list = dict(sorted(self.__layer_list.items()))
 
         else:
-            raise ValueError('Invalid input! Every member in the layer list must have the ' +\
-                'same size.')
+            raise ValueError('Invalid input! Argument must be a list of layer object with same ' +\
+                'size.')
 
     def get_layer_list(self):
         ''' getter of layers in layer list '''
@@ -68,22 +68,30 @@ class Circuit(object):
     def delete_layer(self, nth):
         ''' delete layer from circuit '''
 
-        for key in list(self.__layer_list.keys()):
+        if nth >= 0 and nth <= len(self.__layer_list) - 1:
+            for key in list(self.__layer_list.keys()):
 
-            if int(key) == nth:
-                del self.__layer_list[key]
+                if int(key) == nth:
+                    del self.__layer_list[key]
+            
+            self.__layer_list = dict(sorted(self.__layer_list.items()))
 
-        ranks = [i for i in range(len(self.__layer_list))]
-        layers = list(self.__layer_list.values())
+            ranks = [i for i in range(len(self.__layer_list))]
+            layers = list(self.__layer_list.values())
 
-        self.__layer_list = dict(zip(ranks, layers))
-        self.__layer_list = dict(sorted(self.__layer_list.items()))
+            self.__layer_list = dict(zip(ranks, layers))
+            self.__layer_list = dict(sorted(self.__layer_list.items()))
+        
+        else:
+            raise ValueError('Invalid input! Argument must be greater or equal to 0 and ' +\
+                'less or equal to ' + str(len(self.__layer_list) - 1) + '.')
 
     @check_circuit.insert_layer_check
     def insert_layer(self, l, nth):
         ''' insert layer into circuit '''
 
-        if l.get_layer_size() == self.get_circuit_size():
+        if nth >= 0 and nth <= len(self.__layer_list) \
+            and l.get_layer_size() == self.get_circuit_size():
             ranks = [i for i in range(len(self.__layer_list) + 1)]
             values = list(self.__layer_list.values())
             layers = []
@@ -102,7 +110,9 @@ class Circuit(object):
             self.__layer_list = dict(sorted(self.__layer_list.items()))
 
         else:
-            raise ValueError('Invalid input! layer and circuit size must be the same.')
+            raise ValueError('Invalid input! Layer and circuit size must be the same. ' +\
+                'Argument must be greater or equal to 0 and less or equal to ' +\
+                str(len(self.__layer_list)) + '.')
 
     @check_circuit.run_check
     def run(self, r):
@@ -116,4 +126,4 @@ class Circuit(object):
                 r.set_amplitudes(list(vector))
 
         else:
-            raise ValueError('Invalid input! Register must be the same size as the layers.')
+            raise ValueError('Invalid input! Register must have the same size as the layers.')

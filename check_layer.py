@@ -9,7 +9,10 @@ def layer_init_check(function):
 
     def wrapper(self, gate_list):
 
-        if isinstance(gate_list, list) and all(isinstance(elem, gate.Gate) for elem in gate_list):
+        if isinstance(gate_list, list) and all(isinstance(elem, (gate.Gate, gate.Hadamard, \
+            gate.SquareNot, gate.PauliX, gate.PauliY, gate.PauliZ, gate.Phase, gate.Pi8, \
+            gate.Swap, gate.SquareSwap, gate.CNOT, gate.ControlledZ, gate.ControlledPhase, \
+            gate.Ising, gate.Toffoli, gate.Fredkin)) for elem in gate_list):
             return function(self, gate_list)
         
         else:
@@ -49,7 +52,10 @@ def insert_gate_check(function):
 
     def wrapper(self, g, nth):
 
-        if isinstance(g, gate.Gate) and isinstance(nth, int):
+        if isinstance(g, (gate.Gate, gate.Hadamard, gate.SquareNot, gate.PauliX, gate.PauliY, \
+            gate.PauliZ, gate.Phase, gate.Pi8, gate.Swap, gate.SquareSwap, gate.CNOT, \
+            gate.ControlledZ, gate.ControlledPhase, gate.Ising, gate.Toffoli, gate.Fredkin)) \
+            and isinstance(nth, int):
             return function(self, g, nth)
         
         else:

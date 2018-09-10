@@ -44,4 +44,6 @@ l5 = layer.Layer([gate.Gate(), gate.Gate(), ZM1])
 c2 = circuit.Circuit([l4, l5])
 c2.run(r)
 
-print(r.show())
+t_coeff = [coeff for coeff in r.get_amplitudes() if coeff != 0]
+Q = qubit.Qubit(t_coeff[0], t_coeff[1])
+print(Q.show())

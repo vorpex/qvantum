@@ -1,25 +1,25 @@
 ''' test circuit on Grover search algorithm '''
 
-import Qubit
-import Register
-import Gate
-import Layer
-import Circuit
+import qubit
+import register
+import gate
+import layer
+import circuit
 
 import numpy
 
-q0 = Qubit.Qubit(1, 0)
-q1 = Qubit.Qubit(1, 0)
-q2 = Qubit.Qubit(1, 0)
-q3 = Qubit.Qubit(0, 1)
+q0 = qubit.Qubit(1, 0)
+q1 = qubit.Qubit(1, 0)
+q2 = qubit.Qubit(1, 0)
+q3 = qubit.Qubit(0, 1)
 
-r = Register.Register([q0, q1, q2, q3])
+r = register.Register([q0, q1, q2, q3])
 print(r.show())
 
-l0 = Layer.Layer([Gate.Hadamard(), Gate.Hadamard(), Gate.Hadamard(), Gate.Hadamard()])
-l1 = Layer.Layer([Gate.Gate(), Gate.PauliX(), Gate.Gate(), Gate.Gate()])
+l0 = layer.Layer([gate.Hadamard(), gate.Hadamard(), gate.Hadamard(), gate.Hadamard()])
+l1 = layer.Layer([gate.Gate(), gate.PauliX(), gate.Gate(), gate.Gate()])
 
-G2 = Gate.Gate()
+G2 = gate.Gate()
 G2.set_matrix(numpy.matrix([
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -39,12 +39,12 @@ G2.set_matrix(numpy.matrix([
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0],
     ]))
 
-l2 = Layer.Layer([G2])
-l3 = Layer.Layer([Gate.Gate(), Gate.PauliX(), Gate.Gate(), Gate.Gate()])
-l4 = Layer.Layer([Gate.Hadamard(), Gate.Hadamard(), Gate.Hadamard(), Gate.Gate()])
-l5 = Layer.Layer([Gate.PauliX(), Gate.PauliX(), Gate.PauliX(), Gate.Gate()])
+l2 = layer.Layer([G2])
+l3 = layer.Layer([gate.Gate(), gate.PauliX(), gate.Gate(), gate.Gate()])
+l4 = layer.Layer([gate.Hadamard(), gate.Hadamard(), gate.Hadamard(), gate.Gate()])
+l5 = layer.Layer([gate.PauliX(), gate.PauliX(), gate.PauliX(), gate.Gate()])
 
-G6 = Gate.Gate()
+G6 = gate.Gate()
 G6.set_matrix(numpy.matrix([
     [1, 0, 0, 0, 0, 0, 0, 0],
     [0, 1, 0, 0, 0, 0, 0, 0],
@@ -56,14 +56,13 @@ G6.set_matrix(numpy.matrix([
     [0, 0, 0, 0, 0, 0, 0, -1]
     ]))
 
-l6 = Layer.Layer([G6, Gate.Gate()])
-l7 = Layer.Layer([Gate.PauliX(), Gate.PauliX(), Gate.PauliX(), Gate.Gate()])
-l8 = Layer.Layer([Gate.Hadamard(), Gate.Hadamard(), Gate.Hadamard(), Gate.Gate()])
+l6 = layer.Layer([G6, gate.Gate()])
+l7 = layer.Layer([gate.PauliX(), gate.PauliX(), gate.PauliX(), gate.Gate()])
+l8 = layer.Layer([gate.Hadamard(), gate.Hadamard(), gate.Hadamard(), gate.Gate()])
 
-c = Circuit.Circuit([l0, l1, l2, l3, l4, l5, l6, l7, l8])
+c = circuit.Circuit([l0, l1, l2, l3, l4, l5, l6, l7, l8])
 c.run(r)
 
 print(r.show())
 r.measure_nth_qubit(3)
-r.delete_qubit(3)
 print(r.show())

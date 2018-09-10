@@ -32,7 +32,6 @@ import check_register
 import itertools
 import math
 import numpy
-import random
 import unicodedata
 
 class Register(object):
@@ -208,5 +207,5 @@ class Register(object):
             self.__state_vector = dict(sorted(state_dict.items()))
         
         else:
-            raise ValueError('Invalid input! Parameter must be greater or equal to 0 and ' +\
+            raise ValueError('Invalid input! Argument must be greater or equal to 0 and ' +\
                 'less or equal to ' + str(self.get_qubit_number()) + '.')

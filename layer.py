@@ -84,34 +84,46 @@ class Layer(object):
     def delete_gate(self, nth):
         ''' delete gate from layer '''
 
-        for key in list(self.__gate_list.keys()):
+        if nth >= 0 and nth <= len(self.__gate_list) - 1:
+            for key in list(self.__gate_list.keys()):
 
-            if int(key) == nth:
-                del self.__gate_list[nth]
+                if int(key) == nth:
+                    del self.__gate_list[nth]
 
-        ranks = [i for i in range(len(self.__gate_list))]            
-        gates = list(self.__gate_list.values())
+            self.__gate_list = dict(sorted(self.__gate_list.items()))
 
-        self.__gate_list = dict(zip(ranks, gates))
-        self.__gate_list = dict(sorted(self.__gate_list.items()))
+            ranks = [i for i in range(len(self.__gate_list))]            
+            gates = list(self.__gate_list.values())
+
+            self.__gate_list = dict(zip(ranks, gates))
+            self.__gate_list = dict(sorted(self.__gate_list.items()))
+        
+        else:
+            raise ValueError('Invalid input! Argument must be greater or equal to 0 and ' +\
+                'less or equal to ' + str(len(self.__gate_list) - 1) + '.')
 
     @check_layer.insert_gate_check
     def insert_gate(self, g, nth):
         ''' insert gate into layer '''
 
-        ranks = [i for i in range(len(self.__gate_list) + 1)]            
-        values = list(self.__gate_list.values())
-        gates = []
-        for i in range(len(self.__gate_list) + 1):
+        if nth >= 0 and nth <= len(self.__gate_list):
+            ranks = [i for i in range(len(self.__gate_list) + 1)]            
+            values = list(self.__gate_list.values())
+            gates = []
+            for i in range(len(self.__gate_list) + 1):
 
-            if i < nth:
-                gates.append(values[i])
+                if i < nth:
+                    gates.append(values[i])
 
-            elif i == nth:
-                gates.append(g)
+                elif i == nth:
+                    gates.append(g)
 
-            else:
-                gates.append(values[i - 1])
+                else:
+                    gates.append(values[i - 1])
+            
+            self.__gate_list = dict(zip(ranks, gates))
+            self.__gate_list = dict(sorted(self.__gate_list.items()))
         
-        self.__gate_list = dict(zip(ranks, gates))
-        self.__gate_list = dict(sorted(self.__gate_list.items()))
+        else:
+            raise ValueError('Invalid input! Argument must be greater or equal to 0 and ' +\
+                'less or equal to ' + str(len(self.__gate_list)) + '.')
