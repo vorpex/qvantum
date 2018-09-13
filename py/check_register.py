@@ -83,6 +83,19 @@ def measure_nth_qubit_check(function):
     
     return wrapper
 
+def delete_qubit_check(function):
+    ''' check the arguments of delete_qubit function '''
+
+    def wrapper(self, nth):
+    
+        if isinstance(nth, int):
+            return function(self, nth)
+        
+        else:
+            raise TypeError('Invalid input! Argument must be integer.')
+    
+    return wrapper
+
 def insert_qubit_check(function):
     ''' check the arguments of insert_qubit function '''
 

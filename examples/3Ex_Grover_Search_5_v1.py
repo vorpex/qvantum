@@ -70,4 +70,5 @@ for i in range(10):
 
 print(r.show())
 r.measure_nth_qubit(3)
+r.delete_qubit(3)
 print(r.show())

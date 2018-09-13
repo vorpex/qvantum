@@ -23,6 +23,7 @@ The instances of the register class have the following methods:
 - measure_nth_qubit() - measure the n-th qubit
 - ket()               - return the ket vector of register
 - bra()               - return the bra vector of register
+- delete_qubit()      - delete qubit from register
 - insert_qubit()      - insert qubit into register
 '''
 
@@ -187,6 +188,43 @@ class Register(object):
 
         bra = self.ket().transpose()
         return bra
+
+    @check_register.delete_qubit_check
+    def delete_qubit(self, nth):
+        ''' delete qubit from register '''
+
+        if nth >= 0 and nth <= self.get_qubit_number() - 1:
+            keys =[]
+            for key in self.__state_vector:
+
+                list_key = list(key)
+                list_key.pop(nth)
+                keys.append(''.join(list_key))
+            
+            values = list(self.__state_vector.values())
+            
+            self.__state_vector = {}
+            for i in range(len(keys)):
+
+                if keys[i] not in list(self.__state_vector.keys()):
+                    self.__state_vector[keys[i]] = values[i]
+
+                else:
+                    self.__state_vector[keys[i]] = self.__state_vector[keys[i]] + values[i]
+
+            self.__state_vector = dict(sorted(self.__state_vector.items()))
+            for elem in self.__state_vector:
+
+                if self.__coeff_list[nth][0] == -1 * self.__coeff_list[nth][1]:
+                    self.__state_vector[elem] = 1
+                # qubit.Qubit(-1 / math.sqrt(2), 1 / math.sqrt(2)) causes problem
+                else:
+                    self.__state_vector[elem] = self.__state_vector[elem] / \
+                        (self.__coeff_list[nth][0] + self.__coeff_list[nth][1])
+
+        else:
+            raise ValueError('Invalid input! Argument must be greater or equal to 0 and ' +\
+                'less or equal to ' + str(self.get_qubit_number() - 1) + '.')
     
     @check_register.insert_qubit_check
     def insert_qubit(self, q, nth):
