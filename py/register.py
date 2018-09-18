@@ -1,4 +1,4 @@
-'''
+﻿'''
 register class
 
 "A quantum register is a system comprising multiple qubits[1] and is the quantum analog of the 
@@ -77,7 +77,7 @@ class Register(object):
     def get_qubit_number(self):
         ''' getter of the number of qubits in the register '''
 
-        return int(math.log2(self.get_state_number()))
+        return int(math.log(self.get_state_number(), 2))
 
     @check_register.get_states_check
     def get_states(self, nth=None):

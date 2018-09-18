@@ -78,7 +78,7 @@ class Layer(object):
         ''' getter of size of layer (equals to the size of register on which the 
         layer is usable) '''
 
-        return int(numpy.log2(self.get_matrix_size()))
+        return int(numpy.log(self.get_matrix_size(), 2))
 
     @check_layer.delete_gate_check
     def delete_gate(self, nth):
