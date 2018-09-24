@@ -24,6 +24,7 @@ The instances of layer class have the following methods:
 # pylint: disable=E1101
 
 import check_layer
+import collections
 import numpy
 
 class Layer(object):
@@ -35,8 +36,7 @@ class Layer(object):
 
         ranks = [i for i in range(len(gate_list))]   
 
-        self.__gate_list = dict(zip(ranks, gate_list))
-        self.__gate_list = dict(sorted(self.__gate_list.items()))
+        self.__gate_list = collections.OrderedDict(zip(ranks, gate_list))
 
     def get_gate_list(self):
         ''' getter of gates in gate list '''
@@ -85,18 +85,15 @@ class Layer(object):
         ''' delete gate from layer '''
 
         if nth >= 0 and nth <= len(self.__gate_list) - 1:
-            for key in list(self.__gate_list.keys()):
+            for key in self.__gate_list:
 
                 if int(key) == nth:
                     del self.__gate_list[nth]
 
-            self.__gate_list = dict(sorted(self.__gate_list.items()))
-
             ranks = [i for i in range(len(self.__gate_list))]            
             gates = list(self.__gate_list.values())
 
-            self.__gate_list = dict(zip(ranks, gates))
-            self.__gate_list = dict(sorted(self.__gate_list.items()))
+            self.__gate_list = collections.OrderedDict(zip(ranks, gates))
         
         else:
             raise ValueError('Invalid input! Argument must be greater or equal to 0 and ' +\
@@ -121,8 +118,7 @@ class Layer(object):
                 else:
                     gates.append(values[i - 1])
             
-            self.__gate_list = dict(zip(ranks, gates))
-            self.__gate_list = dict(sorted(self.__gate_list.items()))
+            self.__gate_list = collections.OrderedDict(zip(ranks, gates))
         
         else:
             raise ValueError('Invalid input! Argument must be greater or equal to 0 and ' +\

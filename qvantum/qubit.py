@@ -22,9 +22,7 @@ class is created with random amplitudes (alpha, beta). They share the same metho
 # pylint: disable=E1101
 
 import check_qubit
-import math
 import numpy
-import random
 import unicodedata
 
 class Qubit(object):
@@ -97,12 +95,12 @@ class Random_Qubit(Qubit):
 
         Qubit.__init__(self, 1, 0)
 
-        alpha = random.uniform(0, 1)
-        alpha1 = random.choice([-1, 1]) * math.sqrt(random.uniform(0, alpha))
-        alpha2 = random.choice([-1, 1]) * math.sqrt(alpha - alpha1 ** 2)
+        alpha = numpy.random.uniform(0, 1)
+        alpha1 = numpy.random.choice([-1, 1]) * numpy.sqrt(numpy.random.uniform(0, alpha))
+        alpha2 = numpy.random.choice([-1, 1]) * numpy.sqrt(alpha - alpha1 ** 2)
 
-        beta1 = random.choice([-1, 1]) * math.sqrt(random.uniform(0, 1 - alpha))
-        beta2 = random.choice([-1, 1]) * math.sqrt(1 - alpha - beta1 ** 2)
+        beta1 = numpy.random.choice([-1, 1]) * numpy.sqrt(numpy.random.uniform(0, 1 - alpha))
+        beta2 = numpy.random.choice([-1, 1]) * numpy.sqrt(1 - alpha - beta1 ** 2)
 
         # super().set_amplitudes(complex(alpha1, alpha2), complex(beta1, beta2))
         super(Random_Qubit, self).set_amplitudes(complex(alpha1, alpha2), complex(beta1, beta2))

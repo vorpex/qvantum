@@ -51,7 +51,6 @@ personalize the user's own graphs. These parameters can be found below with thei
 # pylint: disable=E1127
 
 import check_bloch
-import math
 from matplotlib.patches import Circle
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
@@ -90,10 +89,10 @@ def bloch_coords(q):
 def bloch_qubit(u, v, w):
     ''' calculate qubit from bloch coordinates '''
 
-    alpha = complex(math.cos(math.acos(w) / 2), 0)
+    alpha = complex(numpy.cos(numpy.arccos(w) / 2), 0)
     
-    beta = complex(math.sin(math.acos(w) / 2) * u / math.sin(math.acos(w)), \
-        math.sin(math.acos(w) / 2) * v / math.sin(math.acos(w)))
+    beta = complex(numpy.sin(numpy.arccos(w) / 2) * u / numpy.sin(numpy.arccos(w)), \
+        numpy.sin(numpy.arccos(w) / 2) * v / numpy.sin(numpy.arccos(w)))
 
     return qubit.Qubit(alpha, beta)
 
@@ -211,6 +210,6 @@ def phase_test(c1, c2):
     ''' compute phase between two complex number '''
 
     phase = (c1.real * c2.real + c1.imag * c2.imag) / \
-        (math.sqrt(c1.real ** 2 + c1.imag ** 2) * math.sqrt(c2.real ** 2 + c2.imag ** 2))
+        (numpy.sqrt(c1.real ** 2 + c1.imag ** 2) * numpy.sqrt(c2.real ** 2 + c2.imag ** 2))
 
     return phase

@@ -30,8 +30,8 @@ The instances of the register class have the following methods:
 # pylint: disable=E1101
 
 import check_register
+import collections
 import itertools
-import math
 import numpy
 import unicodedata
 
@@ -61,8 +61,7 @@ class Register(object):
 
             coeffs.append(product)
 
-        self.__state_vector = dict(zip(states, coeffs))
-        self.__state_vector = dict(sorted(self.__state_vector.items()))
+        self.__state_vector = collections.OrderedDict(zip(states, coeffs))
 
     def get_coeff_list(self):
         ''' getter of the coefficients of the qubits '''
@@ -77,7 +76,7 @@ class Register(object):
     def get_qubit_number(self):
         ''' getter of the number of qubits in the register '''
 
-        return int(math.log(self.get_state_number(), 2))
+        return int(numpy.log2(self.get_state_number()))
 
     @check_register.get_states_check
     def get_states(self, nth=None):
@@ -109,8 +108,6 @@ class Register(object):
 
                 self.__state_vector[key] = amp_list[i]
                 i = i + 1
-
-            self.__state_vector = dict(sorted(self.__state_vector.items()))
 
         else:
             raise ValueError('Invalid input! The amplitudes list must be the same size as the ' +\
@@ -145,7 +142,6 @@ class Register(object):
             else:
                 self.__state_vector[key] = 0
 
-        self.__state_vector = dict(sorted(self.__state_vector.items()))
         return result
     
     @check_register.measure_nth_qubit_check
@@ -161,19 +157,18 @@ class Register(object):
         prob0 = numpy.sum(numpy.square(numpy.absolute(numpy.array(result0))))
         result = numpy.random.choice([0, 1], p=[prob0, 1 - prob0])
         
-        for item in list(self.__state_vector.keys()):
+        for key in self.__state_vector:
 
-            if item[nth] != str(result):
-                self.__state_vector[item] = 0
+            if key[nth] != str(result):
+                self.__state_vector[key] = 0
         
         renorm = numpy.sum(numpy.square(numpy.absolute(numpy.array( \
             list(self.__state_vector.values())))))
     
         for key in self.__state_vector:
 
-            self.__state_vector[key] = self.__state_vector[key] / math.sqrt(renorm)
+            self.__state_vector[key] = self.__state_vector[key] / numpy.sqrt(renorm)
 
-        self.__state_vector = dict(sorted(self.__state_vector.items()))
         return int(result)
     
     def ket(self):
@@ -203,7 +198,7 @@ class Register(object):
             
             values = list(self.__state_vector.values())
             
-            self.__state_vector = {}
+            self.__state_vector = collections.OrderedDict()
             for i in range(len(keys)):
 
                 if keys[i] not in list(self.__state_vector.keys()):
@@ -212,14 +207,13 @@ class Register(object):
                 else:
                     self.__state_vector[keys[i]] = self.__state_vector[keys[i]] + values[i]
 
-            self.__state_vector = dict(sorted(self.__state_vector.items()))
-            for elem in self.__state_vector:
+            for key in self.__state_vector:
 
                 if self.__coeff_list[nth][0] == -1 * self.__coeff_list[nth][1]:
-                    self.__state_vector[elem] = 1
-                # qubit.Qubit(-1 / math.sqrt(2), 1 / math.sqrt(2)) causes problem
+                    self.__state_vector[key] = 1
+                # qubit.Qubit(-1 / numpy.sqrt(2), 1 / numpy.sqrt(2)) causes problem
                 else:
-                    self.__state_vector[elem] = self.__state_vector[elem] / \
+                    self.__state_vector[key] = self.__state_vector[key] / \
                         (self.__coeff_list[nth][0] + self.__coeff_list[nth][1])
 
         else:
@@ -235,15 +229,15 @@ class Register(object):
             qubit_values = [q.get_alpha(), q.get_beta()]
             keys = list(self.__state_vector.keys())
             values = list(self.__state_vector.values())
-            state_dict = {}
+            state_dict = collections.OrderedDict()
             for i in range(self.get_state_number()):
                 for j in range(2):
 
                     state_dict[keys[i][:nth] + qubit_keys[j] + keys[i][nth:]] = \
                         values[i] * qubit_values[j]
-            
-            self.__state_vector = dict(sorted(state_dict.items()))
-        
+
+            self.__state_vector = collections.OrderedDict(sorted(state_dict.items()))
+
         else:
             raise ValueError('Invalid input! Argument must be greater or equal to 0 and ' +\
                 'less or equal to ' + str(self.get_qubit_number()) + '.')

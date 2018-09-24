@@ -1,5 +1,6 @@
 ''' module testing '''
 
+import math
 import qvantum
 
 # basic ###########################################################################################
@@ -11,6 +12,7 @@ import qvantum
 
 # teleportation ###################################################################################
 
+# q = qvantum.Qubit(1 / math.sqrt(2), 1 / math.sqrt(2))
 q = qvantum.Random_Qubit()
 q1 = qvantum.Qubit(1, 0)
 q2 = qvantum.Qubit(1, 0)

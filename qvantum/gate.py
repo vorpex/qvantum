@@ -30,7 +30,6 @@ The instances of gate class have the following methods:
 # pylint: disable=E1101
 
 import check_gate
-import math
 import numpy
 import qubit
 import register
@@ -106,13 +105,13 @@ class Hadamard(Gate):
         Gate.__init__(self)
         # super().set_name('Hadamard')
         # super().set_matrix(numpy.matrix([
-        #     [1 / math.sqrt(2), 1 / math.sqrt(2)],
-        #     [1 / math.sqrt(2), -1 / math.sqrt(2)]
+        #     [1 / numpy.sqrt(2), 1 / numpy.sqrt(2)],
+        #     [1 / numpy.sqrt(2), -1 / numpy.sqrt(2)]
         #     ]))
         super(Hadamard, self).set_name('Hadamard')
         super(Hadamard, self).set_matrix(numpy.matrix([
-            [1 / math.sqrt(2), 1 / math.sqrt(2)],
-            [1 / math.sqrt(2), -1 / math.sqrt(2)]
+            [1 / numpy.sqrt(2), 1 / numpy.sqrt(2)],
+            [1 / numpy.sqrt(2), -1 / numpy.sqrt(2)]
             ]))
     
     def set_name(self, name):
@@ -275,12 +274,12 @@ class Pi8(Gate):
         # super().set_name(unicodedata.lookup('GREEK SMALL LETTER PI') + '/8')
         # super().set_matrix(numpy.matrix([
         #     [1, 0],
-        #     [0, complex(math.cos(math.pi/4), math.sin(math.pi/4))]
+        #     [0, complex(numpy.cos(numpy.pi/4), numpy.sin(numpy.pi/4))]
         #     ]))
         super(Pi8, self).set_name(unicodedata.lookup('GREEK SMALL LETTER PI') + '/8')
         super(Pi8, self).set_matrix(numpy.matrix([
             [1, 0],
-            [0, complex(math.cos(math.pi/4), math.sin(math.pi/4))]
+            [0, complex(numpy.cos(numpy.pi/4), numpy.sin(numpy.pi/4))]
             ]))
     
     def set_name(self, name):
@@ -479,17 +478,17 @@ class Ising(Gate):
         Gate.__init__(self)
         # super().set_name('Ising')
         # super().set_matrix(numpy.matrix([
-        #     [1, 0, 0, complex(0, -1) * complex(math.cos(phi), math.sin(phi))],
+        #     [1, 0, 0, complex(0, -1) * complex(numpy.cos(phi), numpy.sin(phi))],
         #     [0, 1, complex(0, -1), 0],
         #     [0, complex(0, -1), 1, 0],
-        #     [complex(0, -1) * complex(math.cos(-1 * phi), math.sin(-1 * phi)), 0, 0, 1]
+        #     [complex(0, -1) * complex(numpy.cos(-1 * phi), numpy.sin(-1 * phi)), 0, 0, 1]
         #     ]))
         super(Ising, self).set_name('Ising')
         super(Ising, self).set_matrix(numpy.matrix([
-            [1, 0, 0, complex(0, -1) * complex(math.cos(phi), math.sin(phi))],
+            [1, 0, 0, complex(0, -1) * complex(numpy.cos(phi), numpy.sin(phi))],
             [0, 1, complex(0, -1), 0],
             [0, complex(0, -1), 1, 0],
-            [complex(0, -1) * complex(math.cos(-1 * phi), math.sin(-1 * phi)), 0, 0, 1]
+            [complex(0, -1) * complex(numpy.cos(-1 * phi), numpy.sin(-1 * phi)), 0, 0, 1]
             ]))
 
     def set_name(self, name):

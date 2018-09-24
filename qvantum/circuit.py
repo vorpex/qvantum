@@ -22,6 +22,7 @@ The instances of circuit class have the following methods:
 # pylint: disable=E1101
 
 import check_circuit
+import collections
 import numpy
 
 class Circuit(object):
@@ -35,8 +36,7 @@ class Circuit(object):
             for i in range(len(layer_list))):
             ranks = [i for i in range(len(layer_list))]
 
-            self.__layer_list = dict(zip(ranks, layer_list))
-            self.__layer_list = dict(sorted(self.__layer_list.items()))
+            self.__layer_list = collections.OrderedDict(zip(ranks, layer_list))
 
         else:
             raise ValueError('Invalid input! Argument must be a list of layer object with same ' +\
@@ -69,18 +69,15 @@ class Circuit(object):
         ''' delete layer from circuit '''
 
         if nth >= 0 and nth <= len(self.__layer_list) - 1:
-            for key in list(self.__layer_list.keys()):
+            for key in self.__layer_list:
 
                 if int(key) == nth:
                     del self.__layer_list[key]
-            
-            self.__layer_list = dict(sorted(self.__layer_list.items()))
 
             ranks = [i for i in range(len(self.__layer_list))]
             layers = list(self.__layer_list.values())
 
-            self.__layer_list = dict(zip(ranks, layers))
-            self.__layer_list = dict(sorted(self.__layer_list.items()))
+            self.__layer_list = collections.OrderedDict(zip(ranks, layers))
         
         else:
             raise ValueError('Invalid input! Argument must be greater or equal to 0 and ' +\
@@ -106,8 +103,7 @@ class Circuit(object):
                 else:
                     layers.append(values[i - 1])
             
-            self.__layer_list = dict(zip(ranks, layers))
-            self.__layer_list = dict(sorted(self.__layer_list.items()))
+            self.__layer_list = collections.OrderedDict(zip(ranks, layers))
 
         else:
             raise ValueError('Invalid input! Layer and circuit size must be the same. ' +\
