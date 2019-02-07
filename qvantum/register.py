@@ -1,7 +1,7 @@
 ﻿'''
 register class
 
-"A quantum register is a system comprising multiple qubits[1] and is the quantum analog of the 
+"A quantum register is a system comprising multiple qubits and is the quantum analog of the 
 classical processor register. An n size quantum register is a quantum system comprising n qubits.
 The Hilbert space, H, in which the data stored in a quantum register is:
     
