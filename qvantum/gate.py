@@ -11,7 +11,7 @@ As matrices, quantum gates can be described by 2^n x 2^n sized unitary matrices,
 number of qubits that the gate act on. The variables that the gates act upon, the quantum states,
 are vectors in 2^n complex dimensions, where n again is the number of qubits of variable:
 The base vectors are the possible outcomes if measured, and a quantum state is a linear combination
-ofse outcomes."
+of outcomes."
 
 via Wikipedia: https://en.wikipedia.org/wiki/Quantum_logic_gate
 
