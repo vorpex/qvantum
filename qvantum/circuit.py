@@ -39,7 +39,7 @@ class Circuit(object):
             self.__layer_list = collections.OrderedDict(zip(ranks, layer_list))
 
         else:
-            raise ValueError('Invalid input! Argument must be a list of layer object with same ' +\
+            raise ValueError('Invalid input! Argument must be a list of layer objects with same ' +\
                 'size.')
 
     def get_layer_list(self):
