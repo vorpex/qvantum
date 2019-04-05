@@ -83,5 +83,6 @@ Method to initialize an instance of the qubit class. The squared sum of alpha an
 
 *Examples:*
 
+![Alt text](Test.png?raw=true "Title")
 
 > Written with [StackEdit](https://stackedit.io/).
