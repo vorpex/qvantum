@@ -72,9 +72,16 @@ There is a sixth class, the bloch class which is used for teh Bloch representati
 
 In quantum computing a qubit or quantum bit is the basic unit of quantum information. Every qubit has two clear states such as 0 and 1 but unlike a classical bit a qubit can be in superposition which is a special  mixture of these clear states.
 
-    qvantum.Qubit.__init__(alpha, beta)
+**qvantum.Qubit.__init__(alpha, beta)**
 
 Method to initialize an instance of the qubit class. The squared sum of alpha and beta bust be equal to zero otherwise a ValueError will be thrown.
+
+*Parameters:*
+
+ - alpha: int, float or complex
+ - beta: int, float or complex
+
+*Examples:*
 
 
 > Written with [StackEdit](https://stackedit.io/).
