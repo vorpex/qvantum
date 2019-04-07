@@ -3,7 +3,7 @@
 # pylint: disable=E1101
 
 import numpy
-import qubit
+from . import qubit
 
 def register_init_check(function):
     ''' check the arguments of initialization function of register class '''

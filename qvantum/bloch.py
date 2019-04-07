@@ -50,13 +50,13 @@ personalize the user's own graphs. These parameters can be found below with thei
 
 # pylint: disable=E1127
 
-import check_bloch
+from . import check_bloch
 from matplotlib.patches import Circle
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import mpl_toolkits.mplot3d.art3d as art3d
 import numpy
-import qubit
+from . import qubit
 
 @check_bloch.bloch_coords_check
 def bloch_coords(q):

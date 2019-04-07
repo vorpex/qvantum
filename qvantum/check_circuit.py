@@ -2,8 +2,8 @@
 
 # pylint: disable=E1101
 
-import layer
-import register
+from . import layer
+from . import register
 
 def circuit_init_check(function):
     ''' check the arguments of initialization function of circuit class '''

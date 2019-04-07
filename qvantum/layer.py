@@ -23,7 +23,7 @@ The instances of layer class have the following methods:
 
 # pylint: disable=E1101
 
-import check_layer
+from . import check_layer
 import collections
 import numpy
 

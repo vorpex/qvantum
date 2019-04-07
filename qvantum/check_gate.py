@@ -3,8 +3,8 @@
 # pylint: disable=E1101
 
 import numpy
-import qubit
-import register
+from . import qubit
+from . import register
 
 def gate_call_check(function):
     ''' check the arguments of call function of gate class '''

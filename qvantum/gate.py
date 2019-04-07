@@ -29,10 +29,10 @@ The instances of gate class have the following methods:
 
 # pylint: disable=E1101
 
-import check_gate
+from . import check_gate
 import numpy
-import qubit
-import register
+from . import qubit
+from . import register
 import unicodedata
 
 class Gate(object):

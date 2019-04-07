@@ -29,7 +29,7 @@ The instances of the register class have the following methods:
 
 # pylint: disable=E1101
 
-import check_register
+from . import check_register
 import collections
 import itertools
 import numpy

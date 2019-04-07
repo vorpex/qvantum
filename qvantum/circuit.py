@@ -21,7 +21,7 @@ The instances of circuit class have the following methods:
 
 # pylint: disable=E1101
 
-import check_circuit
+from . import check_circuit
 import collections
 import numpy
 

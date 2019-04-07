@@ -21,7 +21,7 @@ class is created with random amplitudes (alpha, beta). They share the same metho
 
 # pylint: disable=E1101
 
-import check_qubit
+from . import check_qubit
 import numpy
 import unicodedata
 

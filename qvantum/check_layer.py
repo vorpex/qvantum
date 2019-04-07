@@ -2,7 +2,7 @@
 
 # pylint: disable=E1101
 
-import gate
+from . import gate
 
 def layer_init_check(function):
     ''' check the arguments of initialization function of layer class '''

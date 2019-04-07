@@ -2,7 +2,7 @@
 
 # pylint: disable=E1101
 
-import qubit
+from . import qubit
 
 def bloch_coords_check(function):
     ''' check the arguments of bloch_coords function '''
