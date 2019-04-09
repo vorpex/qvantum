@@ -6,9 +6,21 @@ import numpy
 from . import qubit
 
 def register_init_check(function):
-    ''' check the arguments of initialization function of register class '''
+    """Decorator to check the arguments of initialization function in register class.
+    
+    Arguments:
+        function {} -- The tested function
+    """
 
     def wrapper(self, qubit_list):
+        """Wrapper function for given decorator.
+        
+        Arguments:
+            qubit_list {list} -- List of objects from Qubit or Random_Qubit class
+        
+        Raises:
+            ValueError, TypeError
+        """
 
         if isinstance(qubit_list, list) \
             and all(isinstance(elem, (qubit.Qubit, qubit.Random_Qubit)) for elem in qubit_list):
@@ -25,9 +37,21 @@ def register_init_check(function):
     return wrapper
 
 def get_states_check(function):
-    ''' check the arguments of get_nth_state function '''
+    """Decorator to check the arguments of getting states function in register class.
+    
+    Arguments:
+        function {} -- The tested function
+    """
 
     def wrapper(self, nth=None):
+        """Wrapper function for given decorator.
+        
+        Keyword Arguments:
+            nth {int} -- Number of n-th possible state (default: {None})
+        
+        Raises:
+            TypeError
+        """
 
         if isinstance(nth, int) or nth is None:
             return function(self, nth)
@@ -38,9 +62,21 @@ def get_states_check(function):
     return wrapper
 
 def get_amplitudes_check(function):
-    ''' check the arguments of get_amplitudes function '''
+    """Decorator to check the arguments of getting amplitudes function in register class.
+    
+    Arguments:
+        function {} -- The tested function
+    """
 
     def wrapper(self, nth=None):
+        """Wrapper function for given decorator.
+        
+        Keyword Arguments:
+            nth {int} -- Number of n-th possible amplitude (default: {None})
+        
+        Raises:
+            TypeError
+        """
 
         if isinstance(nth, int) or nth is None:
             return function(self, nth)
@@ -51,9 +87,21 @@ def get_amplitudes_check(function):
     return wrapper
 
 def set_amplitudes_check(function):
-    ''' check the arguments of set_amplitudes function '''
+    """Decorator to check the arguments of setting amplitudes function in register class.
+    
+    Arguments:
+        function {} -- The tested function
+    """
 
     def wrapper(self, amp_list):
+        """Wrapper function for given decorator.
+        
+        Arguments:
+            amp_list {list} -- List of int, float or complex objects
+        
+        Raises:
+            ValueError, TypeError
+        """
 
         if isinstance(amp_list, list) \
             and all(isinstance(elem, (int, float, complex)) for elem in amp_list):
@@ -71,9 +119,21 @@ def set_amplitudes_check(function):
     return wrapper
 
 def measure_nth_qubit_check(function):
-    ''' check the arguments of measure_nth_qubit function '''
+    """Decorator to check the arguments of measuring qubit function in register class.
+    
+    Arguments:
+        function {} -- The tested function
+    """
 
     def wrapper(self, nth):
+        """Wrapper function for given decorator.
+        
+        Arguments:
+            nth {int} -- Number of n-th possible qubit
+        
+        Raises:
+            TypeError
+        """
 
         if isinstance(nth, int):
             return function(self, nth)
@@ -84,9 +144,21 @@ def measure_nth_qubit_check(function):
     return wrapper
 
 def delete_qubit_check(function):
-    ''' check the arguments of delete_qubit function '''
+    """Decorator to check the arguments of deleting qubit function in register class.
+    
+    Arguments:
+        function {} -- The tested function
+    """
 
     def wrapper(self, nth):
+        """Wrapper function for given decorator.
+        
+        Arguments:
+            nth {int} -- Number of n-th possible qubit
+        
+        Raises:
+            ValueError, TypeError
+        """
     
         if isinstance(nth, int):
             return function(self, nth)
@@ -97,9 +169,22 @@ def delete_qubit_check(function):
     return wrapper
 
 def insert_qubit_check(function):
-    ''' check the arguments of insert_qubit function '''
+    """Decorator to check the arguments of inserting qubit function in register class.
+    
+    Arguments:
+        function {} -- The tested function
+    """
 
     def wrapper(self, q, nth):
+        """Wrapper function for given decorator.
+        
+        Arguments:
+            q {qubit} -- The qubit to be inserted
+            nth {int} -- The index where the qubit is inserted
+        
+        Raises:
+            ValueError, TypeError
+        """
 
         if isinstance(q, (qubit.Qubit, qubit.Random_Qubit)) and isinstance(nth, int):
             return function(self, q, nth)

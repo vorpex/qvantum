@@ -4,7 +4,7 @@ with open('README.md', 'r') as f:
     long_description = f.read()
 
 setup(name='qvantum',
-    version='0.93',
+    version='0.94',
     description='Python package for quantum computing',
     long_description=long_description,
     long_description_content_type='text/markdown',
