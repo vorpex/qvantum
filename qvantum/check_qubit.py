@@ -1,4 +1,4 @@
-''' checking functions for qubit class '''
+'''checking functions for qubit class'''
 
 # pylint: disable=E1101, W1401
 

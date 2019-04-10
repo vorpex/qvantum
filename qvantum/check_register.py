@@ -1,4 +1,4 @@
-''' checking functions for register class '''
+'''checking functions for register class'''
 
 # pylint: disable=E1101, W1401
 

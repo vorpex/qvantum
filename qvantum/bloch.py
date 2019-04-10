@@ -1,54 +1,6 @@
-'''
-Bloch sphere
+'''bloch sphere functions'''
 
-"In quantum mechanics, the Bloch sphere is a geometrical representation of the pure state space of 
-a two-level quantum mechanical system (qubit), named after the physicist Felix Bloch.
-
-Quantum mechanics is mathematically formulated in Hilbert space or projective Hilbert space. The 
-space of pure states of a quantum system is given by the one-dimensional subspaces of the 
-corresponding Hilbert space (or the "points" of the projective Hilbert space).
-
-The Bloch sphere is a unit 2-sphere, with antipodal points corresponding to a pair of mutually 
-orthogonal state vectors. The north and south poles of the Bloch sphere are typically chosen to 
-correspond to the standard basis vectors |0> and |1>, respectively, which in turn might correspond 
-e.g. to the spin-up and spin-down states of an electron. This choice is arbitrary, however. The 
-points on the surface of the sphere correspond to the pure states of the system, whereas the 
-interior points correspond to the mixed states."
-
-via Wikipedia: https://en.wikipedia.org/wiki/Bloch_sphere
-
-The following functions are the Bloch Sphere related functions in the package:
-
-- bloch_coords()      - calculate bloch coordinates from qubit
-- bloch_qubit()       - calculate qubit from bloch coordinates
-- bloch_sphere_plot() - plot bloch representation
-- phase_test()        - compute phase between two complex numbers
-
-bloch_coords_plot(): function uses MATPLOTLIB for plotting purposes and has some parameters to
-personalize the user's own graphs. These parameters can be found below with their default value:
-
-- xfigsize = 15
-- yfigsize = 7.5
-- frame_on = False
-- tight_layout_on = True
-- style = 'dark_background'
-- surface_on = True
-- wireframe_on = True
-- surface_cmap = 'Blues_r'
-- surface_alpha = 0.3
-- wireframe_color = '#d3d3d3'
-- wireframe_linewidth = 0.075
-- quiver_color = '#ffffff'
-- quiver_linewidth = 1.5
-- quiver_ratio = 0.1
-- line_color = '#d3d3d3'
-- line_linewidth = 0.3
-- circle_edgecolor = '#d3d3d3'
-- circle_facecolor = 'none'
-- circle_linewidth = 0.3
-'''
-
-# pylint: disable=E1127
+# pylint: disable=E1127, W1401
 
 from . import check_bloch
 from matplotlib.patches import Circle
@@ -60,7 +12,24 @@ from . import qubit
 
 @check_bloch.bloch_coords_check
 def bloch_coords(q):
-    ''' calculate bloch coordinates from qubit '''
+    """This function calculates the coordinates of the Bloch representation from the state vector 
+    of a Qubit object.
+    
+    Arguments:
+        q {qubit} -- Instance of Qubit class or Random_Qubit class
+    
+    Raises:
+        TypeError
+    
+    Examples:
+        >>> import qvantum
+        >>>
+        >>> q = qvantum.Random_Qubit()
+        >>> q.show()
+        '|Ψ> = (-0.5879-0.7251i)|0> + (0.3522-0.0674i)|1>'
+        >>> qvantum.bloch_coords(q)
+        (-0.31632342351128423, 0.5899599386821074, 0.7428908146479567)
+    """
 
     p00 = complex(q.get_alpha().real ** 2 + q.get_alpha().imag ** 2, 0)
         
@@ -87,7 +56,27 @@ def bloch_coords(q):
 
 @check_bloch.bloch_qubit_check
 def bloch_qubit(u, v, w):
-    ''' calculate qubit from bloch coordinates '''
+    """This function calculates the state vector of a Qubit object from the given Bloch 
+    coordinates.
+    
+    Arguments:
+        u {int, float} -- 1st coordinate of Bloch representation
+        v {int, float} -- 2nd coordinate of Bloch representation
+        w {int, float} -- 3rd coordinate of Bloch representation
+    
+    Raises:
+        ValueError, TypeError
+    
+    Examples:
+        >>> import math
+        >>> import qvantum
+        >>>
+        >>> u = 0
+        >>> v = 1 / math.sqrt(2)
+        >>> w = 1 / math.sqrt(2)
+        >>> qvantum.bloch_qubit(u, v, w).show()
+        '|Ψ> = (0.9239+0.0000i)|0> + (0.0000+0.3827i)|1>'
+    """
 
     alpha = complex(numpy.cos(numpy.arccos(w) / 2), 0)
     
@@ -97,69 +86,55 @@ def bloch_qubit(u, v, w):
     return qubit.Qubit(alpha, beta)
 
 @check_bloch.bloch_sphere_plot_check
-def bloch_sphere_plot(u, v, w, xfigsize=None, yfigsize=None, frame_on=None, tight_layout_on=None, \
-        style=None, surface_on=None, wireframe_on=None, surface_cmap=None, surface_alpha=None, \
-        wireframe_color=None, wireframe_linewidth=None, quiver_color=None, quiver_linewidth=None, \
-        quiver_ratio=None, line_color=None, line_linewidth=None, circle_edgecolor=None, \
-        circle_facecolor=None, circle_linewidth=None):
-    ''' plot bloch representation '''
-
-    if xfigsize is None:
-        xfigsize = 15
+def bloch_sphere_plot(u, v, w, xfigsize=15, yfigsize=7.5, frame_on=False, tight_layout_on=True, \
+        style='dark_background', surface_on=True, wireframe_on=True, surface_cmap='Blues_r', \
+        surface_alpha=0.3, wireframe_color='#d3d3d3', wireframe_linewidth=0.075, \
+        quiver_color='#ffffff', quiver_linewidth=1.5, quiver_ratio=0.1, line_color='#d3d3d3', \
+        line_linewidth=0.3, circle_edgecolor='#d3d3d3', circle_facecolor='none', \
+        circle_linewidth=0.3):
+    """This function visualizes the qubit using its bloch coordinates and the matplotlib module.
     
-    if yfigsize is None:
-        yfigsize = 7.5
-
-    if frame_on is None:
-        frame_on = False
+    Arguments:
+        u {int, float} -- 1st coordinate of Bloch representation
+        v {int, float} -- 2nd coordinate of Bloch representation
+        w {int, float} -- 3rd coordinate of Bloch representation
     
-    if tight_layout_on is None:
-        tight_layout_on = True
+    Keyword Arguments:
+        Keyword Arguments:
+        xfigsize {int, float} -- X size of figure (default: {15})
+        yfigsize {int, float} -- Y size of figure (default: {7.5})
+        frame_on {bool} -- Frame (default: {False})
+        tight_layout_on {bool} -- Tight layout (default: {True})
+        style {str} -- Style (default: {'dark_background'})
+        surface_on {bool} -- Surface (default: {True})
+        wireframe_on {bool} -- Wireframe (default: {True})
+        surface_cmap {str} -- Surface cmap (default: {'Blues_r'})
+        surface_alpha {int, float} -- Surface alpha (default: {0.3})
+        wireframe_color {str} -- Wireframe color (default: {'#d3d3d3'})
+        wireframe_linewidth {int, float} -- Width of wireframe line (default: {0.075})
+        quiver_color {str} -- Quiver color (default: {'#ffffff'})
+        quiver_linewidth {int, float} -- Width of quiver line (default: {1.5})
+        quiver_ratio {int, float} -- Quiver ratio (default: {0.1})
+        line_color {str} -- Line color (default: {'#d3d3d3'})
+        line_linewidth {int, float} -- Width of line (default: {0.3})
+        circle_edgecolor {str} -- Edge color of circle (default: {'#d3d3d3'})
+        circle_facecolor {str} -- Face color of circle (default: {'none'})
+        circle_linewidth {int, float} -- Width of circle line (default: {0.3})
     
-    if style is None:
-        style = 'dark_background'
+    Raises:
+        ValueError, TypeError
     
-    if surface_on is None:
-        surface_on = True
-    
-    if wireframe_on is None:
-        wireframe_on = True
-    
-    if surface_cmap is None:
-        surface_cmap = 'Blues_r'
-
-    if surface_alpha is None:
-        surface_alpha = 0.3
-    
-    if wireframe_color is None:
-        wireframe_color = '#d3d3d3'
-
-    if wireframe_linewidth is None:
-        wireframe_linewidth = 0.075
-    
-    if quiver_color is None:
-        quiver_color = '#ffffff'
-    
-    if quiver_linewidth is None:
-        quiver_linewidth = 1.5
-    
-    if quiver_ratio is None:
-        quiver_ratio = 0.1
-    
-    if line_color is None:
-        line_color = '#d3d3d3'
-    
-    if line_linewidth is None:
-        line_linewidth = 0.3
-    
-    if circle_edgecolor is None:
-        circle_edgecolor = '#d3d3d3'
-    
-    if circle_facecolor is None:
-        circle_facecolor = 'none'
-    
-    if circle_linewidth is None:
-        circle_linewidth = 0.3
+    Examples:
+        >>> import qvantum
+        >>>
+        >>> q = qvantum.Random_Qubit()
+        >>> q.show()
+        '|Ψ> = (0.6257-0.4027i)|0> + (-0.5114+0.4299i)|1>'
+        >>> u = qvantum.bloch_coords(q)[0]
+        >>> v = qvantum.bloch_coords(q)[1]
+        >>> w = qvantum.bloch_coords(q)[2]
+        >>> qvantum.bloch_sphere_plot(u, v, w)
+    """
 
     fig = plt.figure(figsize=(xfigsize, yfigsize), frameon=frame_on, \
         tight_layout=tight_layout_on)
@@ -207,7 +182,29 @@ def bloch_sphere_plot(u, v, w, xfigsize=None, yfigsize=None, frame_on=None, tigh
 
 @check_bloch.phase_test_check
 def phase_test(c1, c2):
-    ''' compute phase between two complex number '''
+    """Computes the phase between two complex number.
+    
+    Arguments:
+        c1 {complex} -- 1st complex number
+        c2 {complex} -- 2nd complex number
+    
+    Raises:
+        TypeError
+    
+    Examples:
+        >>> import qvantum
+        >>>
+        >>> q1 = qvantum.Random_Qubit()
+        >>> q1.show()
+        '|Ψ> = (0.6615-0.4616i)|0> + (0.5513-0.2132i)|1>'
+        >>> q2 = qvantum.Random_Qubit()
+        >>> q2.show()
+        '|Ψ> = (-0.2091-0.3620i)|0> + (-0.3893+0.8208i)|1>'
+        >>> qvantum.phase_test(q1.get_alpha(), q2.get_alpha())
+        0.08522011231864535
+        >>> qvantum.phase_test(q1.get_beta(), q2.get_beta())
+        -0.7255489587145547
+    """
 
     phase = (c1.real * c2.real + c1.imag * c2.imag) / \
         (numpy.sqrt(c1.real ** 2 + c1.imag ** 2) * numpy.sqrt(c2.real ** 2 + c2.imag ** 2))
