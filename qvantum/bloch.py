@@ -1,4 +1,28 @@
-'''bloch sphere functions'''
+'''Bloch sphere
+
+"In quantum mechanics, the Bloch sphere is a geometrical representation of the pure state space of 
+a two-level quantum mechanical system (qubit), named after the physicist Felix Bloch.
+
+Quantum mechanics is mathematically formulated in Hilbert space or projective Hilbert space. The 
+space of pure states of a quantum system is given by the one-dimensional subspaces of the 
+corresponding Hilbert space (or the "points" of the projective Hilbert space).
+
+The Bloch sphere is a unit 2-sphere, with antipodal points corresponding to a pair of mutually 
+orthogonal state vectors. The north and south poles of the Bloch sphere are typically chosen to 
+correspond to the standard basis vectors |0> and |1>, respectively, which in turn might correspond 
+e.g. to the spin-up and spin-down states of an electron. This choice is arbitrary, however. The 
+points on the surface of the sphere correspond to the pure states of the system, whereas the 
+interior points correspond to the mixed states."
+
+via Wikipedia: https://en.wikipedia.org/wiki/Bloch_sphere
+
+The following functions are the Bloch Sphere related functions in the package:
+
+- bloch_coords()      - calculate bloch coordinates from qubit
+- bloch_qubit()       - calculate qubit from bloch coordinates
+- bloch_sphere_plot() - plot bloch representation
+- phase_test()        - compute phase between two complex numbers
+'''
 
 # pylint: disable=E1127, W1401
 

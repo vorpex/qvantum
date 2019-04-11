@@ -19,7 +19,7 @@ setup(name='qvantum',
     # scripts=['bloch.py', 'check_bloch.py', 'check_circuit.py', 'check_gate.py', 'check_layer.py', \
     #     'check_qubit.py', 'check_register.py', 'circuit.py', 'gate.py', 'layer.py', 'qubit.py', \
     #     'register.py'],
-    install_requires=['numpy'],
+    install_requires=['collections', 'itertools', 'math', 'matplotlib', 'mpl_toolkits', 'numpy', 'unicodedata'],
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
