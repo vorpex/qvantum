@@ -1,6 +1,6 @@
-''' checking functions for gate class '''
+'''checking functions for gate class'''
 
-# pylint: disable=E1101
+# pylint: disable=E1101, W1401
 
 import numpy
 from . import qubit
