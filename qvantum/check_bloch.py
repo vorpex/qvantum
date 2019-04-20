@@ -1,4 +1,4 @@
-'''checking functions for bloch sphere representation'''
+﻿'''checking functions for bloch sphere representation'''
 
 # pylint: disable=E1101, W1401
 
@@ -89,7 +89,7 @@ def bloch_sphere_plot_check(function):
         function {} -- The tested function
     """
 
-    def wrapper(u, v, w, xfigsize=15, yfigsize=7.5, frame_on=False, tight_layout_on=True, \
+    def wrapper(u, v, w, xfigsize=15, yfigsize=7.5, frame_on=False, tight_layout_on=False, \
             style='dark_background', surface_on=True, wireframe_on=True, surface_cmap='Blues_r', \
             surface_alpha=0.3, wireframe_color='#d3d3d3', wireframe_linewidth=0.075, \
             quiver_color='#ffffff', quiver_linewidth=1.5, quiver_ratio=0.1, line_color='#d3d3d3', \
@@ -106,7 +106,7 @@ def bloch_sphere_plot_check(function):
             xfigsize {int, float} -- X size of figure (default: {15})
             yfigsize {int, float} -- Y size of figure (default: {7.5})
             frame_on {bool} -- Frame (default: {False})
-            tight_layout_on {bool} -- Tight layout (default: {True})
+            tight_layout_on {bool} -- Tight layout (default: {False})
             style {str} -- Style (default: {'dark_background'})
             surface_on {bool} -- Surface (default: {True})
             wireframe_on {bool} -- Wireframe (default: {True})

@@ -1,4 +1,4 @@
-'''Bloch sphere
+﻿'''Bloch sphere
 
 "In quantum mechanics, the Bloch sphere is a geometrical representation of the pure state space of 
 a two-level quantum mechanical system (qubit), named after the physicist Felix Bloch.
@@ -27,7 +27,7 @@ The following functions are the Bloch Sphere related functions in the package:
 # pylint: disable=E1127, W1401
 
 from . import check_bloch
-from matplotlib.patches import Circle
+from matplotlib.patches import Circle, PathPatch
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import mpl_toolkits.mplot3d.art3d as art3d
@@ -110,7 +110,7 @@ def bloch_qubit(u, v, w):
     return qubit.Qubit(alpha, beta)
 
 @check_bloch.bloch_sphere_plot_check
-def bloch_sphere_plot(u, v, w, xfigsize=15, yfigsize=7.5, frame_on=False, tight_layout_on=True, \
+def bloch_sphere_plot(u, v, w, xfigsize=15, yfigsize=7.5, frame_on=False, tight_layout_on=False, \
         style='dark_background', surface_on=True, wireframe_on=True, surface_cmap='Blues_r', \
         surface_alpha=0.3, wireframe_color='#d3d3d3', wireframe_linewidth=0.075, \
         quiver_color='#ffffff', quiver_linewidth=1.5, quiver_ratio=0.1, line_color='#d3d3d3', \
@@ -128,7 +128,7 @@ def bloch_sphere_plot(u, v, w, xfigsize=15, yfigsize=7.5, frame_on=False, tight_
         xfigsize {int, float} -- X size of figure (default: {15})
         yfigsize {int, float} -- Y size of figure (default: {7.5})
         frame_on {bool} -- Frame (default: {False})
-        tight_layout_on {bool} -- Tight layout (default: {True})
+        tight_layout_on {bool} -- Tight layout (default: {False})
         style {str} -- Style (default: {'dark_background'})
         surface_on {bool} -- Surface (default: {True})
         wireframe_on {bool} -- Wireframe (default: {True})
