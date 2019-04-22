@@ -1,4 +1,4 @@
-'''qubit class'''
+﻿'''qubit class'''
 
 # pylint: disable=E1101, W1401
 
