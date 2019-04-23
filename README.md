@@ -9,6 +9,7 @@ This function calculates the coordinates of the Bloch representation from the st
 of a Qubit object.
     
 **Arguments:**
+
     q {qubit} -- Instance of Qubit class or Random_Qubit class
 
 **Raises:**
