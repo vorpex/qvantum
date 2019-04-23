@@ -31,7 +31,9 @@ coordinates.
 
 **Arguments:**
 u {int, float} -- 1st coordinate of Bloch representation
+
 v {int, float} -- 2nd coordinate of Bloch representation
+
 w {int, float} -- 3rd coordinate of Bloch representation
 
 **Raises:**
