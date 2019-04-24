@@ -124,7 +124,6 @@ def bloch_sphere_plot(u, v, w, xfigsize=15, yfigsize=7.5, frame_on=False, tight_
         w {int, float} -- 3rd coordinate of Bloch representation
     
     Keyword Arguments:
-        Keyword Arguments:
         xfigsize {int, float} -- X size of figure (default: {15})
         yfigsize {int, float} -- Y size of figure (default: {7.5})
         frame_on {bool} -- Frame (default: {False})
