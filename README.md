@@ -82,7 +82,7 @@ Instances of qubit class have the following methods:
 
 The random_qubit class is the same as qubit class the only difference that an instance of the class is created with random amplitudes (alpha, beta). They share the same methods.
    
-**`def qvantum.qubit.Qubit.__init__()`**
+**`def qvantum.qubit.Qubit.__init__(alpha, beta)`**
 
 Method to initialize an instance of the qubit class. The squared sum of alpha and beta must be equal to zero otherwise a ValueError will be thrown.
 
@@ -184,7 +184,7 @@ Method to perform a measurement on the qubit and return with one clear state by 
     >>> q.show()
     '|Ψ> = (0.0000+0.0000i)|0> + (1.0000+0.0000i)|1>'
 
-**`def qvantum.qubit.Qubit.set_amplitudes()`**
+**`def qvantum.qubit.Qubit.set_amplitudes(alpha, beta)`**
 
 Setter method to replace the old coefficients to new ones. The squared sum of alpha and beta must be equal to zero otherwise a ValueError will be thrown.
 
@@ -219,7 +219,7 @@ Method to show the state function of the qubit object.
     >>> q.show()
     '|Ψ> = (1.0000+0.0000i)|0> + (0.0000+0.0000i)|1>'
 
-**`class qvantum.qubit.Random_Qubit`**
+**`class qvantum.qubit.Random_Qubit(Qubit)`**
 
 This is an inhereted class from the Qubit class. They share the same methods but when an instance of the Random_Qubit class is created the coefficients are randomly choosen.
     
@@ -267,7 +267,7 @@ The instances of the register class have the following methods:
     - delete_qubit()	- delete qubit from register
     - insert_qubit()	- insert qubit into register
     
-**`def qvantum.register.Register.__init__()`**
+**`def qvantum.register.Register.__init__(qubit_list)`**
 
 Method to initialize an instance of the register class. The input is a list of elements in Qubit or Random_Qubit class. Also this list must contain at least 2 elements.
 
@@ -333,7 +333,7 @@ Method to return with the bra vector representation of the register.
     >>> r.bra()
     array([[-0.02572105-0.27339407j, -0.29557738-0.02631109j, 0.09820458+0.61339158j,  0.67110846+0.01599728j]])
 
-**`def qvantum.register.Register.delete_qubit()`**
+**`def qvantum.register.Register.delete_qubit(nth)`**
 
 Method to delete the n-th qubit from the regsiter. This method has some drawback which is discussed later. The input parameter must be an integer corresponding to the number of qubits in the register.
 
@@ -382,7 +382,7 @@ Method to delete the n-th qubit from the regsiter. This method has some drawback
     >>> r.show()
     '|Ψ> = (0.4927-0.6160i)|00> + (-0.0083-0.5904i)|01> + (0.1364-0.0024i)|10> + (0.0777-0.0663i)|11>'
 
-**`def qvantum.register.Register.get_amplitudes()`**
+**`def qvantum.register.Register.get_amplitudes(nth=None)`**
 
 Method to return with the coefficient of the n-th possible state for the regsiter if the parameter is definit. If it isn’t, then the return value is the list of the coefficients of all possible states.
 
@@ -491,7 +491,7 @@ Method to return the number of the possible clear states for the register.
     >>> r.get_state_number()
     4
 
-**`def qvantum.register.Register.get_states()`**
+**`def qvantum.register.Register.get_states(nth=None)`**
 
 Method to return with the n-th possible state for the regsiter if the parameter is definit. If it isn’t then the return value is the list of all possible states.
 
@@ -548,7 +548,7 @@ Method to return with the n-th possible state for the regsiter if the parameter 
 	38     return wrapper
     TypeError: Invalid input! Argument must be integer.
 
-**`def qvantum.register.Register.insert_qubit()`**
+**`def qvantum.register.Register.insert_qubit(q, nth)`**
 
 Method to insert a given qubit into a register. The input parameter must be an integer corresponding to the number of qubits in the register.
 
@@ -613,7 +613,7 @@ Method to return with the ket vector representation of the register.
 		[0.69860685+0.04814138j],
 		[0.51934712-0.23166933j]])
 
-**`def qvantum.register.Register.measure_nth_qubit()`**
+**`def qvantum.register.Register.measure_nth_qubit(nth)`**
 
 Method to perform a measurement on the n-th qubit in the register and return the final state of the register after the process. This final state is randomized regarding to the amplitudes of the register. The input parameter must be an integer corresponding to the number of qubits in the register.
 
@@ -690,7 +690,7 @@ Method to perform a measurement on the whole register and return the final state
     >>> r.show()
     '|Ψ> = (0.0000+0.0000i)|000> + (0.0000+0.0000i)|001> + (1.0000+0.0000i)|010> + (0.0000+0.0000i)|011> + (0.0000+0.0000i)|100> + (0.0000+0.0000i)|101> + (0.0000+0.0000i)|110> + (0.0000+0.0000i)|111>'
 
-**`def qvantum.register.Register.set_amplitudes()`**
+**`def qvantum.register.Register.set_amplitudes(amp_list)`**
 
 Method to set new coefficients for the possible states of the register. The input parameter is a list of real or complex number and their squared sum must be equal to 1. Number of elements in the least must be equal with the number of possible states.
 
