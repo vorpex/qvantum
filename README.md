@@ -252,20 +252,20 @@ A system containing more than one qubit is called a register. The state function
 
 The instances of the register class have the following methods:
 
-    - __init__()			- initialize register
-    - get_coeff_list()		- getter of coefficients of qubits
+    - __init__()		- initialize register
+    - get_coeff_list()	- getter of coefficients of qubits
     - get_state_number()	- getter of number of possible states
     - get_qubit_number()	- getter of number of qubits in the register
-    - get_states()			- getter of states
-    - get_amplitudes()		- getter of amplitudes
-    - set_amplitudes()		- setter of amplitudes
-    - show()				- register representation
+    - get_states()		- getter of states
+    - get_amplitudes()	- getter of amplitudes
+    - set_amplitudes()	- setter of amplitudes
+    - show()		- register representation
     - measure_register()	- measure the whole register
     - measure_nth_qubit()	- measure the n-th qubit
-    - ket()					- return the ket vector of register
-    - bra()					- return the bra vector of register
-    - delete_qubit()		- delete qubit from register
-    - insert_qubit()		- insert qubit into register
+    - ket()			- return the ket vector of register
+    - bra()			- return the bra vector of register
+    - delete_qubit()	- delete qubit from register
+    - insert_qubit()	- insert qubit into register
     
 **`def qvantum.register.Register.__init__()`**
 
@@ -609,9 +609,9 @@ Method to return with the ket vector representation of the register.
     '|Ψ> = (0.0384+0.3328i)|00> + (0.1544+0.2240i)|01> + (0.6986+0.0481i)|10> + (0.5193-0.2317i)|11>'
     >>> r.ket()
     array([[0.03841413+0.33279281j],
-		   [0.15435432+0.22402411j],
-		   [0.69860685+0.04814138j],
-		   [0.51934712-0.23166933j]])
+		  [0.15435432+0.22402411j],
+		  [0.69860685+0.04814138j],
+		  [0.51934712-0.23166933j]])
 
 **`def qvantum.register.Register.measure_nth_qubit()`**
 
