@@ -75,10 +75,10 @@ Instances of qubit class have the following methods:
 	- get_alpha()		- getter of alpha
     - get_beta()		- getter of beta
     - set_amplitudes()	- setter of alpha, beta
-    - show()			- qubit representation
-    - measure()			- measure qubit
-    - ket()				- return the ket vector of qubit
-    - bra()				- return the bra vector of qubit
+    - show()		- qubit representation
+    - measure()		- measure qubit
+    - ket()			- return the ket vector of qubit
+    - bra()			- return the bra vector of qubit
 
 The random_qubit class is the same as qubit class the only difference that an instance of the class is created with random amplitudes (alpha, beta). They share the same methods.
    
@@ -86,12 +86,12 @@ The random_qubit class is the same as qubit class the only difference that an in
 
 Method to initialize an instance of the qubit class. The squared sum of alpha and beta must be equal to zero otherwise a ValueError will be thrown.
 
-**Arguments:**
-	alpha {int, float, complex} -- Amplitude or probability of being in state 0  
-	beta {int, float, complex} -- Amplitude or probability of being in state 1  
+**Arguments:**  
+	*alpha* {int, float, complex} -- Amplitude or probability of being in state 0  
+	*beta* {int, float, complex} -- Amplitude or probability of being in state 1  
 
 **Raises:**
-    ValueError, TypeError
+    *ValueError, TypeError*
 
 **Examples:**
 
@@ -188,12 +188,12 @@ Method to perform a measurement on the qubit and return with one clear state by 
 
 Setter method to replace the old coefficients to new ones. The squared sum of alpha and beta must be equal to zero otherwise a ValueError will be thrown.
 
-**Arguments:**
-    alpha {int, float, complex} -- Amplitude or probability of being in state 0  
-    beta {int, float, complex} -- Amplitude or probability of being in state 1  
+**Arguments:**  
+    *alpha* {int, float, complex} -- Amplitude or probability of being in state 0  
+    *beta* {int, float, complex} -- Amplitude or probability of being in state 1  
 
 **Raises:**
-    ValueError, TypeError
+    *ValueError, TypeError*
 
 **Examples:**
 
@@ -223,8 +223,8 @@ Method to show the state function of the qubit object.
 
 This is an inhereted class from the Qubit class. They share the same methods but when an instance of the Random_Qubit class is created the coefficients are randomly choosen.
     
-**Arguments:**
-Qubit {qubit} -- qubit class
+**Arguments:**  
+*Qubit* {qubit} -- qubit class
 
 **`def qvantum.qubit.Random_Qubit.__init__()`**
 
