@@ -90,7 +90,7 @@ Method to initialize an instance of the qubit class. The squared sum of alpha an
 	*alpha* {int, float, complex} -- Amplitude or probability of being in state 0  
 	*beta* {int, float, complex} -- Amplitude or probability of being in state 1  
 
-**Raises:**
+**Raises:**  
     *ValueError, TypeError*
 
 **Examples:**
@@ -192,7 +192,7 @@ Setter method to replace the old coefficients to new ones. The squared sum of al
     *alpha* {int, float, complex} -- Amplitude or probability of being in state 0  
     *beta* {int, float, complex} -- Amplitude or probability of being in state 1  
 
-**Raises:**
+**Raises:**  
     *ValueError, TypeError*
 
 **Examples:**
