@@ -240,7 +240,7 @@ Method to initialize an instance of the qubit class with randomized amplitudes.
     >>> qvantum.Random_Qubit().show()
     '|Ψ> = (-0.1949+0.9475i)|0> + (0.1028+0.2318i)|1>'
 
-### qvantum.register module
+### 3.2 qvantum.register module
 
 A system containing more than one qubit is called a register. The state function of a register is the superposition of the allowed states of the qubits. The number of possible states is increasing exponentially with every new qubit is added to the system.
 
@@ -553,7 +553,7 @@ Method to return with the n-th possible state for the regsiter if the parameter 
 Method to insert a given qubit into a register. The input parameter must be an integer corresponding to the number of qubits in the register.
 
 **Arguments:**  
-    *q* {qubit} -- The qubit to be inserted
+    *q* {qubit} -- The qubit to be inserted  
     *nth* {int} -- The index where the qubit is inserted
 
 **Raises:**  
