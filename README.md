@@ -3,24 +3,24 @@
 ## Contents
 
  1. Introduction
- 2. Installation
-	 2.1 pip install
-	 2.2 wheel install
-	 2.3 setup file
-3. Modules
-	3.1 qvantum.qubit module
-	3.2 qvantum.register module
-	3.3 qvantum.gate module
-	3.4 qvantum.layer module
-	3.5 qvantum.circuit module
-	3.6 qvantum.bloch module
-4. Examples
-	4.1 Quantum teleportation
-	4.2 Grover's algorithm
-5. Notes
-	5.1 Module reading error
-	5.2 Deleting qubit from register
-	5.3 Ѱ sign in python2
+ 2. Installation  
+	 2.1 pip install  
+	 2.2 wheel install  
+	 2.3 setup file  
+3. Modules  
+	3.1 qvantum.qubit module  
+	3.2 qvantum.register module  
+	3.3 qvantum.gate module  
+	3.4 qvantum.layer module  
+	3.5 qvantum.circuit module  
+	3.6 qvantum.bloch module  
+4. Examples  
+	4.1 Quantum teleportation  
+	4.2 Grover's algorithm  
+5. Notes  
+	5.1 Module reading error  
+	5.2 Deleting qubit from register  
+	5.3 Ѱ sign in python2  
 
 ## 1. Introduction
 
@@ -38,7 +38,7 @@ The latest version of the module can be installed online from the PyPi page usin
 
     pip install qvantum
 
-or alternatively
+or
 
     pip install --index-url https://test.pypi.org/simple qvantum
 
@@ -52,7 +52,11 @@ The latest version of the module can be downloaded from the PyPi page in .whl fo
 
 A setup.py file is also available on PyPi page. Download the file and the folder called "qvantum" then run the command in the folder where all the files were downloaded. Use –e if you want the module be immediately available for every user in your system:
 
-    pip install . //(pip install –e .)
+    pip install .
+
+or
+
+	pip install –e .
 
 ## 3. Modules
 
@@ -67,14 +71,14 @@ In quantum computing a qubit or quantum bit is the basic unit of quantum informa
 
 Instances of qubit class have the following methods:
 
-	- __init__()       	- initialize qubit
-	- get_alpha()    	- getter of alpha
-    - get_beta()       	- getter of beta
-    - set_amplitudes() 	- setter of alpha, beta
-    - show()   			- qubit representation
+	- __init__()		- initialize qubit
+	- get_alpha()		- getter of alpha
+    - get_beta()		- getter of beta
+    - set_amplitudes()	- setter of alpha, beta
+    - show()			- qubit representation
     - measure()			- measure qubit
-    - ket()    			- return the ket vector of qubit
-    - bra()    			- return the bra vector of qubit
+    - ket()				- return the ket vector of qubit
+    - bra()				- return the bra vector of qubit
 
 The random_qubit class is the same as qubit class the only difference that an instance of the class is created with random amplitudes (alpha, beta). They share the same methods.
    
@@ -83,8 +87,8 @@ The random_qubit class is the same as qubit class the only difference that an in
 Method to initialize an instance of the qubit class. The squared sum of alpha and beta must be equal to zero otherwise a ValueError will be thrown.
 
 **Arguments:**
-	alpha {int, float, complex} -- Amplitude or probability of being in state 0 
-	beta {int, float, complex} -- Amplitude or probability of being in state 1 
+	alpha {int, float, complex} -- Amplitude or probability of being in state 0  
+	beta {int, float, complex} -- Amplitude or probability of being in state 1  
 
 **Raises:**
     ValueError, TypeError
@@ -185,8 +189,8 @@ Method to perform a measurement on the qubit and return with one clear state by 
 Setter method to replace the old coefficients to new ones. The squared sum of alpha and beta must be equal to zero otherwise a ValueError will be thrown.
 
 **Arguments:**
-    alpha {int, float, complex} -- Amplitude or probability of being in state 0 
-    beta {int, float, complex} -- Amplitude or probability of being in state 1 
+    alpha {int, float, complex} -- Amplitude or probability of being in state 0  
+    beta {int, float, complex} -- Amplitude or probability of being in state 1  
 
 **Raises:**
     ValueError, TypeError
