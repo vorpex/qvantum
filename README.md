@@ -1,4 +1,243 @@
-﻿# qvantum.bloch module
+﻿# qvantum - module documentation
+
+## Contents
+
+ 1. Introduction
+ 2. Installation
+	 2.1 pip install
+	 2.2 wheel install
+	 2.3 setup file
+3. Modules
+	3.1 qvantum.qubit module
+	3.2 qvantum.register module
+	3.3 qvantum.gate module
+	3.4 qvantum.layer module
+	3.5 qvantum.circuit module
+	3.6 qvantum.bloch module
+4. Examples
+	4.1 Quantum teleportation
+	4.2 Grover's algorithm
+5. Notes
+	5.1 Module reading error
+	5.2 Deleting qubit from register
+	5.3 Ѱ sign in python2
+
+## 1. Introduction
+
+qvantum is a python module with the goal to ensure an easy use library for understanding quantum computing better or designing new quantum algorithms. Working with this module helps you to get more familiar with the basic concepts such as qubit, register or quantum gate, meanwhile the tool has the power for deeper analysis and development.
+
+The module is in beta release phase: tested but it might contain bugs, therefore every constructive note is highly welcomed. Also If you would like to collaborate in the developing process then do not hesitate and contact us.
+
+## 2. Installation
+
+qvantum module can be easily installed using three different approach below (you could extend the commands below like "/path/to/python.exe -m pip install ..." if python wasn't in your PATH)
+
+### 2.1 pip install
+
+The latest version of the module can be installed online from the PyPi page using pip in command line:
+
+    pip install qvantum
+
+or alternatively
+
+    pip install --index-url https://test.pypi.org/simple qvantum
+
+### 2.2 wheel install
+
+The latest version of the module can be downloaded from the PyPi page in .whl format which can be used for installation:
+
+    pip install qvantum-x.xx-py2.py3-none-any.whl
+
+### 2.3 setup file
+
+A setup.py file is also available on PyPi page. Download the file and the folder called "qvantum" then run the command in the folder where all the files were downloaded. Use –e if you want the module be immediately available for every user in your system:
+
+    pip install . //(pip install –e .)
+
+## 3. Modules
+
+In qvantum module there are some classes which represents the basic objects in quantum computing such as: qubit, register, gate, layer and circuit. These objects (and therefore the classes which represents them) are built on each other. Due to this concept a register is built on qubits, layers are formed by gates and circuits are created out of gates.
+There is a sixth class, the bloch class which is used for the Bloch representation and visualisation of a qubit.
+
+### 3.1 qvantum.qubit module
+
+**`class qvantum.qubit.Qubit`**
+
+In quantum computing a qubit or quantum bit is the basic unit of quantum information. Every qubit has two clear states such as 0 and 1 but unlike a classical bit a qubit can be in superposition which is a special  mixture of these clear states. Using qubit class, the user can create qubit objects. When creating a qubit object, the amplitudes must satisfy that |alpha|^2 + |beta|^2 = 1.
+
+Instances of qubit class have the following methods:
+
+	- __init__()       	- initialize qubit
+	- get_alpha()    	- getter of alpha
+    - get_beta()       	- getter of beta
+    - set_amplitudes() 	- setter of alpha, beta
+    - show()   			- qubit representation
+    - measure()			- measure qubit
+    - ket()    			- return the ket vector of qubit
+    - bra()    			- return the bra vector of qubit
+
+The random_qubit class is the same as qubit class the only difference that an instance of the class is created with random amplitudes (alpha, beta). They share the same methods.
+   
+**`def qvantum.qubit.Qubit.__init__()`**
+
+Method to initialize an instance of the qubit class. The squared sum of alpha and beta must be equal to zero otherwise a ValueError will be thrown.
+
+**Arguments:**
+	alpha {int, float, complex} -- Amplitude or probability of being in state 0 
+	beta {int, float, complex} -- Amplitude or probability of being in state 1 
+
+**Raises:**
+    ValueError, TypeError
+
+**Examples:**
+
+    >>> import math
+    >>> import qvantum
+    >>>
+    >>> q = qvantum.Qubit(1, 0)
+    >>> q.show()
+    '|Ψ> = (1.0000+0.0000i)|0> + (0.0000+0.0000i)|1>'
+    >>> qvantum.Qubit(1 / math.sqrt(2), 1 / math.sqrt(2)).show()
+    '|Ψ> = (0.7071+0.0000i)|0> + (0.7071+0.0000i)|1>'
+    >>> q = qvantum.Qubit(5, 2)
+    ---------------------------------------------------------------------------
+    ValueErrorTraceback (most recent call last)
+    <ipython-input-5-9536e50fb31e> in <module>
+    ----> 1 q = qvantum.Qubit(5, 2)
+    c:\ProgramData\Anaconda3\Lib\site-packages\qvantum\check_qubit.py in wrapper(self, alpha, beta)
+	14     else:
+	15 raise ValueError('Invalid input! Alpha and beta must statisfy: ' +    ---> 16     '|alpha|² + |beta|² = 1.')
+	17 
+	18 else:
+	ValueError: Invalid input! Alpha and beta must statisfy: |alpha|² + |beta|² = 1.
+    >>> q = qvantum.Qubit(1, ’shoe’)
+      File "<ipython-input-6-7c844cc7dd1e>", line 1
+    q = qvantum.Qubit(1, ’shoe’)
+     ^
+    SyntaxError: invalid character in identifier
+
+**`def qvantum.qubit.Qubit.bra()`**
+
+Method to return with the bra vector representation of the qubit.
+
+**Examples:**
+
+    >>> import qvantum
+    >>>
+    >>> q = qvantum.Random_Qubit()
+    >>> q.bra()
+    array([[-0.76536276+0.20163924j, -0.39225178-0.46872167j]])
+
+**`def qvantum.qubit.Qubit.get_alpha()`**
+
+Getter method of alpha.
+
+**Examples:**
+
+    >>> import qvantum
+    >>>
+    >>> q = qvantum.Qubit(1, 0)
+    >>> q.get_alpha()
+    1
+
+**`def qvantum.qubit.Qubit.get_beta()`**
+
+Getter method of beta.
+
+**Examples:**
+
+    >>> import qvantum
+    >>>
+    >>> q = qvantum.Qubit(1, 0)
+    >>> q.get_beta()
+    0
+
+**`def qvantum.qubit.Qubit.ket()`**
+
+Method to return with the ket vector representation of the qubit.
+
+**Examples:**
+
+    >>> import qvantum
+    >>>
+    >>> q = qvantum.Random_Qubit()
+    >>> q.ket()
+    array([[-0.76536276+0.20163924j],[-0.39225178-0.46872167j]])
+
+**`def qvantum.qubit.Qubit.measure()`**
+
+Method to perform a measurement on the qubit and return with one clear state by the distribtion according to the coefficients.
+
+**Examples:**
+
+    >>> import qvantum
+    >>>
+    >>> q = qvantum.Random_Qubit()
+    >>> q.show()
+    '|Ψ> = (-0.2867+0.5283i)|0> + (-0.2608+0.7555i)|1>'
+    >>> q.measure()
+    1
+    >>> q.show()
+    '|Ψ> = (0.0000+0.0000i)|0> + (1.0000+0.0000i)|1>'
+
+**`def qvantum.qubit.Qubit.set_amplitudes()`**
+
+Setter method to replace the old coefficients to new ones. The squared sum of alpha and beta must be equal to zero otherwise a ValueError will be thrown.
+
+**Arguments:**
+    alpha {int, float, complex} -- Amplitude or probability of being in state 0 
+    beta {int, float, complex} -- Amplitude or probability of being in state 1 
+
+**Raises:**
+    ValueError, TypeError
+
+**Examples:**
+
+    >>> import math
+    >>> import qvantum
+    >>>
+    >>> q = qvantum.Qubit(1, 0)
+    >>> q.show()
+    '|Ψ> = (1.0000+0.0000i)|0> + (0.0000+0.0000i)|1>'
+    >>> q.set_amplitudes(0, 1)
+    >>> q.show()
+    '|Ψ> = (0.0000+0.0000i)|0> + (1.0000+0.0000i)|1>'
+
+**`def qvantum.qubit.Qubit.show()`**
+
+Method to show the state function of the qubit object.
+
+**Examples:**
+
+    >>> import qvantum
+    >>>
+    >>> q = qvantum.Qubit(1, 0)
+    >>> q.show()
+    '|Ψ> = (1.0000+0.0000i)|0> + (0.0000+0.0000i)|1>'
+
+**`class qvantum.qubit.Random_Qubit`**
+
+This is an inhereted class from the Qubit class. They share the same methods but when an instance of the Random_Qubit class is created the coefficients are randomly choosen.
+    
+**Arguments:**
+Qubit {qubit} -- qubit class
+
+**`def qvantum.qubit.Random_Qubit.__init__()`**
+
+Method to initialize an instance of the qubit class with randomized amplitudes.
+
+**Examples:**
+
+    >>> import qvantum
+    >>>
+    >>> rq = qvantum.Random_Qubit()
+    >>> rq.show()
+    '|Ψ> = (-0.5736+0.2506i)|0> + (0.5223-0.5791i)|1>'
+    >>> qvantum.Random_Qubit().show()
+    '|Ψ> = (-0.1949+0.9475i)|0> + (0.1028+0.2318i)|1>'
+
+NEW TEXT
+# qvantum.bloch module
 
 **`def qvantum.bloch.__init__()`**
 
@@ -9,7 +248,6 @@ This function calculates the coordinates of the Bloch representation from the st
 of a Qubit object.
     
 **Arguments:**
-
     q {qubit} -- Instance of Qubit class or Random_Qubit class
 
 **Raises:**
@@ -31,10 +269,9 @@ This function calculates the state vector of a Qubit object from the given Bloch
 coordinates.
 
 **Arguments:**
-
-u {int, float} -- 1st coordinate of Bloch representation
-v {int, float} -- 2nd coordinate of Bloch representation
-w {int, float} -- 3rd coordinate of Bloch representation
+    u {int, float} -- 1st coordinate of Bloch representation
+    v {int, float} -- 2nd coordinate of Bloch representation
+    w {int, float} -- 3rd coordinate of Bloch representation
 
 **Raises:**
     ValueError, TypeError
@@ -381,17 +618,19 @@ circuit class
     - get_layer_list()   - getter of layers in layer list
     - get_layer_number() - getter of number of layers
     - get_nth_layer()    - getter of n-th layer
-    - get_circuit_size() - getter of size of circuit (equals to the size of register on which the layer is usable)
+    - get_circuit_size() - getter of size of circuit (equals to the size of register on 
+which the layer is usable)
     - delete_layer()     - delete layer from circuit
     - insert_layer()     - insert layer into circuit
-    - run()      		 - run circuit on starting register
+    - run()      - run circuit on starting register
     
 **`def qvantum.circuit.Circuit.__call__()`**
 
 Call self as a function.
 **`def qvantum.circuit.Circuit.__init__()`**
 
-Method to initialize an instance of the Circuit class. The argument must be a list of objects in the Layer class with the same size.
+Method to initialize an instance of the Circuit class. The argument must be a list 
+of objects in the Layer class with the same size.
 
 **Arguments:**
     layer_list {list} -- List of objects from Layer class
@@ -3042,308 +3281,6 @@ to or bigger than 0 and equal to or less than the actual size of the Layer.
  (3, <qvantum.gate.PauliX at 0x1ae59266390>),
  (4, <qvantum.gate.PauliY at 0x1ae59266400>)])
 
-# qvantum.qubit module
-
-**`def qvantum.qubit.__init__()`**
-
-Initialize self.  See help(type(self)) for accurate signature.
-**`class qvantum.qubit.Qubit`**
-
-qubit class
-
-    In quantum computing a qubit or quantum bit is the basic unit of quantum information. Every 
-    qubit has two clear states such as 0 and 1 but unlike a classical bit a qubit can be in 
-    superposition which is a special  mixture of these clear states. Using qubit class, the user 
-    can create qubit objects. When creating a qubit object, the amplitudes must satisfy that 
-    |alpha|^2 + |beta|^2 = 1.
-
-    Instances of qubit class have the following methods:
-
-    - __init__()       - initialize qubit
-    - get_alpha()      - getter of alpha
-    - get_beta()       - getter of beta
-    - set_amplitudes() - setter of alpha, beta
-    - show()   - qubit representation
-    - measure()- measure qubit
-    - ket()    - return the ket vector of qubit
-    - bra()    - return the bra vector of qubit
-
-    The random_qubit class is the same as qubit class the only difference that an instance of the
-    class is created with random amplitudes (alpha, beta). They share the same methods.
-    
-**`def qvantum.qubit.Qubit.__call__()`**
-
-Call self as a function.
-**`def qvantum.qubit.Qubit.__init__()`**
-
-Method to initialize an instance of the qubit class. The squared sum of alpha and beta 
-must be equal to zero otherwise a ValueError will be thrown.
-
-**Arguments:**
-    alpha {int, float, complex} -- Amplitude or probability of being in state 0
-    beta {int, float, complex} -- Amplitude or probability of being in state 1
-
-**Raises:**
-    ValueError, TypeError
-
-**Examples:**
-
-    >>> import math
-    >>> import qvantum
-    >>>
-    >>> q = qvantum.Qubit(1, 0)
-    >>> q.show()
-    '|Ψ> = (1.0000+0.0000i)|0> + (0.0000+0.0000i)|1>'
-    >>> qvantum.Qubit(1 / math.sqrt(2), 1 / math.sqrt(2)).show()
-    '|Ψ> = (0.7071+0.0000i)|0> + (0.7071+0.0000i)|1>'
-    >>> q = qvantum.Qubit(5, 2)
-    ---------------------------------------------------------------------------
-    ValueErrorTraceback (most recent call last)
-    <ipython-input-5-9536e50fb31e> in <module>
-    ----> 1 q = qvantum.Qubit(5, 2)
-
-    c:\ProgramData\Anaconda3\Lib\site-packages\qvantum\check_qubit.py in wrapper(self, alpha, beta)
-14     else:
-15 raise ValueError('Invalid input! Alpha and beta must statisfy: ' +    ---> 16     '|alpha|² + |beta|² = 1.')
-17 
-18 else:
-
-    ValueError: Invalid input! Alpha and beta must statisfy: |alpha|² + |beta|² = 1.
-    >>> q = qvantum.Qubit(1, ’shoe’)
-      File "<ipython-input-6-7c844cc7dd1e>", line 1
-    q = qvantum.Qubit(1, ’shoe’)
-     ^
-    SyntaxError: invalid character in identifier
-
-**`def qvantum.qubit.Qubit.bra()`**
-
-Method to return with the bra vector representation of the qubit.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> q = qvantum.Random_Qubit()
-    >>> q.bra()
-    array([[-0.76536276+0.20163924j, -0.39225178-0.46872167j]])
-
-**`def qvantum.qubit.Qubit.get_alpha()`**
-
-Getter method of alpha.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> q = qvantum.Qubit(1, 0)
-    >>> q.get_alpha()
-    1
-
-**`def qvantum.qubit.Qubit.get_beta()`**
-
-Getter method of beta.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> q = qvantum.Qubit(1, 0)
-    >>> q.get_beta()
-    0
-
-**`def qvantum.qubit.Qubit.ket()`**
-
-Method to return with the ket vector representation of the qubit.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> q = qvantum.Random_Qubit()
-    >>> q.ket()
-    array([[-0.76536276+0.20163924j],
-   [-0.39225178-0.46872167j]])
-
-**`def qvantum.qubit.Qubit.measure()`**
-
-Method to perform a measurement on the qubit and return with one clear state by the 
-distribtion according to the coefficients.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> q = qvantum.Random_Qubit()
-    >>> q.show()
-    '|Ψ> = (-0.2867+0.5283i)|0> + (-0.2608+0.7555i)|1>'
-    >>> q.measure()
-    1
-    >>> q.show()
-    '|Ψ> = (0.0000+0.0000i)|0> + (1.0000+0.0000i)|1>'
-
-**`def qvantum.qubit.Qubit.set_amplitudes()`**
-
-Setter method to replace the old coefficients to new ones. The squared sum of alpha and 
-beta must be equal to zero otherwise a ValueError will be thrown.
-
-**Arguments:**
-    alpha {int, float, complex} -- Amplitude or probability of being in state 0
-    beta {int, float, complex} -- Amplitude or probability of being in state 1
-
-**Raises:**
-    ValueError, TypeError
-
-**Examples:**
-
-    >>> import math
-    >>> import qvantum
-    >>>
-    >>> q = qvantum.Qubit(1, 0)
-    >>> q.show()
-    '|Ψ> = (1.0000+0.0000i)|0> + (0.0000+0.0000i)|1>'
-    >>> q.set_amplitudes(0, 1)
-    >>> q.show()
-    '|Ψ> = (0.0000+0.0000i)|0> + (1.0000+0.0000i)|1>'
-
-**`def qvantum.qubit.Qubit.show()`**
-
-Method to show the state function of the qubit object.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> q = qvantum.Qubit(1, 0)
-    >>> q.show()
-    '|Ψ> = (1.0000+0.0000i)|0> + (0.0000+0.0000i)|1>'
-
-**`class qvantum.qubit.Random_Qubit`**
-
-This is an inhereted class from the Qubit class. They share the same methods but when an 
-    instance of the Random_Qubit class is created the coefficients are randomly choosen.
-    
-**Arguments:**
-Qubit {qubit} -- qubit class
-    
-**`def qvantum.qubit.Random_Qubit.__call__()`**
-
-Call self as a function.
-**`def qvantum.qubit.Random_Qubit.__init__()`**
-
-Method to initialize an instance of the qubit class with randomized amplitudes.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> rq = qvantum.Random_Qubit()
-    >>> rq.show()
-    '|Ψ> = (-0.5736+0.2506i)|0> + (0.5223-0.5791i)|1>'
-    >>> qvantum.Random_Qubit().show()
-    '|Ψ> = (-0.1949+0.9475i)|0> + (0.1028+0.2318i)|1>'
-
-**`def qvantum.qubit.Random_Qubit.bra()`**
-
-Method to return with the bra vector representation of the qubit.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> q = qvantum.Random_Qubit()
-    >>> q.bra()
-    array([[-0.76536276+0.20163924j, -0.39225178-0.46872167j]])
-
-**`def qvantum.qubit.Random_Qubit.get_alpha()`**
-
-Getter method of alpha.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> q = qvantum.Qubit(1, 0)
-    >>> q.get_alpha()
-    1
-
-**`def qvantum.qubit.Random_Qubit.get_beta()`**
-
-Getter method of beta.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> q = qvantum.Qubit(1, 0)
-    >>> q.get_beta()
-    0
-
-**`def qvantum.qubit.Random_Qubit.ket()`**
-
-Method to return with the ket vector representation of the qubit.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> q = qvantum.Random_Qubit()
-    >>> q.ket()
-    array([[-0.76536276+0.20163924j],
-   [-0.39225178-0.46872167j]])
-
-**`def qvantum.qubit.Random_Qubit.measure()`**
-
-Method to perform a measurement on the qubit and return with one clear state by the 
-distribtion according to the coefficients.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> q = qvantum.Random_Qubit()
-    >>> q.show()
-    '|Ψ> = (-0.2867+0.5283i)|0> + (-0.2608+0.7555i)|1>'
-    >>> q.measure()
-    1
-    >>> q.show()
-    '|Ψ> = (0.0000+0.0000i)|0> + (1.0000+0.0000i)|1>'
-
-**`def qvantum.qubit.Random_Qubit.set_amplitudes()`**
-
-Setter method to replace the old coefficients to new ones. The squared sum of alpha and 
-beta must be equal to zero otherwise a ValueError will be thrown.
-
-**Arguments:**
-    alpha {int, float, complex} -- Amplitude or probability of being in state 0
-    beta {int, float, complex} -- Amplitude or probability of being in state 1
-
-**Raises:**
-    ValueError, TypeError
-
-**Examples:**
-
-    >>> import math
-    >>> import qvantum
-    >>>
-    >>> q = qvantum.Qubit(1, 0)
-    >>> q.show()
-    '|Ψ> = (1.0000+0.0000i)|0> + (0.0000+0.0000i)|1>'
-    >>> q.set_amplitudes(0, 1)
-    >>> q.show()
-    '|Ψ> = (0.0000+0.0000i)|0> + (1.0000+0.0000i)|1>'
-
-**`def qvantum.qubit.Random_Qubit.show()`**
-
-Method to show the state function of the qubit object.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> q = qvantum.Qubit(1, 0)
-    >>> q.show()
-    '|Ψ> = (1.0000+0.0000i)|0> + (0.0000+0.0000i)|1>'
-
 # qvantum.register module
 
 **`def qvantum.register.__init__()`**
@@ -3885,3 +3822,4 @@ Method to show the state function of the register object.
     >>> r = qvantum.Register([q1, q2, q3])
     >>> r.show()
     '|Ψ> = (0.3299-0.0125i)|000> + (-0.2215-0.2264i)|001> + (-0.4390+0.3714i)|010> + (0.5469+0.0726i)|011> + (0.1145-0.0835i)|100> + (-0.1332-0.0276i)|101> + (-0.0674+0.2375i)|110> + (0.2123-0.1052i)|111>'
+
