@@ -1331,253 +1331,188 @@ Computes the phase between two complex number.
     >>> qvantum.phase_test(q1.get_beta(), q2.get_beta())
     -0.7255489587145547
 
-NEW TEXT
+### 3.3 qvantum.gate module
 
-# qvantum.check_bloch module
+**`class qvantum.gate.Gate`**
 
-**`def qvantum.check_bloch.__init__()`**
+> "In quantum computing and specifically the quantum circuit model of computation, a quantum logic gate is a basic quantum circuit operating on a small number of qubits. They are the building blocks of quantum circuits, like classical logic gates are for conventional digital circuits.
+> 
+> Quantum logic gates are represented by unitary matrices. The most common quantum gates operate on spaces of one or two qubits, just like the common classical logic gates operate on one or two bits. As matrices, quantum gates can be described by 2^n x 2^n sized unitary matrices, where n is the number of qubits that the gate act on. The variables that the gates act upon, the quantum states, are vectors in 2^n complex dimensions, where n again is the number of qubits of variable:
+> - The base vectors are the possible outcomes if measured, and a quantum state is a linear combination of outcomes."
+> 
+> via Wikipedia: https://en.wikipedia.org/wiki/Quantum_logic_gate
 
-Initialize self.  See help(type(self)) for accurate signature.
-**`def qvantum.check_bloch.bloch_coords_check()`**
+The instances of gate class have the following methods:
 
-Decorator to check the arguments of qubit-to-bloch-coords function.
+    - __init__()	- initialization method
+    - __call__()	- call method
+    - get_name()	- getter of name of gate
+    - get_matrix()	- getter of matrix of gate
+    - get_size()	- getter of size of matrix of gate
+    - set_name()	- setter of name of gate
+    - set_matrix()	- setter of matrix of gate
+    - power()		- raise the matrix of gate to the given power
     
-**Arguments:**
-function {} -- The tested function
-    
-**`def qvantum.check_bloch.bloch_qubit_check()`**
+**`def qvantum.gate.Gate.__call__(qr)`**
 
-Decorator to check the arguments of bloch-coords-to-qubit function.
-    
-**Arguments:**
-function {} -- The tested function
-    
-**`def qvantum.check_bloch.bloch_sphere_plot_check()`**
+Method which makes possible to call a gate on a qubit or a register. The only restriction is that the size of the gate and the size of the qubit or regsiter must be equal to each other.
 
-Decorator to check the arguments of plotting bloch sphere function.
-    
-**Arguments:**
-function {} -- The tested function
-    
-**`def qvantum.check_bloch.phase_test_check()`**
+**Arguments:**  
+    *qr* {Qubit, Register} -- The qubit or register which the gate is called on
 
-Decorator to check the arguments of phase testing function.
-    
-**Arguments:**
-function {} -- The tested function
-    
-# qvantum.check_circuit module
+**Raises:**  
+    *ValueError, TypeError*
 
-**`def qvantum.check_circuit.__init__()`**
+**Examples:**
 
-Initialize self.  See help(type(self)) for accurate signature.
-**`def qvantum.check_circuit.circuit_init_check()`**
+    >>> import qvantum
+    >>>
+    >>> q = qvantum.Random_Qubit()
+    >>> q.show()
+    '|Ψ> = (0.6542+0.3385i)|0> + (-0.5226-0.4293i)|1>'
+    >>> qvantum.Hadamard()(q)
+    >>> q.show()
+    '|Ψ> = (0.0930-0.0642i)|0> + (0.8321+0.5429i)|1>'
 
-Decorator to check the arguments of initialization function in circuit class.
-    
-**Arguments:**
-function {} -- The tested function
-    
-**`def qvantum.check_circuit.delete_layer_check()`**
+**`def qvantum.gate.Gate.__init__()`**
 
-Decorator to check the arguments of deleting layer function.
-    
-**Arguments:**
-function {} -- The tested function
-    
-**`def qvantum.check_circuit.get_nth_layer_check()`**
+Method to initialize a 2x2 sized identity matrix. Every identity matrix is a unitary matrix as well.
 
-Decorator to check the arguments of getting nth layer function.
-    
-**Arguments:**
-function {} -- The tested function
-    
-**`def qvantum.check_circuit.insert_layer_check()`**
+**Examples:**
 
-Decorator to check the arguments of inserting layer function.
-    
-**Arguments:**
-function {} -- The tested function
-    
-**`def qvantum.check_circuit.run_check()`**
+    >>> import qvantum
+    >>>
+    >>> g = qvantum.Gate()
+    >>> g.get_name()
+    'Identity'
+    >>> g.get_matrix()
+    matrix([[1, 0],
+    [0, 1]])
+    >>> g.get_size()
+    2
 
-Decorator to check the arguments of running circuit function.
-    
-**Arguments:**
-function {} -- The tested function
-    
-# qvantum.check_gate module
+**`def qvantum.gate.Gate.get_matrix()`**
 
-**`def qvantum.check_gate.CNOT_check()`**
+Method to return the unitary matrix of the gate.
 
-Decorator to check the arguments of calling Controlled-Not gate.
-    
-**Arguments:**
-function {} -- The tested function
-    
-**`def qvantum.check_gate.Fredkin_check()`**
+**Examples:**
 
-Decorator to check the arguments of calling Fredkin gate.
-    
-**Arguments:**
-function {} -- The tested function
-    
-**`def qvantum.check_gate.Ising_check()`**
+    >>> import qvantum
+    >>>
+    >>> c = qvantum.CNOT(0, 1)
+    >>> c.get_matrix()
+    matrix([[1, 0, 0, 0],
+		   [0, 1, 0, 0],
+		   [0, 0, 0, 1],
+		   [0, 0, 1, 0]])
 
-Decorator to check the arguments of calling Ising gate.
-    
-**Arguments:**
-function {} -- The tested function
-    
-**`def qvantum.check_gate.Toffoli_check()`**
+**`def qvantum.gate.Gate.get_name()`**
 
-Decorator to check the arguments of calling Toffoli gate.
-    
-**Arguments:**
-function {} -- The tested function
-    
-**`def qvantum.check_gate.__init__()`**
+Method to return the unitary matrix of the gate.
 
-Initialize self.  See help(type(self)) for accurate signature.
-**`def qvantum.check_gate.gate_call_check()`**
+**Examples:**
 
-Decorator to check the arguments of call function in gate class.
-    
-**Arguments:**
-function {} -- The tested function
-    
-**`def qvantum.check_gate.power_check()`**
+    >>> import qvantum
+    >>>
+    >>> c = qvantum.CNOT(0, 1)
+    >>> c.get_name()
+    'Controlled-Not'
 
-Decorator to check the arguments of raising a matrix to the given power function.
-    
-**Arguments:**
-function {} -- The tested function
-    
-**`def qvantum.check_gate.set_matrix_check()`**
+**`def qvantum.gate.Gate.get_size()`**
 
-Decorator to check the arguments of setting matrix function.
-    
-**Arguments:**
-function {} -- The tested function
-    
-**`def qvantum.check_gate.set_name_check()`**
+Method to retun the size of the unitary matrix of the gate.
 
-Decorator to check the arguments of setting name function.
-    
-**Arguments:**
-function {} -- The tested function
-    
-# qvantum.check_layer module
+**Examples:**
 
-**`def qvantum.check_layer.__init__()`**
+    >>> import qvantum
+    >>>
+    >>> c = qvantum.CNOT(0, 1)
+    >>> c.get_size()
+    4
 
-Initialize self.  See help(type(self)) for accurate signature.
-**`def qvantum.check_layer.delete_gate_check()`**
+**`def qvantum.gate.Gate.power(power)`**
 
-Decorator to check the arguments of deleting gate function.
-    
-**Arguments:**
-function {} -- The tested function
-    
-**`def qvantum.check_layer.get_nth_gate_check()`**
+Method to raise the unitary matrix of the gate to the given power and overwrites the original matrix of the gate with the results matrix.
 
-Decorator to check the arguments of getting nth gate function.
-    
-**Arguments:**
-function {} -- The tested function
-    
-**`def qvantum.check_layer.insert_gate_check()`**
+**Arguments:**  
+    *power* {int} -- The power which the gate is raised on
 
-Decorator to check the arguments of inserting gate function.
-    
-**Arguments:**
-function {} -- The tested function
-    
-**`def qvantum.check_layer.layer_init_check()`**
+**Raises:**  
+    *TypeError*
 
-Decorator to check the arguments of initialization function in layer class.
-    
-**Arguments:**
-function {} -- The tested function
-    
-# qvantum.check_qubit module
+**Examples:**
 
-**`def qvantum.check_qubit.__init__()`**
+    >>> import qvantum
+    >>>
+    >>> t = qvantum.Toffoli()
+    >>> t.get_matrix()
+    matrix([[1, 0, 0, 0, 0, 0, 0, 0],
+		   [0, 1, 0, 0, 0, 0, 0, 0],
+		   [0, 0, 1, 0, 0, 0, 0, 0],
+		   [0, 0, 0, 0, 0, 0, 0, 1],
+		   [0, 0, 0, 0, 1, 0, 0, 0],
+		   [0, 0, 0, 0, 0, 1, 0, 0],
+		   [0, 0, 0, 0, 0, 0, 1, 0],
+		   [0, 0, 0, 1, 0, 0, 0, 0]])
+    >>> t.power(2)
+    >>> t.get_matrix()
+    matrix([[1, 0, 0, 0, 0, 0, 0, 0],
+		   [0, 1, 0, 0, 0, 0, 0, 0],
+		   [0, 0, 1, 0, 0, 0, 0, 0],
+		   [0, 0, 0, 1, 0, 0, 0, 0],
+		   [0, 0, 0, 0, 1, 0, 0, 0],
+		   [0, 0, 0, 0, 0, 1, 0, 0],
+		   [0, 0, 0, 0, 0, 0, 1, 0],
+		   [0, 0, 0, 0, 0, 0, 0, 1]])
 
-Initialize self.  See help(type(self)) for accurate signature.
-**`def qvantum.check_qubit.qubit_init_check()`**
+**`def qvantum.gate.Gate.set_matrix(matrix)`**
 
-Decorator to check the arguments of initialization function in qubit class.
-    
-**Arguments:**
-function {} -- The tested function
-    
-**`def qvantum.check_qubit.set_amplitudes_check()`**
+Method to set a new unitary matrix for the gate. If matrix is not unitary then an error is raised.
 
-Decorator to check the arguments of setting new amplitudes function in qubit class.
-    
-**Arguments:**
-function {} -- The tested function
-    
-# qvantum.check_register module
+**Arguments:**  
+    *matrix* {numpy.ndarray} -- Matrix of the gate to be set
 
-**`def qvantum.check_register.__init__()`**
+**Raises:**  
+    *ValueError, TypeError*
 
-Initialize self.  See help(type(self)) for accurate signature.
-**`def qvantum.check_register.delete_qubit_check()`**
+**Examples:**
 
-Decorator to check the arguments of deleting qubit function in register class.
-    
-**Arguments:**
-function {} -- The tested function
-    
-**`def qvantum.check_register.get_amplitudes_check()`**
+    >>> import numpy
+    >>> import qvantum
+    >>>
+    >>> g = qvantum.Gate()
+    >>> g.get_matrix()
+    matrix([[1, 0],
+		   [0, 1]])
+    >>> g.set_matrix(numpy.matrix([
+			    [1 / numpy.sqrt(2), 1 / numpy.sqrt(2)],
+			    [1 / numpy.sqrt(2), -1 / numpy.sqrt(2)]
+    ])
+	)
+    >>> g.get_matrix()
+    matrix([[ 0.70710678,  0.70710678],
+		   [ 0.70710678, -0.70710678]])
 
-Decorator to check the arguments of getting amplitudes function in register class.
-    
-**Arguments:**
-function {} -- The tested function
-    
-**`def qvantum.check_register.get_states_check()`**
+**`def qvantum.gate.Gate.set_name(name)`**
 
-Decorator to check the arguments of getting states function in register class.
-    
-**Arguments:**
-function {} -- The tested function
-    
-**`def qvantum.check_register.insert_qubit_check()`**
+Method to set a new name for the gate.
 
-Decorator to check the arguments of inserting qubit function in register class.
-    
-**Arguments:**
-function {} -- The tested function
-    
-**`def qvantum.check_register.measure_nth_qubit_check()`**
+**Arguments:**  
+    *name* {str} -- Name of the gate to be set
 
-Decorator to check the arguments of measuring qubit function in register class.
-    
-**Arguments:**
-function {} -- The tested function
-    
-**`def qvantum.check_register.register_init_check()`**
+**Raises:**  
+    *TypeError*
 
-Decorator to check the arguments of initialization function in register class.
-    
-**Arguments:**
-function {} -- The tested function
-    
-**`def qvantum.check_register.set_amplitudes_check()`**
+**Examples:**
 
-Decorator to check the arguments of setting amplitudes function in register class.
-    
-**Arguments:**
-function {} -- The tested function
+    >>> import qvantum
+    >>> g = qvantum.Gate()
+    >>> g.get_name()
+    'Identity'
+    >>> g.set_name('shoe')
+    >>> g.get_name()
+    'shoe'
 
-# qvantum.gate module
-
-**`def qvantum.gate.__init__()`**
-
-Initialize self.  See help(type(self)) for accurate signature.
 **`class qvantum.gate.CNOT`**
 
 This class is an inherited class from the Gate class. It’s the implementation of the 
@@ -2104,200 +2039,6 @@ Setter of name of Fredkin gate. Always raises BaseException.
 
 **Raises:**
     BaseException
-
-**`class qvantum.gate.Gate`**
-
-gate class
-
-    "In quantum computing and specifically the quantum circuit model of computation, a quantum logic
-    gate is a basic quantum circuit operating on a small number of qubits. They are the building blocks
-    of quantum circuits, like classical logic gates are for conventional digital circuits.
-
-    Quantum logic gates are represented by unitary matrices. The most common quantum gates operate on
-    spaces of one or two qubits, just like the common classical logic gates operate on one or two bits.
-    As matrices, quantum gates can be described by 2^n x 2^n sized unitary matrices, where n is the
-    number of qubits that the gate act on. The variables that the gates act upon, the quantum states,
-    are vectors in 2^n complex dimensions, where n again is the number of qubits of variable:
-    The base vectors are the possible outcomes if measured, and a quantum state is a linear combination
-    of outcomes."
-
-    via Wikipedia: https://en.wikipedia.org/wiki/Quantum_logic_gate
-
-    The instances of gate class have the following methods:
-
-    - __init__()      - initialization method
-    - __call__()      - call method
-    - get_name()      - getter of name of gate
-    - get_matrix()    - getter of matrix of gate
-    - get_size()      - getter of size of matrix of gate
-    - set_name()      - setter of name of gate
-    - set_matrix()    - setter of matrix of gate
-    - power() - raise the matrix of gate to the given power
-    
-**`def qvantum.gate.Gate.__call__()`**
-
-Method which makes possible to call a gate on a qubit or a register. The only 
-restriction is that the size of the gate and the size of the qubit or regsiter must be 
-equal to each other.
-
-**Arguments:**
-    qr {Qubit, Register} -- The qubit or register which the gate is called on
-
-**Raises:**
-    ValueError, TypeError
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> q = qvantum.Random_Qubit()
-    >>> q.show()
-    '|Ψ> = (0.6542+0.3385i)|0> + (-0.5226-0.4293i)|1>'
-    >>> qvantum.Hadamard()(q)
-    >>> q.show()
-    '|Ψ> = (0.0930-0.0642i)|0> + (0.8321+0.5429i)|1>'
-
-**`def qvantum.gate.Gate.__init__()`**
-
-Method to initialize a 2x2 sized identity matrix. Every identity matrix is a unitary 
-matrix as well.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> g = qvantum.Gate()
-    >>> g.get_name()
-    'Identity'
-    >>> g.get_matrix()
-    matrix([[1, 0],
-    [0, 1]])
-    >>> g.get_size()
-    2
-
-**`def qvantum.gate.Gate.get_matrix()`**
-
-Method to return the unitary matrix of the gate.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> c = qvantum.CNOT(0, 1)
-    >>> c.get_matrix()
-    matrix([[1, 0, 0, 0],
-    [0, 1, 0, 0],
-    [0, 0, 0, 1],
-    [0, 0, 1, 0]])
-
-**`def qvantum.gate.Gate.get_name()`**
-
-Method to return the unitary matrix of the gate.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> c = qvantum.CNOT(0, 1)
-    >>> c.get_name()
-    'Controlled-Not'
-
-**`def qvantum.gate.Gate.get_size()`**
-
-Method to retun the size of the unitary matrix of the gate.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> c = qvantum.CNOT(0, 1)
-    >>> c.get_size()
-    4
-
-**`def qvantum.gate.Gate.power()`**
-
-Method to raise the unitary matrix of the gate to the given power and overwrites the 
-original matrix of the gate with the results matrix.
-
-**Arguments:**
-    power {int} -- The power which the gate is raised on
-
-**Raises:**
-    TypeError
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> t = qvantum.Toffoli()
-    >>> t.get_matrix()
-    matrix([[1, 0, 0, 0, 0, 0, 0, 0],
-    [0, 1, 0, 0, 0, 0, 0, 0],
-    [0, 0, 1, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 1],
-    [0, 0, 0, 0, 1, 0, 0, 0],
-    [0, 0, 0, 0, 0, 1, 0, 0],
-    [0, 0, 0, 0, 0, 0, 1, 0],
-    [0, 0, 0, 1, 0, 0, 0, 0]])
-    >>> t.power(2)
-    >>> t.get_matrix()
-    matrix([[1, 0, 0, 0, 0, 0, 0, 0],
-    [0, 1, 0, 0, 0, 0, 0, 0],
-    [0, 0, 1, 0, 0, 0, 0, 0],
-    [0, 0, 0, 1, 0, 0, 0, 0],
-    [0, 0, 0, 0, 1, 0, 0, 0],
-    [0, 0, 0, 0, 0, 1, 0, 0],
-    [0, 0, 0, 0, 0, 0, 1, 0],
-    [0, 0, 0, 0, 0, 0, 0, 1]])
-
-**`def qvantum.gate.Gate.set_matrix()`**
-
-Method to set a new unitary matrix for the gate. If matrix is not unitary then an error 
-is raised.
-
-**Arguments:**
-    matrix {numpy.ndarray} -- Matrix of the gate to be set
-
-**Raises:**
-    ValueError, TypeError
-
-**Examples:**
-
-    >>> import numpy
-    >>> import qvantum
-    >>>
-    >>> g = qvantum.Gate()
-    >>> g.get_matrix()
-    matrix([[1, 0],
-    [0, 1]])
-    >>> g.set_matrix(numpy.matrix([
-    [1 / numpy.sqrt(2), 1 / numpy.sqrt(2)],
-    [1 / numpy.sqrt(2), -1 / numpy.sqrt(2)]
-    ])
-)
-    >>> g.get_matrix()
-    matrix([[ 0.70710678,  0.70710678],
-    [ 0.70710678, -0.70710678]])
-
-**`def qvantum.gate.Gate.set_name()`**
-
-Method to set a new name for the gate.
-
-**Arguments:**
-    name {str} -- Name of the gate to be set
-
-**Raises:**
-    TypeError
-
-**Examples:**
-
-    >>> import qvantum
-    >>> g = qvantum.Gate()
-    >>> g.get_name()
-    'Identity'
-    >>> g.set_name('shoe')
-    >>> g.get_name()
-    'shoe'
 
 **`class qvantum.gate.Hadamard`**
 
