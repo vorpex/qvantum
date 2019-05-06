@@ -430,7 +430,6 @@ Method to return with the coefficient of the n-th possible state for the regsite
     TypeError Traceback (most recent call last)
     <ipython-input-61-7cf70dfde286> in <module>
     ----> 1 r.get_amplitudes('shoe')
-
     c:\ProgramData\Anaconda3\Lib\site-packages\qvantum\check_register.py in wrapper(self, nth)
 	47 
 	48 else:
@@ -541,7 +540,6 @@ Method to return with the n-th possible state for the regsiter if the parameter 
     TypeError Traceback (most recent call last)
     <ipython-input-55-613fb9d4ee8b> in <module>
     ----> 1 r.get_states('shoe')
-
     c:\ProgramData\Anaconda3\Lib\site-packages\qvantum\check_register.py in wrapper(self, nth)
 	34 
 	35 else:
