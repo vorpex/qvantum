@@ -978,13 +978,13 @@ An instance of circuit class represents a whole quantum computional process. The
 
 The instances of circuit class have the following methods:
 
-    - __init__()			- initialization method
-    - get_layer_list()		- getter of layers in layer list
+    - __init__()		- initialization method
+    - get_layer_list()	- getter of layers in layer list
     - get_layer_number()	- getter of number of layers
-    - get_nth_layer()		- getter of n-th layer
+    - get_nth_layer()	- getter of n-th layer
     - get_circuit_size()	- getter of size of circuit (equals to the size of register on which the layer is usable)
-    - delete_layer()		- delete layer from circuit
-    - insert_layer()		- insert layer into circuit
+    - delete_layer()	- delete layer from circuit
+    - insert_layer()	- insert layer into circuit
     - run()			- run circuit on starting register
 
 **`def qvantum.circuit.Circuit.__init__(layer_list)`**
