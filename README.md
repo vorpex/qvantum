@@ -730,6 +730,663 @@ Method to show the state function of the register object.
     >>> r.show()
     '|Ψ> = (0.3299-0.0125i)|000> + (-0.2215-0.2264i)|001> + (-0.4390+0.3714i)|010> + (0.5469+0.0726i)|011> + (0.1145-0.0835i)|100> + (-0.1332-0.0276i)|101> + (-0.0674+0.2375i)|110> + (0.2123-0.1052i)|111>'
 
+### 3.3 qvantum.gate module
+
+**`class qvantum.gate.Gate`**
+
+> "In quantum computing and specifically the quantum circuit model of computation, a quantum logic gate is a basic quantum circuit operating on a small number of qubits. They are the building blocks of quantum circuits, like classical logic gates are for conventional digital circuits.
+> 
+> Quantum logic gates are represented by unitary matrices. The most common quantum gates operate on spaces of one or two qubits, just like the common classical logic gates operate on one or two bits. As matrices, quantum gates can be described by 2^n x 2^n sized unitary matrices, where n is the number of qubits that the gate act on. The variables that the gates act upon, the quantum states, are vectors in 2^n complex dimensions, where n again is the number of qubits of variable:
+> - The base vectors are the possible outcomes if measured, and a quantum state is a linear combination of outcomes."
+> 
+> via Wikipedia: https://en.wikipedia.org/wiki/Quantum_logic_gate
+
+The instances of gate class have the following methods:
+
+    - __init__()	- initialization method
+    - __call__()	- call method
+    - get_name()	- getter of name of gate
+    - get_matrix()	- getter of matrix of gate
+    - get_size()	- getter of size of matrix of gate
+    - set_name()	- setter of name of gate
+    - set_matrix()	- setter of matrix of gate
+    - power()	- raise the matrix of gate to the given power
+    
+**`def qvantum.gate.Gate.__call__(qr)`**
+
+Method which makes possible to call a gate on a qubit or a register. The only restriction is that the size of the gate and the size of the qubit or regsiter must be equal to each other.
+
+**Arguments:**  
+    *qr* {Qubit, Register} -- The qubit or register which the gate is called on
+
+**Raises:**  
+    *ValueError, TypeError*
+
+**Examples:**
+
+    >>> import qvantum
+    >>>
+    >>> q = qvantum.Random_Qubit()
+    >>> q.show()
+    '|Ψ> = (0.6542+0.3385i)|0> + (-0.5226-0.4293i)|1>'
+    >>> qvantum.Hadamard()(q)
+    >>> q.show()
+    '|Ψ> = (0.0930-0.0642i)|0> + (0.8321+0.5429i)|1>'
+
+**`def qvantum.gate.Gate.__init__()`**
+
+Method to initialize a 2x2 sized identity matrix. Every identity matrix is a unitary matrix as well.
+
+**Examples:**
+
+    >>> import qvantum
+    >>>
+    >>> g = qvantum.Gate()
+    >>> g.get_name()
+    'Identity'
+    >>> g.get_matrix()
+    matrix([[1, 0],
+		[0, 1]])
+    >>> g.get_size()
+    2
+
+**`def qvantum.gate.Gate.get_matrix()`**
+
+Method to return the unitary matrix of the gate.
+
+**Examples:**
+
+    >>> import qvantum
+    >>>
+    >>> c = qvantum.CNOT(0, 1)
+    >>> c.get_matrix()
+    matrix([[1, 0, 0, 0],
+		[0, 1, 0, 0],
+		[0, 0, 0, 1],
+		[0, 0, 1, 0]])
+
+**`def qvantum.gate.Gate.get_name()`**
+
+Method to return the unitary matrix of the gate.
+
+**Examples:**
+
+    >>> import qvantum
+    >>>
+    >>> c = qvantum.CNOT(0, 1)
+    >>> c.get_name()
+    'Controlled-Not'
+
+**`def qvantum.gate.Gate.get_size()`**
+
+Method to retun the size of the unitary matrix of the gate.
+
+**Examples:**
+
+    >>> import qvantum
+    >>>
+    >>> c = qvantum.CNOT(0, 1)
+    >>> c.get_size()
+    4
+
+**`def qvantum.gate.Gate.power(power)`**
+
+Method to raise the unitary matrix of the gate to the given power and overwrites the original matrix of the gate with the results matrix.
+
+**Arguments:**  
+    *power* {int} -- The power which the gate is raised on
+
+**Raises:**  
+    *TypeError*
+
+**Examples:**
+
+    >>> import qvantum
+    >>>
+    >>> t = qvantum.Toffoli()
+    >>> t.get_matrix()
+    matrix([[1, 0, 0, 0, 0, 0, 0, 0],
+		[0, 1, 0, 0, 0, 0, 0, 0],
+		[0, 0, 1, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 1],
+		[0, 0, 0, 0, 1, 0, 0, 0],
+		[0, 0, 0, 0, 0, 1, 0, 0],
+		[0, 0, 0, 0, 0, 0, 1, 0],
+		[0, 0, 0, 1, 0, 0, 0, 0]])
+    >>> t.power(2)
+    >>> t.get_matrix()
+    matrix([[1, 0, 0, 0, 0, 0, 0, 0],
+		[0, 1, 0, 0, 0, 0, 0, 0],
+		[0, 0, 1, 0, 0, 0, 0, 0],
+		[0, 0, 0, 1, 0, 0, 0, 0],
+		[0, 0, 0, 0, 1, 0, 0, 0],
+		[0, 0, 0, 0, 0, 1, 0, 0],
+		[0, 0, 0, 0, 0, 0, 1, 0],
+		[0, 0, 0, 0, 0, 0, 0, 1]])
+
+**`def qvantum.gate.Gate.set_matrix(matrix)`**
+
+Method to set a new unitary matrix for the gate. If matrix is not unitary then an error is raised.
+
+**Arguments:**  
+    *matrix* {numpy.ndarray} -- Matrix of the gate to be set
+
+**Raises:**  
+    *ValueError, TypeError*
+
+**Examples:**
+
+    >>> import numpy
+    >>> import qvantum
+    >>>
+    >>> g = qvantum.Gate()
+    >>> g.get_matrix()
+    matrix([[1, 0],
+		[0, 1]])
+    >>> g.set_matrix(numpy.matrix([
+		[1 / numpy.sqrt(2), 1 / numpy.sqrt(2)],
+		[1 / numpy.sqrt(2), -1 / numpy.sqrt(2)]
+	    ])
+	)
+    >>> g.get_matrix()
+    matrix([[ 0.70710678,  0.70710678],
+		[ 0.70710678, -0.70710678]])
+
+**`def qvantum.gate.Gate.set_name(name)`**
+
+Method to set a new name for the gate.
+
+**Arguments:**  
+    *name* {str} -- Name of the gate to be set
+
+**Raises:**  
+    *TypeError*
+
+**Examples:**
+
+    >>> import qvantum
+    >>> g = qvantum.Gate()
+    >>> g.get_name()
+    'Identity'
+    >>> g.set_name('shoe')
+    >>> g.get_name()
+    'shoe'
+
+**`class qvantum.gate.CNOT`**
+
+This class is an inherited class from the Gate class. It’s the implementation of the Controlled-Not gate. It’s called on 2 qubits. The parameters determine which one is the control and the target – (0, 1) or (1, 0). Its unitary matrix:
+
+
+
+**`def qvantum.gate.CNOT.__init__(control_qubit, target_qubit)`**
+
+Method to initialize Controlled-Not gate.
+
+**Arguments:**  
+    *control_qubit* {int} -- Possible values: 0 or 1  
+    *target_qubit* {int} -- Possible values: 0 or 1
+
+**Raises:**  
+    *ValueError*
+
+**Examples:**
+
+    >>> import qvantum
+    >>>
+    >>> h = qvantum.CNOT(1, 0)
+
+**`def qvantum.gate.CNOT.set_matrix()`**
+
+Setter of matrix of Controlled-Not gate. Always raises BaseException.
+
+**Raises:**  
+    *BaseException*
+
+**`def qvantum.gate.CNOT.set_name()`**
+
+Setter of name of Controlled-Not gate. Always raises BaseException.
+
+**Raises:**  
+    *BaseException*
+
+**`class qvantum.gate.ControlledPhase`**
+
+This class is an inherited class from the Gate class. It’s the implementation of the Controlled-Phase gate. Its unitary matrix:
+
+
+    
+**`def qvantum.gate.ControlledPhase.__init__()`**
+
+Method to initialize Controlled-Phase gate.
+
+**Examples:**
+
+    >>> import qvantum
+    >>>
+    >>> h = qvantum.ControlledPhase()
+
+**`def qvantum.gate.ControlledPhase.set_matrix()`**
+
+Setter of matrix of Controlled-Phase gate. Always raises BaseException.
+
+**Raises:**  
+    *BaseException*
+
+**`def qvantum.gate.ControlledPhase.set_name()`**
+
+Setter of name of Controlled-Phase gate. Always raises BaseException.
+
+**Raises:**  
+    *BaseException*
+
+**`class qvantum.gate.ControlledZ`**
+
+This class is an inherited class from the Gate class. It’s the implementation of the Controlled-Z gate. Its unitary matrix:
+
+
+
+**`def qvantum.gate.ControlledZ.__init__()`**
+
+Method to initialize Controlled-Z gate.
+
+**Examples:**
+
+    >>> import qvantum
+    >>>
+    >>> h = qvantum.ControlledZ()
+
+**`def qvantum.gate.ControlledZ.set_matrix()`**
+
+Setter of matrix of Controlled-Z gate. Always raises BaseException.
+
+**Raises:**  
+    *BaseException*
+
+**`def qvantum.gate.ControlledZ.set_name()`**
+
+Setter of name of Controlled-Z gate. Always raises BaseException.
+
+**Raises:**  
+    *BaseException*
+
+**`class qvantum.gate.Fredkin`**
+
+This class is an inherited class from the Gate class. It’s the implementation of the Fredkin gate. It’s called on 3 qubits. The parameters determine which one is the control qubit – 0, 1 or 2.Its unitary matrix:
+
+
+
+**`def qvantum.gate.Fredkin.__init__(control_qubit)`**
+
+Method to initialize Fredkin gate.
+
+**Arguments:**  
+    *control_qubit* {Qubit} -- Possible values: 0, 1 or 2
+
+**Raises:**  
+    *ValueError*
+
+**Examples:**
+
+    >>> import qvantum
+    >>>
+    >>> h = qvantum.Fredkin(2)
+
+**`def qvantum.gate.Fredkin.set_matrix()`**
+
+Setter of matrix of Fredkin gate. Always raises BaseException.
+
+**Raises:**  
+    *BaseException*
+
+**`def qvantum.gate.Fredkin.set_name()`**
+
+Setter of name of Fredkin gate. Always raises BaseException.
+
+**Raises:**  
+    *BaseException*
+
+**`class qvantum.gate.Hadamard`**
+
+This class is an inherited class from the Gate class. It’s the implementation of the Hadamard gate. Its unitary matrix:
+
+
+
+**`def qvantum.gate.Hadamard.__init__()`**
+
+Method to initialize Hadamard gate.
+
+**Examples:**
+
+    >>> import qvantum
+    >>>
+    >>> h = qvantum.Hadamard()
+
+**`def qvantum.gate.Hadamard.set_matrix()`**
+
+Setter of matrix of Hadamard gate. Always raises BaseException.
+
+**Raises:**  
+    *BaseException*
+
+**`def qvantum.gate.Hadamard.set_name()`**
+
+Setter of name of Hadamard gate. Always raises BaseException.
+
+**Raises:**  
+    *BaseException*
+
+**`class qvantum.gate.Ising`**
+
+This class is an inherited class from the Gate class. It’s the implementation of the Ising gate. Its unitary matrix:
+
+
+
+**`def qvantum.gate.Ising.__init__(phi)`**
+
+Method to initialize Ising gate.
+
+**Arguments:**  
+    *phi* {int, float} -- The used angle
+
+**Raises:**  
+    *TypeError*
+
+**Examples:**
+
+    >>> import qvantum
+    >>>
+    >>> h = qvantum.Ising(1)
+
+**`def qvantum.gate.Ising.set_matrix()`**
+
+Setter of matrix of Ising gate. Always raises BaseException.
+
+**Raises:**  
+    *BaseException*
+
+**`def qvantum.gate.Ising.set_name()`**
+
+Setter of name of Ising gate. Always raises BaseException.
+
+**Raises:**  
+    *BaseException*
+
+**`class qvantum.gate.PauliX`**
+
+This class is an inherited class from the Gate class. It’s the implementation of the Pauli-X gate. Its unitary matrix:
+
+
+    
+**`def qvantum.gate.PauliX.__init__()`**
+
+Method to initialize Pauli-X gate.
+
+**Examples:**
+
+    >>> import qvantum
+    >>>
+    >>> h = qvantum.PauliX()
+
+**`def qvantum.gate.PauliX.set_matrix()`**
+
+Setter of matrix of Pauli-X gate. Always raises BaseException.
+
+**Raises:**  
+    *BaseException*
+
+**`def qvantum.gate.PauliX.set_name()`**
+
+Setter of name of Pauli-X gate. Always raises BaseException.
+
+**Raises:**  
+    *BaseException*
+
+**`class qvantum.gate.PauliY`**
+
+This class is an inherited class from the Gate class. It’s the implementation of the Pauli-Y gate. Its unitary matrix:
+
+
+    
+**`def qvantum.gate.PauliY.__init__()`**
+
+Method to initialize Pauli-Y gate.
+
+**Examples:**
+
+    >>> import qvantum
+    >>>
+    >>> h = qvantum.PauliY()
+
+**`def qvantum.gate.PauliY.set_matrix()`**
+
+Setter of matrix of Pauli-Y gate. Always raises BaseException.
+
+**Raises:**  
+    *BaseException*
+
+**`def qvantum.gate.PauliY.set_name()`**
+
+Setter of name of Pauli-Y gate. Always raises BaseException.
+
+**Raises:**  
+    *BaseException*
+
+**`class qvantum.gate.PauliZ`**
+
+This class is an inherited class from the Gate class. It’s the implementation of the Pauli-Z gate. Its unitary matrix:
+
+
+    
+**`def qvantum.gate.PauliZ.__init__()`**
+
+Method to initialize Pauli-Z gate.
+
+**Examples:**
+
+    >>> import qvantum
+    >>>
+    >>> h = qvantum.PauliZ()
+
+**`def qvantum.gate.PauliZ.set_matrix()`**
+
+Setter of matrix of Pauli-Z gate. Always raises BaseException.
+
+**Raises:**  
+    *BaseException*
+
+**`def qvantum.gate.PauliZ.set_name()`**
+
+Setter of name of Pauli-Z gate. Always raises BaseException.
+
+**Raises:**  
+    *BaseException*
+
+**`class qvantum.gate.Phase`**
+
+This class is an inherited class from the Gate class. It’s the implementation of the Phase gate. Its unitary matrix:
+
+
+    
+**`def qvantum.gate.Phase.__init__()`**
+
+Method to initialize Phase gate.
+
+**Examples:**
+
+    >>> import qvantum
+    >>>
+    >>> h = qvantum.Phase()
+
+**`def qvantum.gate.Phase.set_matrix()`**
+
+Setter of matrix of Phase gate. Always raises BaseException.
+
+**Raises:**  
+    *BaseException*
+
+**`def qvantum.gate.Phase.set_name()`**
+
+Setter of name of Phase gate. Always raises BaseException.
+
+**Raises:**  
+    *BaseException*
+
+**`class qvantum.gate.Pi8`**
+
+This class is an inherited class from the Gate class. It’s the implementation of the Pi/8 gate. Its unitary matrix:
+
+
+    
+**`def qvantum.gate.Pi8.__init__()`**
+
+Method to initialize Pi/8 gate.
+
+**Examples:**
+
+    >>> import qvantum
+    >>>
+    >>> h = qvantum.Pi8()
+
+**`def qvantum.gate.Pi8.set_matrix()`**
+
+Setter of matrix of Pi/8 gate. Always raises BaseException.
+
+**Raises:**  
+    *BaseException*
+
+**`def qvantum.gate.Pi8.set_name()`**
+
+Setter of name of Pi/8 gate. Always raises BaseException.
+
+**Raises:**  
+    *BaseException*
+
+**`class qvantum.gate.SquareNot`**
+
+This class is an inherited class from the Gate class. It’s the implementation of the Square-Not gate. Its unitary matrix:
+
+
+    
+**`def qvantum.gate.SquareNot.__init__()`**
+
+Method to initialize Square-Not gate.
+
+**Examples:**
+
+    >>> import qvantum
+    >>>
+    >>> h = qvantum.SquareNot()
+
+**`def qvantum.gate.SquareNot.set_matrix()`**
+
+Setter of matrix of Square-Not gate. Always raises BaseException.
+
+**Raises:**  
+    *BaseException*
+
+**`def qvantum.gate.SquareNot.set_name()`**
+
+Setter of name of Square-Not gate. Always raises BaseException.
+
+**Raises:**  
+    *BaseException*
+
+**`class qvantum.gate.SquareSwap`**
+
+This class is an inherited class from the Gate class. It’s the implementation of the Square-Swap gate. Its unitary matrix:
+
+
+    
+**`def qvantum.gate.SquareSwap.__init__()`**
+
+Method to initialize Square-Swap gate.
+
+**Examples:**
+
+    >>> import qvantum
+    >>>
+    >>> h = qvantum.SquareSwap()
+
+**`def qvantum.gate.SquareSwap.set_matrix()`**
+
+Setter of matrix of Square-Swap gate. Always raises BaseException.
+
+**Raises:**  
+    *BaseException*
+
+**`def qvantum.gate.SquareSwap.set_name()`**
+
+Setter of name of Square-Swap gate. Always raises BaseException.
+
+**Raises:**  
+    *BaseException*
+
+**`class qvantum.gate.Swap`**
+
+This class is an inherited class from the Gate class. It’s the implementation of the Swap gate. Its unitary matrix:
+
+
+    
+**`def qvantum.gate.Swap.__init__()`**
+
+Method to initialize Swap gate.
+
+**Examples:**
+
+    >>> import qvantum
+    >>>
+    >>> h = qvantum.Swap()
+
+**`def qvantum.gate.Swap.set_matrix()`**
+
+Setter of matrix of Swap gate. Always raises BaseException.
+
+**Raises:**  
+    *BaseException*
+
+**`def qvantum.gate.Swap.set_name()`**
+
+Setter of name of Swap gate. Always raises BaseException.
+
+**Raises:**  
+    *BaseException*
+
+**`class qvantum.gate.Toffoli`**
+
+This class is an inherited class from the Gate class. It’s the implementation of the Toffoli gate. It’s called on 3 qubits. The parameters determine which one is the target qubit – 0, 1 or 2.Its unitary matrix:
+
+
+    
+**`def qvantum.gate.Toffoli.__init__(target_qubit)`**
+
+Method to initialize Toffoli gate.
+
+**Arguments:**  
+    *target_qubit* {Qubit} -- Possible values: 0, 1 or 2
+
+**Raises:**  
+    *ValueError*
+
+**Examples:**
+
+    >>> import qvantum
+    >>>
+    >>> h = qvantum.Toffoli(0)
+
+**`def qvantum.gate.Toffoli.set_matrix()`**
+
+Setter of matrix of Toffoli gate. Always raises BaseException.
+
+**Raises:**  
+    *BaseException*
+
+**`def qvantum.gate.Toffoli.set_name()`**
+
+Setter of name of Toffoli gate. Always raises BaseException.
+
+**Raises:**  
+    *BaseException*
+
 ### 3.4 qvantum.layer module
 
 **`class qvantum.layer.Layer`**
@@ -1330,2133 +1987,3 @@ Computes the phase between two complex number.
     0.08522011231864535
     >>> qvantum.phase_test(q1.get_beta(), q2.get_beta())
     -0.7255489587145547
-
-### 3.3 qvantum.gate module
-
-**`class qvantum.gate.Gate`**
-
-> "In quantum computing and specifically the quantum circuit model of computation, a quantum logic gate is a basic quantum circuit operating on a small number of qubits. They are the building blocks of quantum circuits, like classical logic gates are for conventional digital circuits.
-> 
-> Quantum logic gates are represented by unitary matrices. The most common quantum gates operate on spaces of one or two qubits, just like the common classical logic gates operate on one or two bits. As matrices, quantum gates can be described by 2^n x 2^n sized unitary matrices, where n is the number of qubits that the gate act on. The variables that the gates act upon, the quantum states, are vectors in 2^n complex dimensions, where n again is the number of qubits of variable:
-> - The base vectors are the possible outcomes if measured, and a quantum state is a linear combination of outcomes."
-> 
-> via Wikipedia: https://en.wikipedia.org/wiki/Quantum_logic_gate
-
-The instances of gate class have the following methods:
-
-    - __init__()	- initialization method
-    - __call__()	- call method
-    - get_name()	- getter of name of gate
-    - get_matrix()	- getter of matrix of gate
-    - get_size()	- getter of size of matrix of gate
-    - set_name()	- setter of name of gate
-    - set_matrix()	- setter of matrix of gate
-    - power()	- raise the matrix of gate to the given power
-    
-**`def qvantum.gate.Gate.__call__(qr)`**
-
-Method which makes possible to call a gate on a qubit or a register. The only restriction is that the size of the gate and the size of the qubit or regsiter must be equal to each other.
-
-**Arguments:**  
-    *qr* {Qubit, Register} -- The qubit or register which the gate is called on
-
-**Raises:**  
-    *ValueError, TypeError*
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> q = qvantum.Random_Qubit()
-    >>> q.show()
-    '|Ψ> = (0.6542+0.3385i)|0> + (-0.5226-0.4293i)|1>'
-    >>> qvantum.Hadamard()(q)
-    >>> q.show()
-    '|Ψ> = (0.0930-0.0642i)|0> + (0.8321+0.5429i)|1>'
-
-**`def qvantum.gate.Gate.__init__()`**
-
-Method to initialize a 2x2 sized identity matrix. Every identity matrix is a unitary matrix as well.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> g = qvantum.Gate()
-    >>> g.get_name()
-    'Identity'
-    >>> g.get_matrix()
-    matrix([[1, 0],
-		[0, 1]])
-    >>> g.get_size()
-    2
-
-**`def qvantum.gate.Gate.get_matrix()`**
-
-Method to return the unitary matrix of the gate.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> c = qvantum.CNOT(0, 1)
-    >>> c.get_matrix()
-    matrix([[1, 0, 0, 0],
-		[0, 1, 0, 0],
-		[0, 0, 0, 1],
-		[0, 0, 1, 0]])
-
-**`def qvantum.gate.Gate.get_name()`**
-
-Method to return the unitary matrix of the gate.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> c = qvantum.CNOT(0, 1)
-    >>> c.get_name()
-    'Controlled-Not'
-
-**`def qvantum.gate.Gate.get_size()`**
-
-Method to retun the size of the unitary matrix of the gate.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> c = qvantum.CNOT(0, 1)
-    >>> c.get_size()
-    4
-
-**`def qvantum.gate.Gate.power(power)`**
-
-Method to raise the unitary matrix of the gate to the given power and overwrites the original matrix of the gate with the results matrix.
-
-**Arguments:**  
-    *power* {int} -- The power which the gate is raised on
-
-**Raises:**  
-    *TypeError*
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> t = qvantum.Toffoli()
-    >>> t.get_matrix()
-    matrix([[1, 0, 0, 0, 0, 0, 0, 0],
-		[0, 1, 0, 0, 0, 0, 0, 0],
-		[0, 0, 1, 0, 0, 0, 0, 0],
-		[0, 0, 0, 0, 0, 0, 0, 1],
-		[0, 0, 0, 0, 1, 0, 0, 0],
-		[0, 0, 0, 0, 0, 1, 0, 0],
-		[0, 0, 0, 0, 0, 0, 1, 0],
-		[0, 0, 0, 1, 0, 0, 0, 0]])
-    >>> t.power(2)
-    >>> t.get_matrix()
-    matrix([[1, 0, 0, 0, 0, 0, 0, 0],
-		[0, 1, 0, 0, 0, 0, 0, 0],
-		[0, 0, 1, 0, 0, 0, 0, 0],
-		[0, 0, 0, 1, 0, 0, 0, 0],
-		[0, 0, 0, 0, 1, 0, 0, 0],
-		[0, 0, 0, 0, 0, 1, 0, 0],
-		[0, 0, 0, 0, 0, 0, 1, 0],
-		[0, 0, 0, 0, 0, 0, 0, 1]])
-
-**`def qvantum.gate.Gate.set_matrix(matrix)`**
-
-Method to set a new unitary matrix for the gate. If matrix is not unitary then an error is raised.
-
-**Arguments:**  
-    *matrix* {numpy.ndarray} -- Matrix of the gate to be set
-
-**Raises:**  
-    *ValueError, TypeError*
-
-**Examples:**
-
-    >>> import numpy
-    >>> import qvantum
-    >>>
-    >>> g = qvantum.Gate()
-    >>> g.get_matrix()
-    matrix([[1, 0],
-		[0, 1]])
-    >>> g.set_matrix(numpy.matrix([
-		[1 / numpy.sqrt(2), 1 / numpy.sqrt(2)],
-		[1 / numpy.sqrt(2), -1 / numpy.sqrt(2)]
-	    ])
-	)
-    >>> g.get_matrix()
-    matrix([[ 0.70710678,  0.70710678],
-		[ 0.70710678, -0.70710678]])
-
-**`def qvantum.gate.Gate.set_name(name)`**
-
-Method to set a new name for the gate.
-
-**Arguments:**  
-    *name* {str} -- Name of the gate to be set
-
-**Raises:**  
-    *TypeError*
-
-**Examples:**
-
-    >>> import qvantum
-    >>> g = qvantum.Gate()
-    >>> g.get_name()
-    'Identity'
-    >>> g.set_name('shoe')
-    >>> g.get_name()
-    'shoe'
-
-**`class qvantum.gate.CNOT`**
-
-This class is an inherited class from the Gate class. It’s the implementation of the 
-    Controlled-Not gate. It’s called on 2 qubits. The parameters determine which one is the 
-    control and the target – (0, 1) or (1, 0). Its unitary matrix:
-    
-    
-**`def qvantum.gate.CNOT.__call__()`**
-
-Method which makes possible to call a gate on a qubit or a register. The only 
-restriction is that the size of the gate and the size of the qubit or regsiter must be 
-equal to each other.
-
-**Arguments:**
-    qr {Qubit, Register} -- The qubit or register which the gate is called on
-
-**Raises:**
-    ValueError, TypeError
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> q = qvantum.Random_Qubit()
-    >>> q.show()
-    '|Ψ> = (0.6542+0.3385i)|0> + (-0.5226-0.4293i)|1>'
-    >>> qvantum.Hadamard()(q)
-    >>> q.show()
-    '|Ψ> = (0.0930-0.0642i)|0> + (0.8321+0.5429i)|1>'
-
-**`def qvantum.gate.CNOT.__init__()`**
-
-Method to initialize Controlled-Not gate.
-
-**Arguments:**
-    control_qubit {int} -- Possible values: 0 or 1
-    target_qubit {int} -- Possible values: 0 or 1
-
-**Raises:**
-    ValueError
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> h = qvantum.CNOT(1, 0)
-
-**`def qvantum.gate.CNOT.get_matrix()`**
-
-Method to return the unitary matrix of the gate.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> c = qvantum.CNOT(0, 1)
-    >>> c.get_matrix()
-    matrix([[1, 0, 0, 0],
-    [0, 1, 0, 0],
-    [0, 0, 0, 1],
-    [0, 0, 1, 0]])
-
-**`def qvantum.gate.CNOT.get_name()`**
-
-Method to return the unitary matrix of the gate.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> c = qvantum.CNOT(0, 1)
-    >>> c.get_name()
-    'Controlled-Not'
-
-**`def qvantum.gate.CNOT.get_size()`**
-
-Method to retun the size of the unitary matrix of the gate.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> c = qvantum.CNOT(0, 1)
-    >>> c.get_size()
-    4
-
-**`def qvantum.gate.CNOT.power()`**
-
-Method to raise the unitary matrix of the gate to the given power and overwrites the 
-original matrix of the gate with the results matrix.
-
-**Arguments:**
-    power {int} -- The power which the gate is raised on
-
-**Raises:**
-    TypeError
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> t = qvantum.Toffoli()
-    >>> t.get_matrix()
-    matrix([[1, 0, 0, 0, 0, 0, 0, 0],
-    [0, 1, 0, 0, 0, 0, 0, 0],
-    [0, 0, 1, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 1],
-    [0, 0, 0, 0, 1, 0, 0, 0],
-    [0, 0, 0, 0, 0, 1, 0, 0],
-    [0, 0, 0, 0, 0, 0, 1, 0],
-    [0, 0, 0, 1, 0, 0, 0, 0]])
-    >>> t.power(2)
-    >>> t.get_matrix()
-    matrix([[1, 0, 0, 0, 0, 0, 0, 0],
-    [0, 1, 0, 0, 0, 0, 0, 0],
-    [0, 0, 1, 0, 0, 0, 0, 0],
-    [0, 0, 0, 1, 0, 0, 0, 0],
-    [0, 0, 0, 0, 1, 0, 0, 0],
-    [0, 0, 0, 0, 0, 1, 0, 0],
-    [0, 0, 0, 0, 0, 0, 1, 0],
-    [0, 0, 0, 0, 0, 0, 0, 1]])
-
-**`def qvantum.gate.CNOT.set_matrix()`**
-
-Setter of matrix of Controlled-Not gate. Always raises BaseException.
-
-**Raises:**
-    BaseException
-
-**`def qvantum.gate.CNOT.set_name()`**
-
-Setter of name of Controlled-Not gate. Always raises BaseException.
-
-**Raises:**
-    BaseException
-
-**`class qvantum.gate.ControlledPhase`**
-
-This class is an inherited class from the Gate class. It’s the implementation of the 
-    Controlled-Phase gate. Its unitary matrix:
-    
-    
-**`def qvantum.gate.ControlledPhase.__call__()`**
-
-Method which makes possible to call a gate on a qubit or a register. The only 
-restriction is that the size of the gate and the size of the qubit or regsiter must be 
-equal to each other.
-
-**Arguments:**
-    qr {Qubit, Register} -- The qubit or register which the gate is called on
-
-**Raises:**
-    ValueError, TypeError
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> q = qvantum.Random_Qubit()
-    >>> q.show()
-    '|Ψ> = (0.6542+0.3385i)|0> + (-0.5226-0.4293i)|1>'
-    >>> qvantum.Hadamard()(q)
-    >>> q.show()
-    '|Ψ> = (0.0930-0.0642i)|0> + (0.8321+0.5429i)|1>'
-
-**`def qvantum.gate.ControlledPhase.__init__()`**
-
-Method to initialize Controlled-Phase gate.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> h = qvantum.ControlledPhase()
-
-**`def qvantum.gate.ControlledPhase.get_matrix()`**
-
-Method to return the unitary matrix of the gate.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> c = qvantum.CNOT(0, 1)
-    >>> c.get_matrix()
-    matrix([[1, 0, 0, 0],
-    [0, 1, 0, 0],
-    [0, 0, 0, 1],
-    [0, 0, 1, 0]])
-
-**`def qvantum.gate.ControlledPhase.get_name()`**
-
-Method to return the unitary matrix of the gate.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> c = qvantum.CNOT(0, 1)
-    >>> c.get_name()
-    'Controlled-Not'
-
-**`def qvantum.gate.ControlledPhase.get_size()`**
-
-Method to retun the size of the unitary matrix of the gate.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> c = qvantum.CNOT(0, 1)
-    >>> c.get_size()
-    4
-
-**`def qvantum.gate.ControlledPhase.power()`**
-
-Method to raise the unitary matrix of the gate to the given power and overwrites the 
-original matrix of the gate with the results matrix.
-
-**Arguments:**
-    power {int} -- The power which the gate is raised on
-
-**Raises:**
-    TypeError
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> t = qvantum.Toffoli()
-    >>> t.get_matrix()
-    matrix([[1, 0, 0, 0, 0, 0, 0, 0],
-    [0, 1, 0, 0, 0, 0, 0, 0],
-    [0, 0, 1, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 1],
-    [0, 0, 0, 0, 1, 0, 0, 0],
-    [0, 0, 0, 0, 0, 1, 0, 0],
-    [0, 0, 0, 0, 0, 0, 1, 0],
-    [0, 0, 0, 1, 0, 0, 0, 0]])
-    >>> t.power(2)
-    >>> t.get_matrix()
-    matrix([[1, 0, 0, 0, 0, 0, 0, 0],
-    [0, 1, 0, 0, 0, 0, 0, 0],
-    [0, 0, 1, 0, 0, 0, 0, 0],
-    [0, 0, 0, 1, 0, 0, 0, 0],
-    [0, 0, 0, 0, 1, 0, 0, 0],
-    [0, 0, 0, 0, 0, 1, 0, 0],
-    [0, 0, 0, 0, 0, 0, 1, 0],
-    [0, 0, 0, 0, 0, 0, 0, 1]])
-
-**`def qvantum.gate.ControlledPhase.set_matrix()`**
-
-Setter of matrix of Controlled-Phase gate. Always raises BaseException.
-
-**Raises:**
-    BaseException
-
-**`def qvantum.gate.ControlledPhase.set_name()`**
-
-Setter of name of Controlled-Phase gate. Always raises BaseException.
-
-**Raises:**
-    BaseException
-
-**`class qvantum.gate.ControlledZ`**
-
-This class is an inherited class from the Gate class. It’s the implementation of the 
-    Controlled-Z gate. Its unitary matrix:
-    
-    
-**`def qvantum.gate.ControlledZ.__call__()`**
-
-Method which makes possible to call a gate on a qubit or a register. The only 
-restriction is that the size of the gate and the size of the qubit or regsiter must be 
-equal to each other.
-
-**Arguments:**
-    qr {Qubit, Register} -- The qubit or register which the gate is called on
-
-**Raises:**
-    ValueError, TypeError
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> q = qvantum.Random_Qubit()
-    >>> q.show()
-    '|Ψ> = (0.6542+0.3385i)|0> + (-0.5226-0.4293i)|1>'
-    >>> qvantum.Hadamard()(q)
-    >>> q.show()
-    '|Ψ> = (0.0930-0.0642i)|0> + (0.8321+0.5429i)|1>'
-
-**`def qvantum.gate.ControlledZ.__init__()`**
-
-Method to initialize Controlled-Z gate.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> h = qvantum.ControlledZ()
-
-**`def qvantum.gate.ControlledZ.get_matrix()`**
-
-Method to return the unitary matrix of the gate.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> c = qvantum.CNOT(0, 1)
-    >>> c.get_matrix()
-    matrix([[1, 0, 0, 0],
-    [0, 1, 0, 0],
-    [0, 0, 0, 1],
-    [0, 0, 1, 0]])
-
-**`def qvantum.gate.ControlledZ.get_name()`**
-
-Method to return the unitary matrix of the gate.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> c = qvantum.CNOT(0, 1)
-    >>> c.get_name()
-    'Controlled-Not'
-
-**`def qvantum.gate.ControlledZ.get_size()`**
-
-Method to retun the size of the unitary matrix of the gate.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> c = qvantum.CNOT(0, 1)
-    >>> c.get_size()
-    4
-
-**`def qvantum.gate.ControlledZ.power()`**
-
-Method to raise the unitary matrix of the gate to the given power and overwrites the 
-original matrix of the gate with the results matrix.
-
-**Arguments:**
-    power {int} -- The power which the gate is raised on
-
-**Raises:**
-    TypeError
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> t = qvantum.Toffoli()
-    >>> t.get_matrix()
-    matrix([[1, 0, 0, 0, 0, 0, 0, 0],
-    [0, 1, 0, 0, 0, 0, 0, 0],
-    [0, 0, 1, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 1],
-    [0, 0, 0, 0, 1, 0, 0, 0],
-    [0, 0, 0, 0, 0, 1, 0, 0],
-    [0, 0, 0, 0, 0, 0, 1, 0],
-    [0, 0, 0, 1, 0, 0, 0, 0]])
-    >>> t.power(2)
-    >>> t.get_matrix()
-    matrix([[1, 0, 0, 0, 0, 0, 0, 0],
-    [0, 1, 0, 0, 0, 0, 0, 0],
-    [0, 0, 1, 0, 0, 0, 0, 0],
-    [0, 0, 0, 1, 0, 0, 0, 0],
-    [0, 0, 0, 0, 1, 0, 0, 0],
-    [0, 0, 0, 0, 0, 1, 0, 0],
-    [0, 0, 0, 0, 0, 0, 1, 0],
-    [0, 0, 0, 0, 0, 0, 0, 1]])
-
-**`def qvantum.gate.ControlledZ.set_matrix()`**
-
-Setter of matrix of Controlled-Z gate. Always raises BaseException.
-
-**Raises:**
-    BaseException
-
-**`def qvantum.gate.ControlledZ.set_name()`**
-
-Setter of name of Controlled-Z gate. Always raises BaseException.
-
-**Raises:**
-    BaseException
-
-**`class qvantum.gate.Fredkin`**
-
-This class is an inherited class from the Gate class. It’s the implementation of the 
-    Fredkin gate. It’s called on 3 qubits. The parameters determine which one is the control 
-    qubit – 0, 1 or 2.Its unitary matrix:
-    
-    
-**`def qvantum.gate.Fredkin.__call__()`**
-
-Method which makes possible to call a gate on a qubit or a register. The only 
-restriction is that the size of the gate and the size of the qubit or regsiter must be 
-equal to each other.
-
-**Arguments:**
-    qr {Qubit, Register} -- The qubit or register which the gate is called on
-
-**Raises:**
-    ValueError, TypeError
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> q = qvantum.Random_Qubit()
-    >>> q.show()
-    '|Ψ> = (0.6542+0.3385i)|0> + (-0.5226-0.4293i)|1>'
-    >>> qvantum.Hadamard()(q)
-    >>> q.show()
-    '|Ψ> = (0.0930-0.0642i)|0> + (0.8321+0.5429i)|1>'
-
-**`def qvantum.gate.Fredkin.__init__()`**
-
-Method to initialize Fredkin gate.
-
-**Arguments:**
-    control_qubit {Qubit} -- Possible values: 0, 1 or 2
-
-**Raises:**
-    ValueError
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> h = qvantum.Fredkin(2)
-
-**`def qvantum.gate.Fredkin.get_matrix()`**
-
-Method to return the unitary matrix of the gate.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> c = qvantum.CNOT(0, 1)
-    >>> c.get_matrix()
-    matrix([[1, 0, 0, 0],
-    [0, 1, 0, 0],
-    [0, 0, 0, 1],
-    [0, 0, 1, 0]])
-
-**`def qvantum.gate.Fredkin.get_name()`**
-
-Method to return the unitary matrix of the gate.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> c = qvantum.CNOT(0, 1)
-    >>> c.get_name()
-    'Controlled-Not'
-
-**`def qvantum.gate.Fredkin.get_size()`**
-
-Method to retun the size of the unitary matrix of the gate.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> c = qvantum.CNOT(0, 1)
-    >>> c.get_size()
-    4
-
-**`def qvantum.gate.Fredkin.power()`**
-
-Method to raise the unitary matrix of the gate to the given power and overwrites the 
-original matrix of the gate with the results matrix.
-
-**Arguments:**
-    power {int} -- The power which the gate is raised on
-
-**Raises:**
-    TypeError
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> t = qvantum.Toffoli()
-    >>> t.get_matrix()
-    matrix([[1, 0, 0, 0, 0, 0, 0, 0],
-    [0, 1, 0, 0, 0, 0, 0, 0],
-    [0, 0, 1, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 1],
-    [0, 0, 0, 0, 1, 0, 0, 0],
-    [0, 0, 0, 0, 0, 1, 0, 0],
-    [0, 0, 0, 0, 0, 0, 1, 0],
-    [0, 0, 0, 1, 0, 0, 0, 0]])
-    >>> t.power(2)
-    >>> t.get_matrix()
-    matrix([[1, 0, 0, 0, 0, 0, 0, 0],
-    [0, 1, 0, 0, 0, 0, 0, 0],
-    [0, 0, 1, 0, 0, 0, 0, 0],
-    [0, 0, 0, 1, 0, 0, 0, 0],
-    [0, 0, 0, 0, 1, 0, 0, 0],
-    [0, 0, 0, 0, 0, 1, 0, 0],
-    [0, 0, 0, 0, 0, 0, 1, 0],
-    [0, 0, 0, 0, 0, 0, 0, 1]])
-
-**`def qvantum.gate.Fredkin.set_matrix()`**
-
-Setter of matrix of Fredkin gate. Always raises BaseException.
-
-**Raises:**
-    BaseException
-
-**`def qvantum.gate.Fredkin.set_name()`**
-
-Setter of name of Fredkin gate. Always raises BaseException.
-
-**Raises:**
-    BaseException
-
-**`class qvantum.gate.Hadamard`**
-
-This class is an inherited class from the Gate class. It’s the implementation of the 
-    Hadamard gate. Its unitary matrix:
-
-    
-**`def qvantum.gate.Hadamard.__call__()`**
-
-Method which makes possible to call a gate on a qubit or a register. The only 
-restriction is that the size of the gate and the size of the qubit or regsiter must be 
-equal to each other.
-
-**Arguments:**
-    qr {Qubit, Register} -- The qubit or register which the gate is called on
-
-**Raises:**
-    ValueError, TypeError
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> q = qvantum.Random_Qubit()
-    >>> q.show()
-    '|Ψ> = (0.6542+0.3385i)|0> + (-0.5226-0.4293i)|1>'
-    >>> qvantum.Hadamard()(q)
-    >>> q.show()
-    '|Ψ> = (0.0930-0.0642i)|0> + (0.8321+0.5429i)|1>'
-
-**`def qvantum.gate.Hadamard.__init__()`**
-
-Method to initialize Hadamard gate.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> h = qvantum.Hadamard()
-
-**`def qvantum.gate.Hadamard.get_matrix()`**
-
-Method to return the unitary matrix of the gate.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> c = qvantum.CNOT(0, 1)
-    >>> c.get_matrix()
-    matrix([[1, 0, 0, 0],
-    [0, 1, 0, 0],
-    [0, 0, 0, 1],
-    [0, 0, 1, 0]])
-
-**`def qvantum.gate.Hadamard.get_name()`**
-
-Method to return the unitary matrix of the gate.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> c = qvantum.CNOT(0, 1)
-    >>> c.get_name()
-    'Controlled-Not'
-
-**`def qvantum.gate.Hadamard.get_size()`**
-
-Method to retun the size of the unitary matrix of the gate.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> c = qvantum.CNOT(0, 1)
-    >>> c.get_size()
-    4
-
-**`def qvantum.gate.Hadamard.power()`**
-
-Method to raise the unitary matrix of the gate to the given power and overwrites the 
-original matrix of the gate with the results matrix.
-
-**Arguments:**
-    power {int} -- The power which the gate is raised on
-
-**Raises:**
-    TypeError
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> t = qvantum.Toffoli()
-    >>> t.get_matrix()
-    matrix([[1, 0, 0, 0, 0, 0, 0, 0],
-    [0, 1, 0, 0, 0, 0, 0, 0],
-    [0, 0, 1, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 1],
-    [0, 0, 0, 0, 1, 0, 0, 0],
-    [0, 0, 0, 0, 0, 1, 0, 0],
-    [0, 0, 0, 0, 0, 0, 1, 0],
-    [0, 0, 0, 1, 0, 0, 0, 0]])
-    >>> t.power(2)
-    >>> t.get_matrix()
-    matrix([[1, 0, 0, 0, 0, 0, 0, 0],
-    [0, 1, 0, 0, 0, 0, 0, 0],
-    [0, 0, 1, 0, 0, 0, 0, 0],
-    [0, 0, 0, 1, 0, 0, 0, 0],
-    [0, 0, 0, 0, 1, 0, 0, 0],
-    [0, 0, 0, 0, 0, 1, 0, 0],
-    [0, 0, 0, 0, 0, 0, 1, 0],
-    [0, 0, 0, 0, 0, 0, 0, 1]])
-
-**`def qvantum.gate.Hadamard.set_matrix()`**
-
-Setter of matrix of Hadamard gate. Always raises BaseException.
-
-**Raises:**
-    BaseException
-
-**`def qvantum.gate.Hadamard.set_name()`**
-
-Setter of name of Hadamard gate. Always raises BaseException.
-
-**Raises:**
-    BaseException
-
-**`class qvantum.gate.Ising`**
-
-This class is an inherited class from the Gate class. It’s the implementation of the 
-    Ising gate. Its unitary matrix:
-    
-    
-**`def qvantum.gate.Ising.__call__()`**
-
-Method which makes possible to call a gate on a qubit or a register. The only 
-restriction is that the size of the gate and the size of the qubit or regsiter must be 
-equal to each other.
-
-**Arguments:**
-    qr {Qubit, Register} -- The qubit or register which the gate is called on
-
-**Raises:**
-    ValueError, TypeError
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> q = qvantum.Random_Qubit()
-    >>> q.show()
-    '|Ψ> = (0.6542+0.3385i)|0> + (-0.5226-0.4293i)|1>'
-    >>> qvantum.Hadamard()(q)
-    >>> q.show()
-    '|Ψ> = (0.0930-0.0642i)|0> + (0.8321+0.5429i)|1>'
-
-**`def qvantum.gate.Ising.__init__()`**
-
-Method to initialize Ising gate.
-
-**Arguments:**
-    phi {int, float} -- The used angle
-
-**Raises:**
-    TypeError
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> h = qvantum.Ising(1)
-
-**`def qvantum.gate.Ising.get_matrix()`**
-
-Method to return the unitary matrix of the gate.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> c = qvantum.CNOT(0, 1)
-    >>> c.get_matrix()
-    matrix([[1, 0, 0, 0],
-    [0, 1, 0, 0],
-    [0, 0, 0, 1],
-    [0, 0, 1, 0]])
-
-**`def qvantum.gate.Ising.get_name()`**
-
-Method to return the unitary matrix of the gate.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> c = qvantum.CNOT(0, 1)
-    >>> c.get_name()
-    'Controlled-Not'
-
-**`def qvantum.gate.Ising.get_size()`**
-
-Method to retun the size of the unitary matrix of the gate.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> c = qvantum.CNOT(0, 1)
-    >>> c.get_size()
-    4
-
-**`def qvantum.gate.Ising.power()`**
-
-Method to raise the unitary matrix of the gate to the given power and overwrites the 
-original matrix of the gate with the results matrix.
-
-**Arguments:**
-    power {int} -- The power which the gate is raised on
-
-**Raises:**
-    TypeError
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> t = qvantum.Toffoli()
-    >>> t.get_matrix()
-    matrix([[1, 0, 0, 0, 0, 0, 0, 0],
-    [0, 1, 0, 0, 0, 0, 0, 0],
-    [0, 0, 1, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 1],
-    [0, 0, 0, 0, 1, 0, 0, 0],
-    [0, 0, 0, 0, 0, 1, 0, 0],
-    [0, 0, 0, 0, 0, 0, 1, 0],
-    [0, 0, 0, 1, 0, 0, 0, 0]])
-    >>> t.power(2)
-    >>> t.get_matrix()
-    matrix([[1, 0, 0, 0, 0, 0, 0, 0],
-    [0, 1, 0, 0, 0, 0, 0, 0],
-    [0, 0, 1, 0, 0, 0, 0, 0],
-    [0, 0, 0, 1, 0, 0, 0, 0],
-    [0, 0, 0, 0, 1, 0, 0, 0],
-    [0, 0, 0, 0, 0, 1, 0, 0],
-    [0, 0, 0, 0, 0, 0, 1, 0],
-    [0, 0, 0, 0, 0, 0, 0, 1]])
-
-**`def qvantum.gate.Ising.set_matrix()`**
-
-Setter of matrix of Ising gate. Always raises BaseException.
-
-**Raises:**
-    BaseException
-
-**`def qvantum.gate.Ising.set_name()`**
-
-Setter of name of Ising gate. Always raises BaseException.
-
-**Raises:**
-    BaseException
-
-**`class qvantum.gate.PauliX`**
-
-This class is an inherited class from the Gate class. It’s the implementation of the 
-    Pauli-X gate. Its unitary matrix:
-    
-    
-**`def qvantum.gate.PauliX.__call__()`**
-
-Method which makes possible to call a gate on a qubit or a register. The only 
-restriction is that the size of the gate and the size of the qubit or regsiter must be 
-equal to each other.
-
-**Arguments:**
-    qr {Qubit, Register} -- The qubit or register which the gate is called on
-
-**Raises:**
-    ValueError, TypeError
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> q = qvantum.Random_Qubit()
-    >>> q.show()
-    '|Ψ> = (0.6542+0.3385i)|0> + (-0.5226-0.4293i)|1>'
-    >>> qvantum.Hadamard()(q)
-    >>> q.show()
-    '|Ψ> = (0.0930-0.0642i)|0> + (0.8321+0.5429i)|1>'
-
-**`def qvantum.gate.PauliX.__init__()`**
-
-Method to initialize Pauli-X gate.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> h = qvantum.PauliX()
-
-**`def qvantum.gate.PauliX.get_matrix()`**
-
-Method to return the unitary matrix of the gate.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> c = qvantum.CNOT(0, 1)
-    >>> c.get_matrix()
-    matrix([[1, 0, 0, 0],
-    [0, 1, 0, 0],
-    [0, 0, 0, 1],
-    [0, 0, 1, 0]])
-
-**`def qvantum.gate.PauliX.get_name()`**
-
-Method to return the unitary matrix of the gate.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> c = qvantum.CNOT(0, 1)
-    >>> c.get_name()
-    'Controlled-Not'
-
-**`def qvantum.gate.PauliX.get_size()`**
-
-Method to retun the size of the unitary matrix of the gate.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> c = qvantum.CNOT(0, 1)
-    >>> c.get_size()
-    4
-
-**`def qvantum.gate.PauliX.power()`**
-
-Method to raise the unitary matrix of the gate to the given power and overwrites the 
-original matrix of the gate with the results matrix.
-
-**Arguments:**
-    power {int} -- The power which the gate is raised on
-
-**Raises:**
-    TypeError
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> t = qvantum.Toffoli()
-    >>> t.get_matrix()
-    matrix([[1, 0, 0, 0, 0, 0, 0, 0],
-    [0, 1, 0, 0, 0, 0, 0, 0],
-    [0, 0, 1, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 1],
-    [0, 0, 0, 0, 1, 0, 0, 0],
-    [0, 0, 0, 0, 0, 1, 0, 0],
-    [0, 0, 0, 0, 0, 0, 1, 0],
-    [0, 0, 0, 1, 0, 0, 0, 0]])
-    >>> t.power(2)
-    >>> t.get_matrix()
-    matrix([[1, 0, 0, 0, 0, 0, 0, 0],
-    [0, 1, 0, 0, 0, 0, 0, 0],
-    [0, 0, 1, 0, 0, 0, 0, 0],
-    [0, 0, 0, 1, 0, 0, 0, 0],
-    [0, 0, 0, 0, 1, 0, 0, 0],
-    [0, 0, 0, 0, 0, 1, 0, 0],
-    [0, 0, 0, 0, 0, 0, 1, 0],
-    [0, 0, 0, 0, 0, 0, 0, 1]])
-
-**`def qvantum.gate.PauliX.set_matrix()`**
-
-Setter of matrix of Pauli-X gate. Always raises BaseException.
-
-**Raises:**
-    BaseException
-
-**`def qvantum.gate.PauliX.set_name()`**
-
-Setter of name of Pauli-X gate. Always raises BaseException.
-
-**Raises:**
-    BaseException
-
-**`class qvantum.gate.PauliY`**
-
-This class is an inherited class from the Gate class. It’s the implementation of the 
-    Pauli-Y gate. Its unitary matrix:
-    
-    
-**`def qvantum.gate.PauliY.__call__()`**
-
-Method which makes possible to call a gate on a qubit or a register. The only 
-restriction is that the size of the gate and the size of the qubit or regsiter must be 
-equal to each other.
-
-**Arguments:**
-    qr {Qubit, Register} -- The qubit or register which the gate is called on
-
-**Raises:**
-    ValueError, TypeError
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> q = qvantum.Random_Qubit()
-    >>> q.show()
-    '|Ψ> = (0.6542+0.3385i)|0> + (-0.5226-0.4293i)|1>'
-    >>> qvantum.Hadamard()(q)
-    >>> q.show()
-    '|Ψ> = (0.0930-0.0642i)|0> + (0.8321+0.5429i)|1>'
-
-**`def qvantum.gate.PauliY.__init__()`**
-
-Method to initialize Pauli-Y gate.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> h = qvantum.PauliY()
-
-**`def qvantum.gate.PauliY.get_matrix()`**
-
-Method to return the unitary matrix of the gate.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> c = qvantum.CNOT(0, 1)
-    >>> c.get_matrix()
-    matrix([[1, 0, 0, 0],
-    [0, 1, 0, 0],
-    [0, 0, 0, 1],
-    [0, 0, 1, 0]])
-
-**`def qvantum.gate.PauliY.get_name()`**
-
-Method to return the unitary matrix of the gate.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> c = qvantum.CNOT(0, 1)
-    >>> c.get_name()
-    'Controlled-Not'
-
-**`def qvantum.gate.PauliY.get_size()`**
-
-Method to retun the size of the unitary matrix of the gate.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> c = qvantum.CNOT(0, 1)
-    >>> c.get_size()
-    4
-
-**`def qvantum.gate.PauliY.power()`**
-
-Method to raise the unitary matrix of the gate to the given power and overwrites the 
-original matrix of the gate with the results matrix.
-
-**Arguments:**
-    power {int} -- The power which the gate is raised on
-
-**Raises:**
-    TypeError
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> t = qvantum.Toffoli()
-    >>> t.get_matrix()
-    matrix([[1, 0, 0, 0, 0, 0, 0, 0],
-    [0, 1, 0, 0, 0, 0, 0, 0],
-    [0, 0, 1, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 1],
-    [0, 0, 0, 0, 1, 0, 0, 0],
-    [0, 0, 0, 0, 0, 1, 0, 0],
-    [0, 0, 0, 0, 0, 0, 1, 0],
-    [0, 0, 0, 1, 0, 0, 0, 0]])
-    >>> t.power(2)
-    >>> t.get_matrix()
-    matrix([[1, 0, 0, 0, 0, 0, 0, 0],
-    [0, 1, 0, 0, 0, 0, 0, 0],
-    [0, 0, 1, 0, 0, 0, 0, 0],
-    [0, 0, 0, 1, 0, 0, 0, 0],
-    [0, 0, 0, 0, 1, 0, 0, 0],
-    [0, 0, 0, 0, 0, 1, 0, 0],
-    [0, 0, 0, 0, 0, 0, 1, 0],
-    [0, 0, 0, 0, 0, 0, 0, 1]])
-
-**`def qvantum.gate.PauliY.set_matrix()`**
-
-Setter of matrix of Pauli-Y gate. Always raises BaseException.
-
-**Raises:**
-    BaseException
-
-**`def qvantum.gate.PauliY.set_name()`**
-
-Setter of name of Pauli-Y gate. Always raises BaseException.
-
-**Raises:**
-    BaseException
-
-**`class qvantum.gate.PauliZ`**
-
-This class is an inherited class from the Gate class. It’s the implementation of the 
-    Pauli-Z gate. Its unitary matrix:
-    
-    
-**`def qvantum.gate.PauliZ.__call__()`**
-
-Method which makes possible to call a gate on a qubit or a register. The only 
-restriction is that the size of the gate and the size of the qubit or regsiter must be 
-equal to each other.
-
-**Arguments:**
-    qr {Qubit, Register} -- The qubit or register which the gate is called on
-
-**Raises:**
-    ValueError, TypeError
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> q = qvantum.Random_Qubit()
-    >>> q.show()
-    '|Ψ> = (0.6542+0.3385i)|0> + (-0.5226-0.4293i)|1>'
-    >>> qvantum.Hadamard()(q)
-    >>> q.show()
-    '|Ψ> = (0.0930-0.0642i)|0> + (0.8321+0.5429i)|1>'
-
-**`def qvantum.gate.PauliZ.__init__()`**
-
-Method to initialize Pauli-Z gate.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> h = qvantum.PauliZ()
-
-**`def qvantum.gate.PauliZ.get_matrix()`**
-
-Method to return the unitary matrix of the gate.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> c = qvantum.CNOT(0, 1)
-    >>> c.get_matrix()
-    matrix([[1, 0, 0, 0],
-    [0, 1, 0, 0],
-    [0, 0, 0, 1],
-    [0, 0, 1, 0]])
-
-**`def qvantum.gate.PauliZ.get_name()`**
-
-Method to return the unitary matrix of the gate.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> c = qvantum.CNOT(0, 1)
-    >>> c.get_name()
-    'Controlled-Not'
-
-**`def qvantum.gate.PauliZ.get_size()`**
-
-Method to retun the size of the unitary matrix of the gate.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> c = qvantum.CNOT(0, 1)
-    >>> c.get_size()
-    4
-
-**`def qvantum.gate.PauliZ.power()`**
-
-Method to raise the unitary matrix of the gate to the given power and overwrites the 
-original matrix of the gate with the results matrix.
-
-**Arguments:**
-    power {int} -- The power which the gate is raised on
-
-**Raises:**
-    TypeError
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> t = qvantum.Toffoli()
-    >>> t.get_matrix()
-    matrix([[1, 0, 0, 0, 0, 0, 0, 0],
-    [0, 1, 0, 0, 0, 0, 0, 0],
-    [0, 0, 1, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 1],
-    [0, 0, 0, 0, 1, 0, 0, 0],
-    [0, 0, 0, 0, 0, 1, 0, 0],
-    [0, 0, 0, 0, 0, 0, 1, 0],
-    [0, 0, 0, 1, 0, 0, 0, 0]])
-    >>> t.power(2)
-    >>> t.get_matrix()
-    matrix([[1, 0, 0, 0, 0, 0, 0, 0],
-    [0, 1, 0, 0, 0, 0, 0, 0],
-    [0, 0, 1, 0, 0, 0, 0, 0],
-    [0, 0, 0, 1, 0, 0, 0, 0],
-    [0, 0, 0, 0, 1, 0, 0, 0],
-    [0, 0, 0, 0, 0, 1, 0, 0],
-    [0, 0, 0, 0, 0, 0, 1, 0],
-    [0, 0, 0, 0, 0, 0, 0, 1]])
-
-**`def qvantum.gate.PauliZ.set_matrix()`**
-
-Setter of matrix of Pauli-Z gate. Always raises BaseException.
-
-**Raises:**
-    BaseException
-
-**`def qvantum.gate.PauliZ.set_name()`**
-
-Setter of name of Pauli-Z gate. Always raises BaseException.
-
-**Raises:**
-    BaseException
-
-**`class qvantum.gate.Phase`**
-
-This class is an inherited class from the Gate class. It’s the implementation of the 
-    Phase gate. Its unitary matrix:
-    
-    
-**`def qvantum.gate.Phase.__call__()`**
-
-Method which makes possible to call a gate on a qubit or a register. The only 
-restriction is that the size of the gate and the size of the qubit or regsiter must be 
-equal to each other.
-
-**Arguments:**
-    qr {Qubit, Register} -- The qubit or register which the gate is called on
-
-**Raises:**
-    ValueError, TypeError
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> q = qvantum.Random_Qubit()
-    >>> q.show()
-    '|Ψ> = (0.6542+0.3385i)|0> + (-0.5226-0.4293i)|1>'
-    >>> qvantum.Hadamard()(q)
-    >>> q.show()
-    '|Ψ> = (0.0930-0.0642i)|0> + (0.8321+0.5429i)|1>'
-
-**`def qvantum.gate.Phase.__init__()`**
-
-Method to initialize Phase gate.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> h = qvantum.Phase()
-
-**`def qvantum.gate.Phase.get_matrix()`**
-
-Method to return the unitary matrix of the gate.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> c = qvantum.CNOT(0, 1)
-    >>> c.get_matrix()
-    matrix([[1, 0, 0, 0],
-    [0, 1, 0, 0],
-    [0, 0, 0, 1],
-    [0, 0, 1, 0]])
-
-**`def qvantum.gate.Phase.get_name()`**
-
-Method to return the unitary matrix of the gate.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> c = qvantum.CNOT(0, 1)
-    >>> c.get_name()
-    'Controlled-Not'
-
-**`def qvantum.gate.Phase.get_size()`**
-
-Method to retun the size of the unitary matrix of the gate.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> c = qvantum.CNOT(0, 1)
-    >>> c.get_size()
-    4
-
-**`def qvantum.gate.Phase.power()`**
-
-Method to raise the unitary matrix of the gate to the given power and overwrites the 
-original matrix of the gate with the results matrix.
-
-**Arguments:**
-    power {int} -- The power which the gate is raised on
-
-**Raises:**
-    TypeError
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> t = qvantum.Toffoli()
-    >>> t.get_matrix()
-    matrix([[1, 0, 0, 0, 0, 0, 0, 0],
-    [0, 1, 0, 0, 0, 0, 0, 0],
-    [0, 0, 1, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 1],
-    [0, 0, 0, 0, 1, 0, 0, 0],
-    [0, 0, 0, 0, 0, 1, 0, 0],
-    [0, 0, 0, 0, 0, 0, 1, 0],
-    [0, 0, 0, 1, 0, 0, 0, 0]])
-    >>> t.power(2)
-    >>> t.get_matrix()
-    matrix([[1, 0, 0, 0, 0, 0, 0, 0],
-    [0, 1, 0, 0, 0, 0, 0, 0],
-    [0, 0, 1, 0, 0, 0, 0, 0],
-    [0, 0, 0, 1, 0, 0, 0, 0],
-    [0, 0, 0, 0, 1, 0, 0, 0],
-    [0, 0, 0, 0, 0, 1, 0, 0],
-    [0, 0, 0, 0, 0, 0, 1, 0],
-    [0, 0, 0, 0, 0, 0, 0, 1]])
-
-**`def qvantum.gate.Phase.set_matrix()`**
-
-Setter of matrix of Phase gate. Always raises BaseException.
-
-**Raises:**
-    BaseException
-
-**`def qvantum.gate.Phase.set_name()`**
-
-Setter of name of Phase gate. Always raises BaseException.
-
-**Raises:**
-    BaseException
-
-**`class qvantum.gate.Pi8`**
-
-This class is an inherited class from the Gate class. It’s the implementation of the 
-    Pi/8 gate. Its unitary matrix:
-    
-    
-**`def qvantum.gate.Pi8.__call__()`**
-
-Method which makes possible to call a gate on a qubit or a register. The only 
-restriction is that the size of the gate and the size of the qubit or regsiter must be 
-equal to each other.
-
-**Arguments:**
-    qr {Qubit, Register} -- The qubit or register which the gate is called on
-
-**Raises:**
-    ValueError, TypeError
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> q = qvantum.Random_Qubit()
-    >>> q.show()
-    '|Ψ> = (0.6542+0.3385i)|0> + (-0.5226-0.4293i)|1>'
-    >>> qvantum.Hadamard()(q)
-    >>> q.show()
-    '|Ψ> = (0.0930-0.0642i)|0> + (0.8321+0.5429i)|1>'
-
-**`def qvantum.gate.Pi8.__init__()`**
-
-Method to initialize Pi/8 gate.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> h = qvantum.Pi8()
-
-**`def qvantum.gate.Pi8.get_matrix()`**
-
-Method to return the unitary matrix of the gate.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> c = qvantum.CNOT(0, 1)
-    >>> c.get_matrix()
-    matrix([[1, 0, 0, 0],
-    [0, 1, 0, 0],
-    [0, 0, 0, 1],
-    [0, 0, 1, 0]])
-
-**`def qvantum.gate.Pi8.get_name()`**
-
-Method to return the unitary matrix of the gate.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> c = qvantum.CNOT(0, 1)
-    >>> c.get_name()
-    'Controlled-Not'
-
-**`def qvantum.gate.Pi8.get_size()`**
-
-Method to retun the size of the unitary matrix of the gate.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> c = qvantum.CNOT(0, 1)
-    >>> c.get_size()
-    4
-
-**`def qvantum.gate.Pi8.power()`**
-
-Method to raise the unitary matrix of the gate to the given power and overwrites the 
-original matrix of the gate with the results matrix.
-
-**Arguments:**
-    power {int} -- The power which the gate is raised on
-
-**Raises:**
-    TypeError
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> t = qvantum.Toffoli()
-    >>> t.get_matrix()
-    matrix([[1, 0, 0, 0, 0, 0, 0, 0],
-    [0, 1, 0, 0, 0, 0, 0, 0],
-    [0, 0, 1, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 1],
-    [0, 0, 0, 0, 1, 0, 0, 0],
-    [0, 0, 0, 0, 0, 1, 0, 0],
-    [0, 0, 0, 0, 0, 0, 1, 0],
-    [0, 0, 0, 1, 0, 0, 0, 0]])
-    >>> t.power(2)
-    >>> t.get_matrix()
-    matrix([[1, 0, 0, 0, 0, 0, 0, 0],
-    [0, 1, 0, 0, 0, 0, 0, 0],
-    [0, 0, 1, 0, 0, 0, 0, 0],
-    [0, 0, 0, 1, 0, 0, 0, 0],
-    [0, 0, 0, 0, 1, 0, 0, 0],
-    [0, 0, 0, 0, 0, 1, 0, 0],
-    [0, 0, 0, 0, 0, 0, 1, 0],
-    [0, 0, 0, 0, 0, 0, 0, 1]])
-
-**`def qvantum.gate.Pi8.set_matrix()`**
-
-Setter of matrix of Pi/8 gate. Always raises BaseException.
-
-**Raises:**
-    BaseException
-
-**`def qvantum.gate.Pi8.set_name()`**
-
-Setter of name of Pi/8 gate. Always raises BaseException.
-
-**Raises:**
-    BaseException
-
-**`class qvantum.gate.SquareNot`**
-
-This class is an inherited class from the Gate class. It’s the implementation of the 
-    Square-Not gate. Its unitary matrix:
-    
-    
-**`def qvantum.gate.SquareNot.__call__()`**
-
-Method which makes possible to call a gate on a qubit or a register. The only 
-restriction is that the size of the gate and the size of the qubit or regsiter must be 
-equal to each other.
-
-**Arguments:**
-    qr {Qubit, Register} -- The qubit or register which the gate is called on
-
-**Raises:**
-    ValueError, TypeError
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> q = qvantum.Random_Qubit()
-    >>> q.show()
-    '|Ψ> = (0.6542+0.3385i)|0> + (-0.5226-0.4293i)|1>'
-    >>> qvantum.Hadamard()(q)
-    >>> q.show()
-    '|Ψ> = (0.0930-0.0642i)|0> + (0.8321+0.5429i)|1>'
-
-**`def qvantum.gate.SquareNot.__init__()`**
-
-Method to initialize Square-Not gate.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> h = qvantum.SquareNot()
-
-**`def qvantum.gate.SquareNot.get_matrix()`**
-
-Method to return the unitary matrix of the gate.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> c = qvantum.CNOT(0, 1)
-    >>> c.get_matrix()
-    matrix([[1, 0, 0, 0],
-    [0, 1, 0, 0],
-    [0, 0, 0, 1],
-    [0, 0, 1, 0]])
-
-**`def qvantum.gate.SquareNot.get_name()`**
-
-Method to return the unitary matrix of the gate.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> c = qvantum.CNOT(0, 1)
-    >>> c.get_name()
-    'Controlled-Not'
-
-**`def qvantum.gate.SquareNot.get_size()`**
-
-Method to retun the size of the unitary matrix of the gate.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> c = qvantum.CNOT(0, 1)
-    >>> c.get_size()
-    4
-
-**`def qvantum.gate.SquareNot.power()`**
-
-Method to raise the unitary matrix of the gate to the given power and overwrites the 
-original matrix of the gate with the results matrix.
-
-**Arguments:**
-    power {int} -- The power which the gate is raised on
-
-**Raises:**
-    TypeError
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> t = qvantum.Toffoli()
-    >>> t.get_matrix()
-    matrix([[1, 0, 0, 0, 0, 0, 0, 0],
-    [0, 1, 0, 0, 0, 0, 0, 0],
-    [0, 0, 1, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 1],
-    [0, 0, 0, 0, 1, 0, 0, 0],
-    [0, 0, 0, 0, 0, 1, 0, 0],
-    [0, 0, 0, 0, 0, 0, 1, 0],
-    [0, 0, 0, 1, 0, 0, 0, 0]])
-    >>> t.power(2)
-    >>> t.get_matrix()
-    matrix([[1, 0, 0, 0, 0, 0, 0, 0],
-    [0, 1, 0, 0, 0, 0, 0, 0],
-    [0, 0, 1, 0, 0, 0, 0, 0],
-    [0, 0, 0, 1, 0, 0, 0, 0],
-    [0, 0, 0, 0, 1, 0, 0, 0],
-    [0, 0, 0, 0, 0, 1, 0, 0],
-    [0, 0, 0, 0, 0, 0, 1, 0],
-    [0, 0, 0, 0, 0, 0, 0, 1]])
-
-**`def qvantum.gate.SquareNot.set_matrix()`**
-
-Setter of matrix of Square-Not gate. Always raises BaseException.
-
-**Raises:**
-    BaseException
-
-**`def qvantum.gate.SquareNot.set_name()`**
-
-Setter of name of Square-Not gate. Always raises BaseException.
-
-**Raises:**
-    BaseException
-
-**`class qvantum.gate.SquareSwap`**
-
-This class is an inherited class from the Gate class. It’s the implementation of the 
-    Square-Swap gate. Its unitary matrix:
-    
-    
-**`def qvantum.gate.SquareSwap.__call__()`**
-
-Method which makes possible to call a gate on a qubit or a register. The only 
-restriction is that the size of the gate and the size of the qubit or regsiter must be 
-equal to each other.
-
-**Arguments:**
-    qr {Qubit, Register} -- The qubit or register which the gate is called on
-
-**Raises:**
-    ValueError, TypeError
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> q = qvantum.Random_Qubit()
-    >>> q.show()
-    '|Ψ> = (0.6542+0.3385i)|0> + (-0.5226-0.4293i)|1>'
-    >>> qvantum.Hadamard()(q)
-    >>> q.show()
-    '|Ψ> = (0.0930-0.0642i)|0> + (0.8321+0.5429i)|1>'
-
-**`def qvantum.gate.SquareSwap.__init__()`**
-
-Method to initialize Square-Swap gate.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> h = qvantum.SquareSwap()
-
-**`def qvantum.gate.SquareSwap.get_matrix()`**
-
-Method to return the unitary matrix of the gate.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> c = qvantum.CNOT(0, 1)
-    >>> c.get_matrix()
-    matrix([[1, 0, 0, 0],
-    [0, 1, 0, 0],
-    [0, 0, 0, 1],
-    [0, 0, 1, 0]])
-
-**`def qvantum.gate.SquareSwap.get_name()`**
-
-Method to return the unitary matrix of the gate.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> c = qvantum.CNOT(0, 1)
-    >>> c.get_name()
-    'Controlled-Not'
-
-**`def qvantum.gate.SquareSwap.get_size()`**
-
-Method to retun the size of the unitary matrix of the gate.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> c = qvantum.CNOT(0, 1)
-    >>> c.get_size()
-    4
-
-**`def qvantum.gate.SquareSwap.power()`**
-
-Method to raise the unitary matrix of the gate to the given power and overwrites the 
-original matrix of the gate with the results matrix.
-
-**Arguments:**
-    power {int} -- The power which the gate is raised on
-
-**Raises:**
-    TypeError
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> t = qvantum.Toffoli()
-    >>> t.get_matrix()
-    matrix([[1, 0, 0, 0, 0, 0, 0, 0],
-    [0, 1, 0, 0, 0, 0, 0, 0],
-    [0, 0, 1, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 1],
-    [0, 0, 0, 0, 1, 0, 0, 0],
-    [0, 0, 0, 0, 0, 1, 0, 0],
-    [0, 0, 0, 0, 0, 0, 1, 0],
-    [0, 0, 0, 1, 0, 0, 0, 0]])
-    >>> t.power(2)
-    >>> t.get_matrix()
-    matrix([[1, 0, 0, 0, 0, 0, 0, 0],
-    [0, 1, 0, 0, 0, 0, 0, 0],
-    [0, 0, 1, 0, 0, 0, 0, 0],
-    [0, 0, 0, 1, 0, 0, 0, 0],
-    [0, 0, 0, 0, 1, 0, 0, 0],
-    [0, 0, 0, 0, 0, 1, 0, 0],
-    [0, 0, 0, 0, 0, 0, 1, 0],
-    [0, 0, 0, 0, 0, 0, 0, 1]])
-
-**`def qvantum.gate.SquareSwap.set_matrix()`**
-
-Setter of matrix of Square-Swap gate. Always raises BaseException.
-
-**Raises:**
-    BaseException
-
-**`def qvantum.gate.SquareSwap.set_name()`**
-
-Setter of name of Square-Swap gate. Always raises BaseException.
-
-**Raises:**
-    BaseException
-
-**`class qvantum.gate.Swap`**
-
-This class is an inherited class from the Gate class. It’s the implementation of the 
-    Swap gate. Its unitary matrix:
-    
-    
-**`def qvantum.gate.Swap.__call__()`**
-
-Method which makes possible to call a gate on a qubit or a register. The only 
-restriction is that the size of the gate and the size of the qubit or regsiter must be 
-equal to each other.
-
-**Arguments:**
-    qr {Qubit, Register} -- The qubit or register which the gate is called on
-
-**Raises:**
-    ValueError, TypeError
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> q = qvantum.Random_Qubit()
-    >>> q.show()
-    '|Ψ> = (0.6542+0.3385i)|0> + (-0.5226-0.4293i)|1>'
-    >>> qvantum.Hadamard()(q)
-    >>> q.show()
-    '|Ψ> = (0.0930-0.0642i)|0> + (0.8321+0.5429i)|1>'
-
-**`def qvantum.gate.Swap.__init__()`**
-
-Method to initialize Swap gate.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> h = qvantum.Swap()
-
-**`def qvantum.gate.Swap.get_matrix()`**
-
-Method to return the unitary matrix of the gate.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> c = qvantum.CNOT(0, 1)
-    >>> c.get_matrix()
-    matrix([[1, 0, 0, 0],
-    [0, 1, 0, 0],
-    [0, 0, 0, 1],
-    [0, 0, 1, 0]])
-
-**`def qvantum.gate.Swap.get_name()`**
-
-Method to return the unitary matrix of the gate.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> c = qvantum.CNOT(0, 1)
-    >>> c.get_name()
-    'Controlled-Not'
-
-**`def qvantum.gate.Swap.get_size()`**
-
-Method to retun the size of the unitary matrix of the gate.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> c = qvantum.CNOT(0, 1)
-    >>> c.get_size()
-    4
-
-**`def qvantum.gate.Swap.power()`**
-
-Method to raise the unitary matrix of the gate to the given power and overwrites the 
-original matrix of the gate with the results matrix.
-
-**Arguments:**
-    power {int} -- The power which the gate is raised on
-
-**Raises:**
-    TypeError
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> t = qvantum.Toffoli()
-    >>> t.get_matrix()
-    matrix([[1, 0, 0, 0, 0, 0, 0, 0],
-    [0, 1, 0, 0, 0, 0, 0, 0],
-    [0, 0, 1, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 1],
-    [0, 0, 0, 0, 1, 0, 0, 0],
-    [0, 0, 0, 0, 0, 1, 0, 0],
-    [0, 0, 0, 0, 0, 0, 1, 0],
-    [0, 0, 0, 1, 0, 0, 0, 0]])
-    >>> t.power(2)
-    >>> t.get_matrix()
-    matrix([[1, 0, 0, 0, 0, 0, 0, 0],
-    [0, 1, 0, 0, 0, 0, 0, 0],
-    [0, 0, 1, 0, 0, 0, 0, 0],
-    [0, 0, 0, 1, 0, 0, 0, 0],
-    [0, 0, 0, 0, 1, 0, 0, 0],
-    [0, 0, 0, 0, 0, 1, 0, 0],
-    [0, 0, 0, 0, 0, 0, 1, 0],
-    [0, 0, 0, 0, 0, 0, 0, 1]])
-
-**`def qvantum.gate.Swap.set_matrix()`**
-
-Setter of matrix of Swap gate. Always raises BaseException.
-
-**Raises:**
-    BaseException
-
-**`def qvantum.gate.Swap.set_name()`**
-
-Setter of name of Swap gate. Always raises BaseException.
-
-**Raises:**
-    BaseException
-
-**`class qvantum.gate.Toffoli`**
-
-This class is an inherited class from the Gate class. It’s the implementation of the 
-    Toffoli gate. It’s called on 3 qubits. The parameters determine which one is the target 
-    qubit – 0, 1 or 2.Its unitary matrix:
-    
-    
-**`def qvantum.gate.Toffoli.__call__()`**
-
-Method which makes possible to call a gate on a qubit or a register. The only 
-restriction is that the size of the gate and the size of the qubit or regsiter must be 
-equal to each other.
-
-**Arguments:**
-    qr {Qubit, Register} -- The qubit or register which the gate is called on
-
-**Raises:**
-    ValueError, TypeError
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> q = qvantum.Random_Qubit()
-    >>> q.show()
-    '|Ψ> = (0.6542+0.3385i)|0> + (-0.5226-0.4293i)|1>'
-    >>> qvantum.Hadamard()(q)
-    >>> q.show()
-    '|Ψ> = (0.0930-0.0642i)|0> + (0.8321+0.5429i)|1>'
-
-**`def qvantum.gate.Toffoli.__init__()`**
-
-Method to initialize Toffoli gate.
-
-**Arguments:**
-    target_qubit {Qubit} -- Possible values: 0, 1 or 2
-
-**Raises:**
-    ValueError
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> h = qvantum.Toffoli(0)
-
-**`def qvantum.gate.Toffoli.get_matrix()`**
-
-Method to return the unitary matrix of the gate.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> c = qvantum.CNOT(0, 1)
-    >>> c.get_matrix()
-    matrix([[1, 0, 0, 0],
-    [0, 1, 0, 0],
-    [0, 0, 0, 1],
-    [0, 0, 1, 0]])
-
-**`def qvantum.gate.Toffoli.get_name()`**
-
-Method to return the unitary matrix of the gate.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> c = qvantum.CNOT(0, 1)
-    >>> c.get_name()
-    'Controlled-Not'
-
-**`def qvantum.gate.Toffoli.get_size()`**
-
-Method to retun the size of the unitary matrix of the gate.
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> c = qvantum.CNOT(0, 1)
-    >>> c.get_size()
-    4
-
-**`def qvantum.gate.Toffoli.power()`**
-
-Method to raise the unitary matrix of the gate to the given power and overwrites the 
-original matrix of the gate with the results matrix.
-
-**Arguments:**
-    power {int} -- The power which the gate is raised on
-
-**Raises:**
-    TypeError
-
-**Examples:**
-
-    >>> import qvantum
-    >>>
-    >>> t = qvantum.Toffoli()
-    >>> t.get_matrix()
-    matrix([[1, 0, 0, 0, 0, 0, 0, 0],
-    [0, 1, 0, 0, 0, 0, 0, 0],
-    [0, 0, 1, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 1],
-    [0, 0, 0, 0, 1, 0, 0, 0],
-    [0, 0, 0, 0, 0, 1, 0, 0],
-    [0, 0, 0, 0, 0, 0, 1, 0],
-    [0, 0, 0, 1, 0, 0, 0, 0]])
-    >>> t.power(2)
-    >>> t.get_matrix()
-    matrix([[1, 0, 0, 0, 0, 0, 0, 0],
-    [0, 1, 0, 0, 0, 0, 0, 0],
-    [0, 0, 1, 0, 0, 0, 0, 0],
-    [0, 0, 0, 1, 0, 0, 0, 0],
-    [0, 0, 0, 0, 1, 0, 0, 0],
-    [0, 0, 0, 0, 0, 1, 0, 0],
-    [0, 0, 0, 0, 0, 0, 1, 0],
-    [0, 0, 0, 0, 0, 0, 0, 1]])
-
-**`def qvantum.gate.Toffoli.set_matrix()`**
-
-Setter of matrix of Toffoli gate. Always raises BaseException.
-
-**Raises:**
-    BaseException
-
-**`def qvantum.gate.Toffoli.set_name()`**
-
-Setter of name of Toffoli gate. Always raises BaseException.
-
-**Raises:**
-    BaseException
