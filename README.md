@@ -768,7 +768,7 @@ Method to initialize an instance of the Layer class. The argument must be a list
     >>> l2 = qvantum.Layer([qvantum.PauliX()])
     >>> l2.get_layer_matrix()
     matrix([[0., 1.],
-		  [1., 0.]])
+		 [1., 0.]])
 
 **`def qvantum.layer.Layer.delete_gate(nth)`**
 
@@ -844,9 +844,9 @@ matrix.
     >>> l = qvantum.Layer([qvantum.Hadamard(), qvantum.Gate()])
     >>> l.get_layer_matrix()
     matrix([[ 0.70710678,  0.,  0.70710678,  0.],
-		  [ 0.,  0.70710678,  0.,  0.70710678],
-		  [ 0.70710678,  0., -0.70710678, -0.],
-		  [ 0.,  0.70710678, -0., -0.70710678]])
+		 [ 0.,  0.70710678,  0.,  0.70710678],
+		 [ 0.70710678,  0., -0.70710678, -0.],
+		 [ 0.,  0.70710678, -0., -0.70710678]])
 
 **`def qvantum.layer.Layer.get_layer_size()`**
 
@@ -860,9 +860,9 @@ Layer can be applied on.
     >>> l = qvantum.Layer([qvantum.Hadamard(), qvantum.Gate()])
     >>> l.get_layer_matrix()
     matrix([[ 0.70710678,  0.,  0.70710678,  0.],
-		  [ 0.,  0.70710678,  0.,  0.70710678],
-		  [ 0.70710678,  0., -0.70710678, -0.],
-		  [ 0.,  0.70710678, -0., -0.70710678]])
+		 [ 0.,  0.70710678,  0.,  0.70710678],
+		 [ 0.70710678,  0., -0.70710678, -0.],
+		 [ 0.,  0.70710678, -0., -0.70710678]])
     >>> l.get_matrix_size()
     4
     >>> l.get_layer_size()
@@ -879,9 +879,9 @@ Method to return the size of the matrix of the current Layer object.
     >>> l = qvantum.Layer([qvantum.Hadamard(), qvantum.Gate()])
     >>> l.get_layer_matrix()
     matrix([[ 0.70710678,  0.,  0.70710678,  0.],
-		  [ 0.,  0.70710678,  0.,  0.70710678],
-		  [ 0.70710678,  0., -0.70710678, -0.],
-		  [ 0.,  0.70710678, -0., -0.70710678]])
+		 [ 0.,  0.70710678,  0.,  0.70710678],
+		 [ 0.70710678,  0., -0.70710678, -0.],
+		 [ 0.,  0.70710678, -0., -0.70710678]])
     >>> l.get_matrix_size()
     4
 
