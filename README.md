@@ -965,10 +965,10 @@ Hadamard, SquareNot, PauliX, PauliY, PauliZ, Phase, Pi8, Swap, SquareSwap, CNOT,
     >>> l.insert_gate(qvantum.PauliY(), 4)
     >>> l.get_gate_list()
     OrderedDict([(0, <qvantum.gate.Hadamard at 0x1ae59266470>),
-		(1, <qvantum.gate.PauliY at 0x1ae5923d400>),
-		(2, <qvantum.gate.Gate at 0x1ae59266438>),
-		(3, <qvantum.gate.PauliX at 0x1ae59266390>),
-		(4, <qvantum.gate.PauliY at 0x1ae59266400>)])
+			(1, <qvantum.gate.PauliY at 0x1ae5923d400>),
+			(2, <qvantum.gate.Gate at 0x1ae59266438>),
+			(3, <qvantum.gate.PauliX at 0x1ae59266390>),
+			(4, <qvantum.gate.PauliY at 0x1ae59266400>)])
 
 NEW TEXT
 # qvantum.bloch module
