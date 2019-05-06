@@ -1351,7 +1351,7 @@ The instances of gate class have the following methods:
     - get_size()	- getter of size of matrix of gate
     - set_name()	- setter of name of gate
     - set_matrix()	- setter of matrix of gate
-    - power()		- raise the matrix of gate to the given power
+    - power()	- raise the matrix of gate to the given power
     
 **`def qvantum.gate.Gate.__call__(qr)`**
 
@@ -1402,9 +1402,9 @@ Method to return the unitary matrix of the gate.
     >>> c = qvantum.CNOT(0, 1)
     >>> c.get_matrix()
     matrix([[1, 0, 0, 0],
-		   [0, 1, 0, 0],
-		   [0, 0, 0, 1],
-		   [0, 0, 1, 0]])
+		  [0, 1, 0, 0],
+		  [0, 0, 0, 1],
+		  [0, 0, 1, 0]])
 
 **`def qvantum.gate.Gate.get_name()`**
 
@@ -1447,23 +1447,23 @@ Method to raise the unitary matrix of the gate to the given power and overwrites
     >>> t = qvantum.Toffoli()
     >>> t.get_matrix()
     matrix([[1, 0, 0, 0, 0, 0, 0, 0],
-		   [0, 1, 0, 0, 0, 0, 0, 0],
-		   [0, 0, 1, 0, 0, 0, 0, 0],
-		   [0, 0, 0, 0, 0, 0, 0, 1],
-		   [0, 0, 0, 0, 1, 0, 0, 0],
-		   [0, 0, 0, 0, 0, 1, 0, 0],
-		   [0, 0, 0, 0, 0, 0, 1, 0],
-		   [0, 0, 0, 1, 0, 0, 0, 0]])
+		  [0, 1, 0, 0, 0, 0, 0, 0],
+		  [0, 0, 1, 0, 0, 0, 0, 0],
+		  [0, 0, 0, 0, 0, 0, 0, 1],
+		  [0, 0, 0, 0, 1, 0, 0, 0],
+		  [0, 0, 0, 0, 0, 1, 0, 0],
+		  [0, 0, 0, 0, 0, 0, 1, 0],
+		  [0, 0, 0, 1, 0, 0, 0, 0]])
     >>> t.power(2)
     >>> t.get_matrix()
     matrix([[1, 0, 0, 0, 0, 0, 0, 0],
-		   [0, 1, 0, 0, 0, 0, 0, 0],
-		   [0, 0, 1, 0, 0, 0, 0, 0],
-		   [0, 0, 0, 1, 0, 0, 0, 0],
-		   [0, 0, 0, 0, 1, 0, 0, 0],
-		   [0, 0, 0, 0, 0, 1, 0, 0],
-		   [0, 0, 0, 0, 0, 0, 1, 0],
-		   [0, 0, 0, 0, 0, 0, 0, 1]])
+		  [0, 1, 0, 0, 0, 0, 0, 0],
+		  [0, 0, 1, 0, 0, 0, 0, 0],
+		  [0, 0, 0, 1, 0, 0, 0, 0],
+		  [0, 0, 0, 0, 1, 0, 0, 0],
+		  [0, 0, 0, 0, 0, 1, 0, 0],
+		  [0, 0, 0, 0, 0, 0, 1, 0],
+		  [0, 0, 0, 0, 0, 0, 0, 1]])
 
 **`def qvantum.gate.Gate.set_matrix(matrix)`**
 
@@ -1485,13 +1485,13 @@ Method to set a new unitary matrix for the gate. If matrix is not unitary then a
     matrix([[1, 0],
 		   [0, 1]])
     >>> g.set_matrix(numpy.matrix([
-			    [1 / numpy.sqrt(2), 1 / numpy.sqrt(2)],
-			    [1 / numpy.sqrt(2), -1 / numpy.sqrt(2)]
+			   [1 / numpy.sqrt(2), 1 / numpy.sqrt(2)],
+			   [1 / numpy.sqrt(2), -1 / numpy.sqrt(2)]
     ])
 	)
     >>> g.get_matrix()
     matrix([[ 0.70710678,  0.70710678],
-		   [ 0.70710678, -0.70710678]])
+		  [ 0.70710678, -0.70710678]])
 
 **`def qvantum.gate.Gate.set_name(name)`**
 
