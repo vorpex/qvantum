@@ -1212,10 +1212,10 @@ Method to perform the computational process on a Register object as input and re
 
 The following functions are the Bloch Sphere related functions in the package: 
 
-	- bloch_coords()		- calculate bloch coordinates from qubit
-	- bloch_qubit()			- calculate qubit from bloch coordinates
+	- bloch_coords()	- calculate bloch coordinates from qubit
+	- bloch_qubit()		- calculate qubit from bloch coordinates
 	- bloch_sphere_plot()	- plot bloch representation
-	- phase_test()			- compute phase between two complex numbers
+	- phase_test()		- compute phase between two complex numbers
 
 **`def qvantum.bloch.bloch_coords(q)`**
 
