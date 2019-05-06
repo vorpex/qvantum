@@ -242,6 +242,8 @@ Method to initialize an instance of the qubit class with randomized amplitudes.
 
 ### 3.2 qvantum.register module
 
+**`class qvantum.register.Register`**
+
 A system containing more than one qubit is called a register. The state function of a register is the superposition of the allowed states of the qubits. The number of possible states is increasing exponentially with every new qubit is added to the system.
 
 > A quantum register is a system comprising multiple qubits and is the quantum analog of the classical processor register. An n size quantum register is a quantum system comprising n qubits. The Hilbert space, H, in which the data stored in a quantum register is:
