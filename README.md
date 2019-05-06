@@ -1204,6 +1204,19 @@ Method to perform the computational process on a Register object as input and re
 
 ### 3.6 qvantum.bloch module
 
+> "In quantum mechanics, the Bloch sphere is a geometrical representation of the pure state space of a two-level quantum mechanical system (qubit), named after the physicist Felix Bloch. Quantum mechanics is mathematically formulated in Hilbert space or projective Hilbert space. The space of pure states of a quantum system is given by the one-dimensional subspaces of the corresponding Hilbert space (or the "points" of the projective Hilbert space).
+> 
+> The Bloch sphere is a unit 2-sphere, with antipodal points corresponding to a pair of mutually orthogonal state vectors. The north and south poles of the Bloch sphere are typically chosen to correspond to the standard basis vectors |0> and |1>, respectively, which in turn might correspond e.g. to the spin-up and spin-down states of an electron. This choice is arbitrary, however. The points on the surface of the sphere correspond to the pure states of the system, whereas the interior points correspond to the mixed states."
+> 
+> via Wikipedia: https://en.wikipedia.org/wiki/Bloch_sphere
+
+The following functions are the Bloch Sphere related functions in the package: 
+
+	- bloch_coords()		- calculate bloch coordinates from qubit
+	- bloch_qubit()			- calculate qubit from bloch coordinates
+	- bloch_sphere_plot()	- plot bloch representation
+	- phase_test()			- compute phase between two complex numbers
+
 **`def qvantum.bloch.bloch_coords(q)`**
 
 This function calculates the coordinates of the Bloch representation from the state vector of a Qubit object.
@@ -1247,7 +1260,7 @@ This function calculates the state vector of a Qubit object from the given Bloch
     >>> qvantum.bloch_qubit(u, v, w).show()
     '|Ψ> = (0.9239+0.0000i)|0> + (0.0000+0.3827i)|1>'
 
-**`def qvantum.bloch.bloch_sphere_plot(u, v, w)`**
+**`def qvantum.bloch.bloch_sphere_plot(u, v, w, xfigsize=15, yfigsize=7.5, frame_on=False, tight_layout_on=False, style='dark_background', surface_on=True, wireframe_on=True, surface_cmap='Blues_r', surface_alpha=0.3, wireframe_color='#d3d3d3', wireframe_linewidth=0.075, quiver_color='#ffffff', quiver_linewidth=1.5, quiver_ratio=0.1, line_color='#d3d3d3', line_linewidth=0.3, circle_edgecolor='#d3d3d3', circle_facecolor='none', circle_linewidth=0.3)`**
 
 This function visualizes the qubit using its bloch coordinates and the matplotlib module.
     
