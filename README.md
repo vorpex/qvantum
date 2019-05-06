@@ -1387,7 +1387,7 @@ Method to initialize a 2x2 sized identity matrix. Every identity matrix is a uni
     'Identity'
     >>> g.get_matrix()
     matrix([[1, 0],
-	    [0, 1]])
+		[0, 1]])
     >>> g.get_size()
     2
 
@@ -1488,7 +1488,7 @@ Method to set a new unitary matrix for the gate. If matrix is not unitary then a
 		[1 / numpy.sqrt(2), 1 / numpy.sqrt(2)],
 		[1 / numpy.sqrt(2), -1 / numpy.sqrt(2)]
 	    ])
-		)
+	)
     >>> g.get_matrix()
     matrix([[ 0.70710678,  0.70710678],
 		[ 0.70710678, -0.70710678]])
