@@ -916,7 +916,21 @@ Method to set a new name for the gate.
 
 This class is an inherited class from the Gate class. It’s the implementation of the Controlled-Not gate. It’s called on 2 qubits. The parameters determine which one is the control and the target – (0, 1) or (1, 0). Its unitary matrix:
 
-
+$$
+    \begin{bmatrix}
+    1&0&0&0\\
+    0&1&0&0\\
+    0&0&0&1\\
+	0&0&1&0\\
+    \end{bmatrix}
+or
+    \begin{bmatrix}
+    1&0&0&0\\
+    0&0&0&1\\
+    0&0&1&0\\
+	0&1&0&0\\
+    \end{bmatrix}
+$$
 
 **`def qvantum.gate.CNOT.__init__(control_qubit, target_qubit)`**
 
