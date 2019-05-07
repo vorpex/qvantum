@@ -916,7 +916,6 @@ Method to set a new name for the gate.
 
 This class is an inherited class from the Gate class. It’s the implementation of the Controlled-Not gate. It’s called on 2 qubits. The parameters determine which one is the control and the target – (0, 1) or (1, 0). Its unitary matrix:
 
-
 $$
     \begin{bmatrix}
     1&0&0&0\\
@@ -968,7 +967,14 @@ Setter of name of Controlled-Not gate. Always raises BaseException.
 
 This class is an inherited class from the Gate class. It’s the implementation of the Controlled-Phase gate. Its unitary matrix:
 
-
+$$
+    \begin{bmatrix}
+    1&0&0&0\\
+    0&1&0&0\\
+    0&0&1&0\\
+	0&0&0&i\\
+    \end{bmatrix}
+$$
     
 **`def qvantum.gate.ControlledPhase.__init__()`**
 
@@ -998,7 +1004,14 @@ Setter of name of Controlled-Phase gate. Always raises BaseException.
 
 This class is an inherited class from the Gate class. It’s the implementation of the Controlled-Z gate. Its unitary matrix:
 
-
+$$
+    \begin{bmatrix}
+    1&0&0&0\\
+    0&1&0&0\\
+    0&0&1&0\\
+	0&0&0&-1\\
+    \end{bmatrix}
+$$
 
 **`def qvantum.gate.ControlledZ.__init__()`**
 
@@ -1028,7 +1041,40 @@ Setter of name of Controlled-Z gate. Always raises BaseException.
 
 This class is an inherited class from the Gate class. It’s the implementation of the Fredkin gate. It’s called on 3 qubits. The parameters determine which one is the control qubit – 0, 1 or 2.Its unitary matrix:
 
-
+$$
+    \begin{bmatrix}
+    1&0&0&0&0&0&0&0\\
+    0&1&0&0&0&0&0&0\\
+    0&0&1&0&0&0&0&0\\
+	0&0&0&1&0&0&0&0\\
+	0&0&0&0&1&0&0&0\\
+	0&0&0&0&0&0&1&0\\
+	0&0&0&0&0&1&0&0\\
+	0&0&0&0&0&0&0&1\\
+    \end{bmatrix}
+or
+\begin{bmatrix}
+    1&0&0&0&0&0&0&0\\
+    0&1&0&0&0&0&0&0\\
+    0&0&1&0&0&0&0&0\\
+	0&0&0&0&0&0&1&0\\
+	0&0&0&0&1&0&0&0\\
+	0&0&0&0&0&1&0&0\\
+	0&0&0&1&0&0&0&0\\
+	0&0&0&0&0&0&0&1\\
+    \end{bmatrix}
+or
+\begin{bmatrix}
+    1&0&0&0&0&0&0&0\\
+    0&1&0&0&0&0&0&0\\
+    0&0&1&0&0&0&0&0\\
+	0&0&0&0&0&1&0&0\\
+	0&0&0&0&1&0&0&0\\
+	0&0&0&1&0&0&0&0\\
+	0&0&0&0&0&0&1&0\\
+	0&0&0&0&0&0&0&1\\
+    \end{bmatrix}
+$$
 
 **`def qvantum.gate.Fredkin.__init__(control_qubit)`**
 
@@ -1064,7 +1110,12 @@ Setter of name of Fredkin gate. Always raises BaseException.
 
 This class is an inherited class from the Gate class. It’s the implementation of the Hadamard gate. Its unitary matrix:
 
-
+$$
+    \begin{bmatrix}
+    \frac{1}{\sqrt 2}&\frac{1}{\sqrt 2}\\
+    \frac{1}{\sqrt 2}&\frac{-1}{\sqrt 2}\\
+    \end{bmatrix}
+$$
 
 **`def qvantum.gate.Hadamard.__init__()`**
 
@@ -1094,7 +1145,14 @@ Setter of name of Hadamard gate. Always raises BaseException.
 
 This class is an inherited class from the Gate class. It’s the implementation of the Ising gate. Its unitary matrix:
 
-
+$$
+    \begin{bmatrix}
+    1&0&0&-i(cos(\varphi) + isin(\varphi))\\
+    0&1&-i&0\\
+    0&-i&1&0\\
+	-i(cos(-\varphi) + isin(-\varphi))&0&0&1\\
+    \end{bmatrix}
+$$
 
 **`def qvantum.gate.Ising.__init__(phi)`**
 
@@ -1130,7 +1188,12 @@ Setter of name of Ising gate. Always raises BaseException.
 
 This class is an inherited class from the Gate class. It’s the implementation of the Pauli-X gate. Its unitary matrix:
 
-
+$$
+    \begin{bmatrix}
+    0&1\\
+    1&0\\
+    \end{bmatrix}
+$$
     
 **`def qvantum.gate.PauliX.__init__()`**
 
@@ -1160,7 +1223,12 @@ Setter of name of Pauli-X gate. Always raises BaseException.
 
 This class is an inherited class from the Gate class. It’s the implementation of the Pauli-Y gate. Its unitary matrix:
 
-
+$$
+    \begin{bmatrix}
+    1&-i\\
+    i&0\\
+    \end{bmatrix}
+$$
     
 **`def qvantum.gate.PauliY.__init__()`**
 
@@ -1190,7 +1258,12 @@ Setter of name of Pauli-Y gate. Always raises BaseException.
 
 This class is an inherited class from the Gate class. It’s the implementation of the Pauli-Z gate. Its unitary matrix:
 
-
+$$
+    \begin{bmatrix}
+    1&0\\
+    0&-1\\
+    \end{bmatrix}
+$$
     
 **`def qvantum.gate.PauliZ.__init__()`**
 
@@ -1220,7 +1293,12 @@ Setter of name of Pauli-Z gate. Always raises BaseException.
 
 This class is an inherited class from the Gate class. It’s the implementation of the Phase gate. Its unitary matrix:
 
-
+$$
+    \begin{bmatrix}
+    1&0\\
+    0&i\\
+    \end{bmatrix}
+$$
     
 **`def qvantum.gate.Phase.__init__()`**
 
@@ -1250,7 +1328,12 @@ Setter of name of Phase gate. Always raises BaseException.
 
 This class is an inherited class from the Gate class. It’s the implementation of the Pi/8 gate. Its unitary matrix:
 
-
+$$
+    \begin{bmatrix}
+    1&0\\
+    \frac{1}{\sqrt 2}&cos\frac{\pi}{4}+isin\frac{\pi}{4}\\
+    \end{bmatrix}
+$$
     
 **`def qvantum.gate.Pi8.__init__()`**
 
@@ -1280,7 +1363,12 @@ Setter of name of Pi/8 gate. Always raises BaseException.
 
 This class is an inherited class from the Gate class. It’s the implementation of the Square-Not gate. Its unitary matrix:
 
-
+$$
+    \begin{bmatrix}
+    1+i&1-i\\
+    1-i&1+i\\
+    \end{bmatrix}
+$$
     
 **`def qvantum.gate.SquareNot.__init__()`**
 
@@ -1310,7 +1398,14 @@ Setter of name of Square-Not gate. Always raises BaseException.
 
 This class is an inherited class from the Gate class. It’s the implementation of the Square-Swap gate. Its unitary matrix:
 
-
+$$
+    \begin{bmatrix}
+    1&0&0&0\\
+    0&\frac{1+i}{2}&\frac{1-i}{2}&0\\
+    0&\frac{1-i}{2}&\frac{1+i}{2}&0\\
+    0&0&0&1\\
+    \end{bmatrix}
+$$
     
 **`def qvantum.gate.SquareSwap.__init__()`**
 
@@ -1340,7 +1435,14 @@ Setter of name of Square-Swap gate. Always raises BaseException.
 
 This class is an inherited class from the Gate class. It’s the implementation of the Swap gate. Its unitary matrix:
 
-
+$$
+    \begin{bmatrix}
+    1&0&0&0\\
+    0&0&1&0\\
+    0&1&0&0\\
+    0&0&0&1\\
+    \end{bmatrix}
+$$
     
 **`def qvantum.gate.Swap.__init__()`**
 
