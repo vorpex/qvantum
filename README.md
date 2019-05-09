@@ -1987,3 +1987,17 @@ Computes the phase between two complex number.
     0.08522011231864535
     >>> qvantum.phase_test(q1.get_beta(), q2.get_beta())
     -0.7255489587145547
+
+## 4. Examples
+
+The examples in this section show the way how to interpret the already known quantum circuits or develop new ones using the qvantum module.
+
+### 4.1 Quantum teleportation
+
+The quantum circuit of teleportation looks like this below:
+<p align="center"><img src="/pics/Quantum_Teleportation.jpg?invert_in_darkmode&sanitize=true" align=middle/></p>
+
+> Source: Michael A. Nielsen & Isaac L. Chuang - Quantum Computation and Quantum Information
+
+And the same circuit can be represented this way by using qvantum module:
+
