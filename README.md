@@ -1995,9 +1995,56 @@ The examples in this section show the way how to interpret the already known qua
 ### 4.1 Quantum teleportation
 
 The quantum circuit of teleportation looks like this below:
-<p align="center"><img src="/pics/Quantum_Teleportation.jpg?invert_in_darkmode&sanitize=true" align=middle/></p>
+<p align="center"><img src="/pics/Quantum_Teleportation.jpg?invert_in_darkmode&sanitize=true" align=middle width=450pt height=150pt/></p>
 
-> Source: Michael A. Nielsen & Isaac L. Chuang - Quantum Computation and Quantum Information
+> Michael A. Nielsen & Isaac L. Chuang - Quantum Computation and Quantum Information
 
 And the same circuit can be represented this way by using qvantum module:
 
+	>>> import qvantum
+	>>>
+	>>> q = qvantum.Random_Qubit()
+	>>> q1 = qvantum.Qubit(1, 0)
+	>>> q2 = qvantum.Qubit(1, 0)
+	>>>
+	>>> r = qvantum.Register([q1, q2])
+	>>>
+	>>> l0 = qvantum.Layer([qvantum.Hadamard(), qvantum.Gate()])
+	>>> l1 = qvantum.Layer([qvantum.CNOT(0, 1)])
+	>>>
+	>>> c0 = qvantum.Circuit([l0, l1])
+	>>> c0.run(r)
+	>>>
+	>>> r.insert_qubit(q, 0)
+	>>>
+	>>> l2 = qvantum.Layer([qvantum.CNOT(0, 1), qvantum.Gate()])
+	>>> l3 = qvantum.Layer([qvantum.Hadamard(), qvantum.Gate(), qvantum.Gate()])
+	>>>
+	>>> c1 = qvantum.Circuit([l2, l3])
+	>>> c1.run(r)
+	>>>
+	>>> m0 = r.measure_nth_qubit(0)
+	>>> m1 = r.measure_nth_qubit(1)
+	>>>
+	>>> # print(r.show())
+	>>>
+	>>> XM2 = qvantum.PauliX()
+	>>> XM2.power(m1)
+	>>> ZM1 = qvantum.PauliZ()
+	>>> ZM1.power(m0)
+	>>>
+	>>> l4 = qvantum.Layer([qvantum.Gate(), qvantum.Gate(), XM2])
+	>>> l5 = qvantum.Layer([qvantum.Gate(), qvantum.Gate(), ZM1])
+	>>>
+	>>> c2 = qvantum.Circuit([l4, l5])
+	>>> c2.run(r)
+	>>>
+	>>> r.delete_qubit(0)
+	>>> r.delete_qubit(0)
+	>>>
+	>>> q.show()
+	'|Ψ> = (0.0495+0.6502i)|0> + (0.3629-0.6657i)|1>'
+	>>> r.show()
+	'|Ψ> = (0.0495+0.6502i)|0> + (0.3629-0.6657i)|1>'
+
+<p align="center"><img src="/pics/Quantum_Teleportation_qvantum.jpg?invert_in_darkmode&sanitize=true" align=middle width=450pt height=150pt/></p>
