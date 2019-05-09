@@ -2137,3 +2137,159 @@ Computes the phase between two complex number.
     0.08522011231864535
     >>> qvantum.phase_test(q1.get_beta(), q2.get_beta())
     -0.7255489587145547
+
+## 4. Examples
+
+The examples in this section show the way how to interpret the already known quantum circuits or develop new ones using the qvantum module.
+
+### 4.1 Quantum teleportation
+
+The quantum circuit of teleportation looks like this below:
+<p align="center"><img src="/pics/Quantum_Teleportation.jpg?invert_in_darkmode&sanitize=true" align=middle/></p>
+
+> Michael A. Nielsen & Isaac L. Chuang - Quantum Computation and Quantum Information
+
+And the same circuit can be represented this way by using qvantum module:
+
+	>>> import qvantum
+	>>>
+	>>> q = qvantum.Random_Qubit()
+	>>> q1 = qvantum.Qubit(1, 0)
+	>>> q2 = qvantum.Qubit(1, 0)
+	>>>
+	>>> r = qvantum.Register([q1, q2])
+	>>>
+	>>> l0 = qvantum.Layer([qvantum.Hadamard(), qvantum.Gate()])
+	>>> l1 = qvantum.Layer([qvantum.CNOT(0, 1)])
+	>>>
+	>>> c0 = qvantum.Circuit([l0, l1])
+	>>> c0.run(r)
+	>>>
+	>>> r.insert_qubit(q, 0)
+	>>>
+	>>> l2 = qvantum.Layer([qvantum.CNOT(0, 1), qvantum.Gate()])
+	>>> l3 = qvantum.Layer([qvantum.Hadamard(), qvantum.Gate(), qvantum.Gate()])
+	>>>
+	>>> c1 = qvantum.Circuit([l2, l3])
+	>>> c1.run(r)
+	>>>
+	>>> m0 = r.measure_nth_qubit(0)
+	>>> m1 = r.measure_nth_qubit(1)
+	>>>
+	>>> # print(r.show())
+	>>>
+	>>> XM2 = qvantum.PauliX()
+	>>> XM2.power(m1)
+	>>> ZM1 = qvantum.PauliZ()
+	>>> ZM1.power(m0)
+	>>>
+	>>> l4 = qvantum.Layer([qvantum.Gate(), qvantum.Gate(), XM2])
+	>>> l5 = qvantum.Layer([qvantum.Gate(), qvantum.Gate(), ZM1])
+	>>>
+	>>> c2 = qvantum.Circuit([l4, l5])
+	>>> c2.run(r)
+	>>>
+	>>> r.delete_qubit(0)
+	>>> r.delete_qubit(0)
+	>>>
+	>>> q.show()
+	'|Ψ> = (0.0495+0.6502i)|0> + (0.3629-0.6657i)|1>'
+	>>> r.show()
+	'|Ψ> = (0.0495+0.6502i)|0> + (0.3629-0.6657i)|1>'
+
+<p align="center"><img src="/pics/Quantum_Teleportation_qvantum.jpg?invert_in_darkmode&sanitize=true" align=middle/></p>
+
+### 4.2 Grover’s algorithm
+
+The quantum circuit of teleportation looks like this below:
+<p align="center"><img src="/pics/Quantum_Grover5.jpg?invert_in_darkmode&sanitize=true" align=middle/></p>
+
+> http://demonstrations.wolfram.com/QuantumCircuitImplementingGroversSearchAlgorithm/
+
+And the same circuit can be represented this way by using qvantum module:
+
+	>>> import numpy
+	>>> import qvantum
+	>>>
+	>>> q0 = qvantum.Qubit(1, 0)
+	>>> q1 = qvantum.Qubit(1, 0)
+	>>> q2 = qvantum.Qubit(1, 0)
+	>>> q3 = qvantum.Qubit(0, 1)
+	>>>
+	>>> r = qvantum.Register([q0, q1, q2, q3])
+	>>> r.show()
+	'|Ψ> = (0.0000+0.0000i)|0000> + (1.0000+0.0000i)|0001> + 			(0.0000+0.0000i)|0010> + (0.0000+0.0000i)|0011> + (0.0000+0.0000i)|0100> + (0.0000+0.0000i)|0101> + (0.0000+0.0000i)|0110> + (0.0000+0.0000i)|0111> + (0.0000+0.0000i)|1000> + (0.0000+0.0000i)|1001> + (0.0000+0.0000i)|1010> + (0.0000+0.0000i)|1011> + (0.0000+0.0000i)|1100> + (0.0000+0.0000i)|1101> + (0.0000+0.0000i)|1110> + (0.0000+0.0000i)|1111>'
+	>>> l0 = qvantum.Layer([qvantum.Hadamard(), qvantum.Hadamard(), qvantum.Hadamard(), qvantum.Hadamard()])
+	>>> l1 = qvantum.Layer([qvantum.Gate(), qvantum.PauliX(), qvantum.Gate(), qvantum.Gate()])
+	>>>
+	>>> g2 = qvantum.Gate()
+	>>> g2.set_matrix(numpy.matrix([
+		[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0],
+		]))
+	>>>
+	>>> l2 = qvantum.Layer([g2])
+	>>> l3 = qvantum.Layer([qvantum.Gate(), qvantum.PauliX(), qvantum.Gate(), qvantum.Gate()])
+	>>> l4 = qvantum.Layer([qvantum.Hadamard(), qvantum.Hadamard(), qvantum.Hadamard(), qvantum.Gate()])
+	>>> l5 = qvantum.Layer([qvantum.PauliX(), qvantum.PauliX(), qvantum.PauliX(), qvantum.Gate()])
+	>>>
+	>>> g6 = qvantum.Gate()
+	>>> g6.set_matrix(numpy.matrix([
+		[1, 0, 0, 0, 0, 0, 0, 0],
+		[0, 1, 0, 0, 0, 0, 0, 0],
+		[0, 0, 1, 0, 0, 0, 0, 0],
+		[0, 0, 0, 1, 0, 0, 0, 0],
+		[0, 0, 0, 0, 1, 0, 0, 0],
+		[0, 0, 0, 0, 0, 1, 0, 0],
+		[0, 0, 0, 0, 0, 0, 1, 0],
+		[0, 0, 0, 0, 0, 0, 0, -1]
+		]))
+	>>>
+	>>> l6 = qvantum.Layer([g6, qvantum.Gate()])
+	>>> l7 = qvantum.Layer([qvantum.PauliX(), qvantum.PauliX(), qvantum.PauliX(), qvantum.Gate()])
+	>>> l8 = qvantum.Layer([qvantum.Hadamard(), qvantum.Hadamard(), qvantum.Hadamard(), qvantum.Gate()])
+	>>>
+	>>> c = qvantum.Circuit([l0, l1, l2, l3, l4, l5, l6, l7, l8])
+	>>> c.run(r)
+	>>>
+	>>> r.show()
+	'|Ψ> = (-0.1250+0.0000i)|0000> + (0.1250+0.0000i)|0001> + (-0.1250+0.0000i)|0010> + (0.1250+0.0000i)|0011> + (-0.1250+0.0000i)|0100> + (0.1250+0.0000i)|0101> + (-0.1250+0.0000i)|0110> + (0.1250+0.0000i)|0111> + (-0.1250+0.0000i)|1000> + (0.1250+0.0000i)|1001> + (-0.6250+0.0000i)|1010> + (0.6250+0.0000i)|1011> + (-0.1250+0.0000i)|1100> + (0.1250+0.0000i)|1101> + (-0.1250+0.0000i)|1110> + (0.1250+0.0000i)|1111>'
+	>>> r.measure_nth_qubit(3)
+	0
+	>>> r.delete_qubit(3)
+	>>> r.show()
+	'|Ψ> = (-0.1768+0.0000i)|000> + (-0.1768+0.0000i)|001> + (-0.1768+0.0000i)|010> + (-0.1768+0.0000i)|011> + (-0.1768+0.0000i)|100> + (-0.8839+0.0000i)|101> + (-0.1768+0.0000i)|110> + (-0.1768+0.0000i)|111>'
+
+<p align="center"><img src="/pics/Quantum_Grover5_qvantum.jpg?invert_in_darkmode&sanitize=true" align=middle/></p>
+
+## 5. Notes
+
+### 5.1 Module reading error
+
+If there is some error after the installation of the module then it’s possible that there is some missconfiguration in the local variable parameters. In that case try to load the module using the actual path in the local system
+
+	>>> import sys
+	>>> sys.path.append(’path\to\your\module’)
+	>>> import qvantum
+
+### 5.2 Deleting a qubit from register
+
+it is possible that using the delete method of an object of the Register class the result is not what was expected. It’s because in quantum mechanics there are states which are cannot be described by the product of two different quantum states. This states are called quantum entanglement. Please be careful during using this method. Developing alternative ways to come over this problem is in progress.
+
+### 5.3 Ѱ sign in python2
+
+Using python2, the state symbol Ѱ may not be displayed correctly. Unfortunatley this problem can not be solved on just the code level, the display also depends on the current local system parameters. Try to modify that if you encounter this problem.
