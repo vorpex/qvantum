@@ -9,7 +9,7 @@ q2 = qvantum.Qubit(1, 0)
 q3 = qvantum.Qubit(0, 1)
 
 r = qvantum.Register([q0, q1, q2, q3])
-r.show()
+print(r.show())
 
 l0 = qvantum.Layer([qvantum.Hadamard(), qvantum.Hadamard(), qvantum.Hadamard(), qvantum.Hadamard()])
 l1 = qvantum.Layer([qvantum.Gate(), qvantum.PauliX(), qvantum.Gate(), qvantum.Gate()])
@@ -58,7 +58,7 @@ l8 = qvantum.Layer([qvantum.Hadamard(), qvantum.Hadamard(), qvantum.Hadamard(), 
 c = qvantum.Circuit([l0, l1, l2, l3, l4, l5, l6, l7, l8])
 c.run(r)
 
-r.show()
+print(r.show())
 r.measure_nth_qubit(3)
 r.delete_qubit(3)
-r.show()
+print(r.show())
