@@ -1995,7 +1995,7 @@ The examples in this section show the way how to interpret the already known qua
 ### 4.1 Quantum teleportation
 
 The quantum circuit of teleportation looks like this below:
-<p align="center"><img src="/pics/Quantum_Teleportation.jpg?invert_in_darkmode&sanitize=true" align=middle width=550pt height=200pt/></p>
+<p align="center"><img src="/pics/Quantum_Teleportation.jpg?invert_in_darkmode&sanitize=true" align=middle/></p>
 
 > Michael A. Nielsen & Isaac L. Chuang - Quantum Computation and Quantum Information
 
@@ -2047,4 +2047,4 @@ And the same circuit can be represented this way by using qvantum module:
 	>>> r.show()
 	'|Ψ> = (0.0495+0.6502i)|0> + (0.3629-0.6657i)|1>'
 
-<p align="center"><img src="/pics/Quantum_Teleportation_qvantum.jpg?invert_in_darkmode&sanitize=true" align=middle width=650pt height=300pt/></p>
+<p align="center"><img src="/pics/Quantum_Teleportation_qvantum.jpg?invert_in_darkmode&sanitize=true" align=middle/></p>
