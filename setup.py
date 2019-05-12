@@ -1,10 +1,10 @@
 from setuptools import setup, find_packages
 
-with open('README.md', 'r') as f:
+with open('PYPI_SUMMARY.md', 'r') as f:
     long_description = f.read()
 
 setup(name='qvantum',
-    version='0.94',
+    version='0.96',
     description='Python package for quantum computing',
     long_description=long_description,
     long_description_content_type='text/markdown',
@@ -25,12 +25,9 @@ setup(name='qvantum',
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
         'Intended Audience :: Education',
-        'Intended Audience :: Research',
-        'Intended Audience :: Science',
+        'Intended Audience :: Science/Research',
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
         'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 3',
-        'Topic :: Quantum Computing',
-        'Topic :: Quantum Process'],
+        'Programming Language :: Python :: 3'],
     zip_safe=False)
