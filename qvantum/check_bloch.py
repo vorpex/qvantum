@@ -74,7 +74,7 @@ def bloch_qubit_check(function):
                 return function(u, v, w)
         
             else:
-                raise ValueError('Invalid input! u, v and w must statisfy: ' +\
+                raise ValueError('Invalid input! u, v and w must satisfy: ' +\
                     'u\u00b2 + v\u00b2 + w\u00b2 = 1.')
         
         else:
@@ -147,7 +147,7 @@ def bloch_sphere_plot_check(function):
                     circle_facecolor, circle_linewidth)
         
             else:
-                raise ValueError('Invalid input! u, v and w must statisfy: ' +\
+                raise ValueError('Invalid input! u, v and w must satisfy: ' +\
                     'u\u00b2 + v\u00b2 + w\u00b2 = 1.')
         
         else:

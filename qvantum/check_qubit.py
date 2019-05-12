@@ -1,4 +1,4 @@
-'''checking functions for qubit class'''
+﻿'''checking functions for qubit class'''
 
 # pylint: disable=E1101, W1401
 
@@ -37,12 +37,12 @@ def qubit_init_check(function):
 
             c:\ProgramData\Anaconda3\Lib\site-packages\qvantum\check_qubit.py in wrapper(self, alpha, beta)
                 14             else:
-                15                 raise ValueError('Invalid input! Alpha and beta must statisfy: ' +\
+                15                 raise ValueError('Invalid input! Alpha and beta must satisfy: ' +\
             ---> 16                     '|alpha|\u00b2 + |beta|\u00b2 = 1.')
                 17 
                 18         else:
 
-            ValueError: Invalid input! Alpha and beta must statisfy: |alpha|² + |beta|² = 1.
+            ValueError: Invalid input! Alpha and beta must satisfy: |alpha|² + |beta|² = 1.
             >>> q = qvantum.Qubit(1, ’shoe’)
               File "<ipython-input-6-7c844cc7dd1e>", line 1
             q = qvantum.Qubit(1, ’shoe’)
@@ -55,7 +55,7 @@ def qubit_init_check(function):
                 return function(self, alpha, beta)
         
             else:
-                raise ValueError('Invalid input! Alpha and beta must statisfy: ' +\
+                raise ValueError('Invalid input! Alpha and beta must satisfy: ' +\
                     '|alpha|\u00b2 + |beta|\u00b2 = 1.')
         
         else:
@@ -98,7 +98,7 @@ def set_amplitudes_check(function):
                 return function(self, alpha, beta)
         
             else:
-                raise ValueError('Invalid input! Alpha and beta must statisfy: ' +\
+                raise ValueError('Invalid input! Alpha and beta must satisfy: ' +\
                     '|alpha|\u00b2 + |beta|\u00b2 = 1.')
         
         else:

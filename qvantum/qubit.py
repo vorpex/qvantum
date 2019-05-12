@@ -59,12 +59,12 @@ class Qubit(object):
 
             c:\ProgramData\Anaconda3\Lib\site-packages\qvantum\check_qubit.py in wrapper(self, alpha, beta)
                 14             else:
-                15                 raise ValueError('Invalid input! Alpha and beta must statisfy: ' +\
+                15                 raise ValueError('Invalid input! Alpha and beta must satisfy: ' +\
             ---> 16                     '|alpha|\u00b2 + |beta|\u00b2 = 1.')
                 17 
                 18         else:
 
-            ValueError: Invalid input! Alpha and beta must statisfy: |alpha|² + |beta|² = 1.
+            ValueError: Invalid input! Alpha and beta must satisfy: |alpha|² + |beta|² = 1.
             >>> q = qvantum.Qubit(1, ’shoe’)
               File "<ipython-input-6-7c844cc7dd1e>", line 1
             q = qvantum.Qubit(1, ’shoe’)
