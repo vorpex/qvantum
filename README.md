@@ -24,13 +24,13 @@
 
 ## 1. Introduction
 
-qvantum is a python module with the goal to ensure an easy use library for understanding quantum computing better or designing new quantum algorithms. Working with this module helps you to get more familiar with the basic concepts such as qubit, register or quantum gate, meanwhile the tool has the power for deeper analysis and development.
+qvantum is a python module, and it's goal is to ensure an easy use library for understanding quantum computing better or designing new quantum algorithms. Working with this module helps you to get more familiar with the basic concepts such as qubit, register or quantum gate, meanwhile the tool has the power for deeper analysis and development.
 
-The module is in beta release phase: tested but it might contain bugs, therefore every constructive note is highly welcomed. Also If you would like to collaborate in the developing process then do not hesitate and contact us.
+The module is in beta release phase: tested but it might contain bugs, therefore every constructive note is highly appreciated. Also if you would like to collaborate in the developing process do not hesitate to contact us.
 
 ## 2. Installation
 
-qvantum module can be easily installed using three different approach below (you could extend the commands below like "/path/to/python.exe -m pip install ..." if python wasn't in your PATH)
+qvantum module can be easily installed using three different approach below (you could extend the commands below like "/path/to/python.exe -m pip install ...", if python wasn't in your PATH)
 
 ### 2.1 pip install
 
@@ -61,11 +61,11 @@ or
 ## 3. Modules
 
 In qvantum module there are some classes which represents the basic objects in quantum computing such as: qubit, register, gate, layer and circuit. These objects (and therefore the classes which represents them) are built on each other. Due to this concept a register is built on qubits, layers are formed by gates and circuits are created out of gates.
-There is a sixth class, the bloch class which is used for the Bloch representation and visualisation of a qubit.
+There is a sixth module, the bloch module which is used for the Bloch representation and visualization of a qubit.
 
 ### 3.1 qvantum.qubit module
 
-**`class qvantum.qubit.Qubit`**
+### **`class qvantum.qubit.Qubit`**
 
 In quantum computing a qubit or quantum bit is the basic unit of quantum information. Every qubit has two clear states such as 0 and 1 but unlike a classical bit a qubit can be in superposition which is a special  mixture of these clear states. Using qubit class, the user can create qubit objects. When creating a qubit object, the amplitudes must satisfy that |alpha|^2 + |beta|^2 = 1.
 
@@ -80,9 +80,9 @@ Instances of qubit class have the following methods:
     - ket()			- return the ket vector of qubit
     - bra()			- return the bra vector of qubit
 
-The random_qubit class is the same as qubit class the only difference that an instance of the class is created with random amplitudes (alpha, beta). They share the same methods.
+The Random_Qubit class is the same as qubit class the only difference that an instance of the class is created with random amplitudes (alpha, beta). They share the same methods.
    
-**`def qvantum.qubit.Qubit.__init__(alpha, beta)`**
+### **`def qvantum.qubit.Qubit.__init__(alpha, beta)`**
 
 Method to initialize an instance of the qubit class. The squared sum of alpha and beta must be equal to zero otherwise a ValueError will be thrown.
 
@@ -110,17 +110,17 @@ Method to initialize an instance of the qubit class. The squared sum of alpha an
     ----> 1 q = qvantum.Qubit(5, 2)
     c:\ProgramData\Anaconda3\Lib\site-packages\qvantum\check_qubit.py in wrapper(self, alpha, beta)
 	14     else:
-	15 raise ValueError('Invalid input! Alpha and beta must statisfy: ' +    ---> 16     '|alpha|² + |beta|² = 1.')
+	15 raise ValueError('Invalid input! Alpha and beta must satisfy: ' +    ---> 16     '|alpha|² + |beta|² = 1.')
 	17 
 	18 else:
-	ValueError: Invalid input! Alpha and beta must statisfy: |alpha|² + |beta|² = 1.
+	ValueError: Invalid input! Alpha and beta must satisfy: |alpha|² + |beta|² = 1.
     >>> q = qvantum.Qubit(1, ’shoe’)
       File "<ipython-input-6-7c844cc7dd1e>", line 1
     q = qvantum.Qubit(1, ’shoe’)
      ^
     SyntaxError: invalid character in identifier
 
-**`def qvantum.qubit.Qubit.bra()`**
+### **`def qvantum.qubit.Qubit.bra()`**
 
 Method to return with the bra vector representation of the qubit.
 
@@ -132,7 +132,7 @@ Method to return with the bra vector representation of the qubit.
     >>> q.bra()
     array([[-0.76536276+0.20163924j, -0.39225178-0.46872167j]])
 
-**`def qvantum.qubit.Qubit.get_alpha()`**
+### **`def qvantum.qubit.Qubit.get_alpha()`**
 
 Getter method of alpha.
 
@@ -144,7 +144,7 @@ Getter method of alpha.
     >>> q.get_alpha()
     1
 
-**`def qvantum.qubit.Qubit.get_beta()`**
+### **`def qvantum.qubit.Qubit.get_beta()`**
 
 Getter method of beta.
 
@@ -156,7 +156,7 @@ Getter method of beta.
     >>> q.get_beta()
     0
 
-**`def qvantum.qubit.Qubit.ket()`**
+### **`def qvantum.qubit.Qubit.ket()`**
 
 Method to return with the ket vector representation of the qubit.
 
@@ -168,9 +168,9 @@ Method to return with the ket vector representation of the qubit.
     >>> q.ket()
     array([[-0.76536276+0.20163924j],[-0.39225178-0.46872167j]])
 
-**`def qvantum.qubit.Qubit.measure()`**
+### **`def qvantum.qubit.Qubit.measure()`**
 
-Method to perform a measurement on the qubit and return with one clear state by the distribtion according to the coefficients.
+Method to perform a measurement on the qubit and return with one clear state by the distribution according to the coefficients.
 
 **Examples:**
 
@@ -184,7 +184,7 @@ Method to perform a measurement on the qubit and return with one clear state by 
     >>> q.show()
     '|Ψ> = (0.0000+0.0000i)|0> + (1.0000+0.0000i)|1>'
 
-**`def qvantum.qubit.Qubit.set_amplitudes(alpha, beta)`**
+### **`def qvantum.qubit.Qubit.set_amplitudes(alpha, beta)`**
 
 Setter method to replace the old coefficients to new ones. The squared sum of alpha and beta must be equal to zero otherwise a ValueError will be thrown.
 
@@ -207,7 +207,7 @@ Setter method to replace the old coefficients to new ones. The squared sum of al
     >>> q.show()
     '|Ψ> = (0.0000+0.0000i)|0> + (1.0000+0.0000i)|1>'
 
-**`def qvantum.qubit.Qubit.show()`**
+### **`def qvantum.qubit.Qubit.show()`**
 
 Method to show the state function of the qubit object.
 
@@ -219,14 +219,14 @@ Method to show the state function of the qubit object.
     >>> q.show()
     '|Ψ> = (1.0000+0.0000i)|0> + (0.0000+0.0000i)|1>'
 
-**`class qvantum.qubit.Random_Qubit(Qubit)`**
+### **`class qvantum.qubit.Random_Qubit(Qubit)`**
 
-This is an inhereted class from the Qubit class. They share the same methods but when an instance of the Random_Qubit class is created the coefficients are randomly choosen.
+This is an inherited class from the Qubit class. They share the same methods but when an instance of the Random_Qubit class is created the coefficients are randomly chosen.
     
 **Arguments:**  
-*Qubit* {qubit} -- qubit class
+	*Qubit* {qubit} -- qubit class
 
-**`def qvantum.qubit.Random_Qubit.__init__()`**
+### **`def qvantum.qubit.Random_Qubit.__init__()`**
 
 Method to initialize an instance of the qubit class with randomized amplitudes.
 
@@ -242,9 +242,9 @@ Method to initialize an instance of the qubit class with randomized amplitudes.
 
 ### 3.2 qvantum.register module
 
-**`class qvantum.register.Register`**
+### **`class qvantum.register.Register`**
 
-A system containing more than one qubit is called a register. The state function of a register is the superposition of the allowed states of the qubits. The number of possible states is increasing exponentially with every new qubit is added to the system.
+A system containing more than one qubit is called a register. The state function of a register is the superposition of the allowed states of the qubits. The number of possible states are increasing exponentially with every new qubit added to the system.
 
 > A quantum register is a system comprising multiple qubits and is the quantum analog of the classical processor register. An n size quantum register is a quantum system comprising n qubits. The Hilbert space, H, in which the data stored in a quantum register is:
 > 
@@ -269,7 +269,7 @@ The instances of the register class have the following methods:
     - delete_qubit()	- delete qubit from register
     - insert_qubit()	- insert qubit into register
     
-**`def qvantum.register.Register.__init__(qubit_list)`**
+### **`def qvantum.register.Register.__init__(qubit_list)`**
 
 Method to initialize an instance of the register class. The input is a list of elements in Qubit or Random_Qubit class. Also this list must contain at least 2 elements.
 
@@ -318,7 +318,7 @@ Method to initialize an instance of the register class. The input is a list of e
     >>> r2.show()
     '|Ψ> = (-0.4171-0.2953i)|00> + (-0.4106-0.7059i)|01> + (-0.1120-0.0875i)|10> + (-0.1049-0.2015i)|11>'
 
-**`def qvantum.register.Register.bra()`**
+### **`def qvantum.register.Register.bra()`**
 
 Method to return with the bra vector representation of the register.
 
@@ -335,9 +335,9 @@ Method to return with the bra vector representation of the register.
     >>> r.bra()
     array([[-0.02572105-0.27339407j, -0.29557738-0.02631109j, 0.09820458+0.61339158j,  0.67110846+0.01599728j]])
 
-**`def qvantum.register.Register.delete_qubit(nth)`**
+### **`def qvantum.register.Register.delete_qubit(nth)`**
 
-Method to delete the n-th qubit from the regsiter. This method has some drawback which is discussed later. The input parameter must be an integer corresponding to the number of qubits in the register.
+Method to delete the n-th qubit from the register. This method has some drawback which is discussed later. The input parameter must be an integer corresponding to the number of qubits in the register.
 
 **Arguments:**  
     *nth* {int} -- Number of n-th possible qubit
@@ -384,9 +384,9 @@ Method to delete the n-th qubit from the regsiter. This method has some drawback
     >>> r.show()
     '|Ψ> = (0.4927-0.6160i)|00> + (-0.0083-0.5904i)|01> + (0.1364-0.0024i)|10> + (0.0777-0.0663i)|11>'
 
-**`def qvantum.register.Register.get_amplitudes(nth=None)`**
+### **`def qvantum.register.Register.get_amplitudes(nth=None)`**
 
-Method to return with the coefficient of the n-th possible state for the regsiter if the parameter is definit. If it isn’t, then the return value is the list of the coefficients of all possible states.
+Method to return with the coefficient of the n-th possible state for the register if the parameter is definite. If it isn’t, then the return value is the list of the coefficients of all possible states.
 
 **Keyword Arguments:**  
     *nth* {int, None} -- Number of n-th possible amplitude (default: {None})
@@ -438,9 +438,9 @@ Method to return with the coefficient of the n-th possible state for the regsite
 	51     return wrapper
     TypeError: Invalid input! Argument must be integer or None type.
 
-**`def qvantum.register.Register.get_coeff_list()`**
+### **`def qvantum.register.Register.get_coeff_list()`**
 
-Method to return the coefficients of the qubits in the regsiter.
+Method to return the coefficients of the qubits in the register.
 
 **Examples:**
 
@@ -458,7 +458,7 @@ Method to return the coefficients of the qubits in the regsiter.
      [(-0.24150232744743877-0.25201257747977823j),
       (-0.5574180512412585+0.7532937028675246j)]]
 
-**`def qvantum.register.Register.get_qubit_number()`**
+### **`def qvantum.register.Register.get_qubit_number()`**
 
 Method to return the number of the qubits in the register.
 
@@ -475,7 +475,7 @@ Method to return the number of the qubits in the register.
     >>> r.get_state_number()
     2
 
-**`def qvantum.register.Register.get_state_number()`**
+### **`def qvantum.register.Register.get_state_number()`**
 
 Method to return the number of the possible clear states for the register.
 
@@ -492,9 +492,9 @@ Method to return the number of the possible clear states for the register.
     >>> r.get_state_number()
     4
 
-**`def qvantum.register.Register.get_states(nth=None)`**
+### **`def qvantum.register.Register.get_states(nth=None)`**
 
-Method to return with the n-th possible state for the regsiter if the parameter is definit. If it isn’t then the return value is the list of all possible states.
+Method to return with the n-th possible state for the register if the parameter is definite. If it isn’t then the return value is the list of all possible states.
 
 **Keyword Arguments:**  
     *nth* {int, None} -- Number of n-th possible state (default: {None})
@@ -548,7 +548,7 @@ Method to return with the n-th possible state for the regsiter if the parameter 
 	38     return wrapper
     TypeError: Invalid input! Argument must be integer.
 
-**`def qvantum.register.Register.insert_qubit(q, nth)`**
+### **`def qvantum.register.Register.insert_qubit(q, nth)`**
 
 Method to insert a given qubit into a register. The input parameter must be an integer corresponding to the number of qubits in the register.
 
@@ -593,7 +593,7 @@ Method to insert a given qubit into a register. The input parameter must be an i
     >>> r.show()
     '|Ψ> = (-0.1362-0.0942i)|0000> + (0.0976+0.0195i)|0001> + (0.0976+0.0195i)|0010> + (-0.0585+0.0125i)|0011> + (-0.2109+0.2709i)|0100> + (0.0518-0.1998i)|0101> + (0.0518-0.1998i)|0110> + (0.0190+0.1226i)|0111> + (-0.0293-0.2712i)|1000> + (0.0809+0.1427i)|1001> + (0.0809+0.1427i)|1010> + (-0.0786-0.0595i)|1011> + (-0.5648+0.0288i)|1100> + (0.3048-0.1506i)|1101> + (0.3048-0.1506i)|1110> + (-0.1323+0.1558i)|1111>'
 
-**`def qvantum.register.Register.ket()`**
+### **`def qvantum.register.Register.ket()`**
 
 Method to return with the ket vector representation of the register.
 
@@ -613,7 +613,7 @@ Method to return with the ket vector representation of the register.
 		[0.69860685+0.04814138j],
 		[0.51934712-0.23166933j]])
 
-**`def qvantum.register.Register.measure_nth_qubit(nth)`**
+### **`def qvantum.register.Register.measure_nth_qubit(nth)`**
 
 Method to perform a measurement on the n-th qubit in the register and return the final state of the register after the process. This final state is randomized regarding to the amplitudes of the register. The input parameter must be an integer corresponding to the number of qubits in the register.
 
@@ -670,7 +670,7 @@ Method to perform a measurement on the n-th qubit in the register and return the
     >>> r.show()
     '|Ψ> = (0.0000+0.0000i)|000> + (0.3921+0.5707i)|001> + (0.0000+0.0000i)|010> + (0.0153-0.0315i)|011> + (0.0000+0.0000i)|100> + (0.7196-0.0095i)|101> + (0.0000+0.0000i)|110> + (-0.0184-0.0314i)|111>'
 
-**`def qvantum.register.Register.measure_register()`**
+### **`def qvantum.register.Register.measure_register()`**
 
 Method to perform a measurement on the whole register and return the final state of the register after the process. This final state is randomized regarding to the amplitudes of the register.
 
@@ -690,7 +690,7 @@ Method to perform a measurement on the whole register and return the final state
     >>> r.show()
     '|Ψ> = (0.0000+0.0000i)|000> + (0.0000+0.0000i)|001> + (1.0000+0.0000i)|010> + (0.0000+0.0000i)|011> + (0.0000+0.0000i)|100> + (0.0000+0.0000i)|101> + (0.0000+0.0000i)|110> + (0.0000+0.0000i)|111>'
 
-**`def qvantum.register.Register.set_amplitudes(amp_list)`**
+### **`def qvantum.register.Register.set_amplitudes(amp_list)`**
 
 Method to set new coefficients for the possible states of the register. The input parameter is a list of real or complex number and their squared sum must be equal to 1. Number of elements in the least must be equal with the number of possible states.
 
@@ -714,7 +714,7 @@ Method to set new coefficients for the possible states of the register. The inpu
     >>> r.set_amplitudes([0, 0, 1, 0, 0, 0, 0, 0])
     '|Ψ> = (0.0000+0.0000i)|000> + (0.0000+0.0000i)|001> + (1.0000+0.0000i)|010> + (0.0000+0.0000i)|011> + (0.0000+0.0000i)|100> + (0.0000+0.0000i)|101> + (0.0000+0.0000i)|110> + (0.0000+0.0000i)|111>'
 
-**`def qvantum.register.Register.show()`**
+### **`def qvantum.register.Register.show()`**
 
 Method to show the state function of the register object.
 
@@ -732,7 +732,7 @@ Method to show the state function of the register object.
 
 ### 3.3 qvantum.gate module
 
-**`class qvantum.gate.Gate`**
+### **`class qvantum.gate.Gate`**
 
 > "In quantum computing and specifically the quantum circuit model of computation, a quantum logic gate is a basic quantum circuit operating on a small number of qubits. They are the building blocks of quantum circuits, like classical logic gates are for conventional digital circuits.
 > 
@@ -752,9 +752,9 @@ The instances of gate class have the following methods:
     - set_matrix()	- setter of matrix of gate
     - power()	- raise the matrix of gate to the given power
     
-**`def qvantum.gate.Gate.__call__(qr)`**
+### **`def qvantum.gate.Gate.__call__(qr)`**
 
-Method which makes possible to call a gate on a qubit or a register. The only restriction is that the size of the gate and the size of the qubit or regsiter must be equal to each other.
+Method which makes possible to call a gate on a qubit or a register. The only restriction is that the size of the gate and the size of the qubit or register must be equal to each other.
 
 **Arguments:**  
     *qr* {Qubit, Register} -- The qubit or register which the gate is called on
@@ -773,7 +773,7 @@ Method which makes possible to call a gate on a qubit or a register. The only re
     >>> q.show()
     '|Ψ> = (0.0930-0.0642i)|0> + (0.8321+0.5429i)|1>'
 
-**`def qvantum.gate.Gate.__init__()`**
+### **`def qvantum.gate.Gate.__init__()`**
 
 Method to initialize a 2x2 sized identity matrix. Every identity matrix is a unitary matrix as well.
 
@@ -790,7 +790,7 @@ Method to initialize a 2x2 sized identity matrix. Every identity matrix is a uni
     >>> g.get_size()
     2
 
-**`def qvantum.gate.Gate.get_matrix()`**
+### **`def qvantum.gate.Gate.get_matrix()`**
 
 Method to return the unitary matrix of the gate.
 
@@ -805,9 +805,9 @@ Method to return the unitary matrix of the gate.
 		[0, 0, 0, 1],
 		[0, 0, 1, 0]])
 
-**`def qvantum.gate.Gate.get_name()`**
+### **`def qvantum.gate.Gate.get_name()`**
 
-Method to return the unitary matrix of the gate.
+Method to return the name of the gate.
 
 **Examples:**
 
@@ -817,7 +817,7 @@ Method to return the unitary matrix of the gate.
     >>> c.get_name()
     'Controlled-Not'
 
-**`def qvantum.gate.Gate.get_size()`**
+### **`def qvantum.gate.Gate.get_size()`**
 
 Method to retun the size of the unitary matrix of the gate.
 
@@ -829,9 +829,9 @@ Method to retun the size of the unitary matrix of the gate.
     >>> c.get_size()
     4
 
-**`def qvantum.gate.Gate.power(power)`**
+### **`def qvantum.gate.Gate.power(power)`**
 
-Method to raise the unitary matrix of the gate to the given power and overwrites the original matrix of the gate with the results matrix.
+Method to raise the unitary matrix of the gate to the given power and overwrite the original matrix of the gate with the result's matrix.
 
 **Arguments:**  
     *power* {int} -- The power which the gate is raised on
@@ -864,7 +864,7 @@ Method to raise the unitary matrix of the gate to the given power and overwrites
 		[0, 0, 0, 0, 0, 0, 1, 0],
 		[0, 0, 0, 0, 0, 0, 0, 1]])
 
-**`def qvantum.gate.Gate.set_matrix(matrix)`**
+### **`def qvantum.gate.Gate.set_matrix(matrix)`**
 
 Method to set a new unitary matrix for the gate. If matrix is not unitary then an error is raised.
 
@@ -892,7 +892,7 @@ Method to set a new unitary matrix for the gate. If matrix is not unitary then a
     matrix([[ 0.70710678,  0.70710678],
 		[ 0.70710678, -0.70710678]])
 
-**`def qvantum.gate.Gate.set_name(name)`**
+### **`def qvantum.gate.Gate.set_name(name)`**
 
 Method to set a new name for the gate.
 
@@ -912,13 +912,13 @@ Method to set a new name for the gate.
     >>> g.get_name()
     'shoe'
 
-**`class qvantum.gate.CNOT`**
+### **`class qvantum.gate.CNOT`**
 
 This class is an inherited class from the Gate class. It’s the implementation of the Controlled-Not gate. It’s called on 2 qubits. The parameters determine which one is the control and the target – (0, 1) or (1, 0). Its unitary matrix:
 
 <p align="center"><img src="/tex/f0268d81e824bf4ab71e107f0ea79296.svg?invert_in_darkmode&sanitize=true" align=middle width=229.53983909999997pt height=78.9048876pt/></p>
 
-**`def qvantum.gate.CNOT.__init__(control_qubit, target_qubit)`**
+### **`def qvantum.gate.CNOT.__init__(control_qubit, target_qubit)`**
 
 Method to initialize Controlled-Not gate.
 
@@ -935,27 +935,27 @@ Method to initialize Controlled-Not gate.
     >>>
     >>> h = qvantum.CNOT(1, 0)
 
-**`def qvantum.gate.CNOT.set_matrix()`**
+### **`def qvantum.gate.CNOT.set_matrix()`**
 
 Setter of matrix of Controlled-Not gate. Always raises BaseException.
 
 **Raises:**  
     *BaseException*
 
-**`def qvantum.gate.CNOT.set_name()`**
+### **`def qvantum.gate.CNOT.set_name()`**
 
 Setter of name of Controlled-Not gate. Always raises BaseException.
 
 **Raises:**  
     *BaseException*
 
-**`class qvantum.gate.ControlledPhase`**
+### **`class qvantum.gate.ControlledPhase`**
 
 This class is an inherited class from the Gate class. It’s the implementation of the Controlled-Phase gate. Its unitary matrix:
 
 <p align="center"><img src="/tex/80eaa43c84a5dd97612398f7c333ed6d.svg?invert_in_darkmode&sanitize=true" align=middle width=104.10975959999999pt height=78.9048876pt/></p>
     
-**`def qvantum.gate.ControlledPhase.__init__()`**
+### **`def qvantum.gate.ControlledPhase.__init__()`**
 
 Method to initialize Controlled-Phase gate.
 
@@ -965,27 +965,27 @@ Method to initialize Controlled-Phase gate.
     >>>
     >>> h = qvantum.ControlledPhase()
 
-**`def qvantum.gate.ControlledPhase.set_matrix()`**
+### **`def qvantum.gate.ControlledPhase.set_matrix()`**
 
 Setter of matrix of Controlled-Phase gate. Always raises BaseException.
 
 **Raises:**  
     *BaseException*
 
-**`def qvantum.gate.ControlledPhase.set_name()`**
+### **`def qvantum.gate.ControlledPhase.set_name()`**
 
 Setter of name of Controlled-Phase gate. Always raises BaseException.
 
 **Raises:**  
     *BaseException*
 
-**`class qvantum.gate.ControlledZ`**
+### **`class qvantum.gate.ControlledZ`**
 
 This class is an inherited class from the Gate class. It’s the implementation of the Controlled-Z gate. Its unitary matrix:
 
 <p align="center"><img src="/tex/b4b2643cd082a5fdcfb14c880b2370ac.svg?invert_in_darkmode&sanitize=true" align=middle width=116.8951872pt height=78.9048876pt/></p>
 
-**`def qvantum.gate.ControlledZ.__init__()`**
+### **`def qvantum.gate.ControlledZ.__init__()`**
 
 Method to initialize Controlled-Z gate.
 
@@ -995,27 +995,27 @@ Method to initialize Controlled-Z gate.
     >>>
     >>> h = qvantum.ControlledZ()
 
-**`def qvantum.gate.ControlledZ.set_matrix()`**
+### **`def qvantum.gate.ControlledZ.set_matrix()`**
 
 Setter of matrix of Controlled-Z gate. Always raises BaseException.
 
 **Raises:**  
     *BaseException*
 
-**`def qvantum.gate.ControlledZ.set_name()`**
+### **`def qvantum.gate.ControlledZ.set_name()`**
 
 Setter of name of Controlled-Z gate. Always raises BaseException.
 
 **Raises:**  
     *BaseException*
 
-**`class qvantum.gate.Fredkin`**
+### **`class qvantum.gate.Fredkin`**
 
-This class is an inherited class from the Gate class. It’s the implementation of the Fredkin gate. It’s called on 3 qubits. The parameters determine which one is the control qubit – 0, 1 or 2.Its unitary matrix:
+This class is an inherited class from the Gate class. It’s the implementation of the Fredkin gate. It’s called on 3 qubits. The parameters determine which one is the control qubit – 0, 1 or 2. Its  unitary matrix:
 
 <p align="center"><img src="/tex/275f0ebef0f6edc1738dd7cfb7ac8857.svg?invert_in_darkmode&sanitize=true" align=middle width=650.8606318499999pt height=157.80979994999998pt/></p>
 
-**`def qvantum.gate.Fredkin.__init__(control_qubit)`**
+### **`def qvantum.gate.Fredkin.__init__(control_qubit)`**
 
 Method to initialize Fredkin gate.
 
@@ -1031,27 +1031,27 @@ Method to initialize Fredkin gate.
     >>>
     >>> h = qvantum.Fredkin(2)
 
-**`def qvantum.gate.Fredkin.set_matrix()`**
+### **`def qvantum.gate.Fredkin.set_matrix()`**
 
 Setter of matrix of Fredkin gate. Always raises BaseException.
 
 **Raises:**  
     *BaseException*
 
-**`def qvantum.gate.Fredkin.set_name()`**
+### **`def qvantum.gate.Fredkin.set_name()`**
 
 Setter of name of Fredkin gate. Always raises BaseException.
 
 **Raises:**  
     *BaseException*
 
-**`class qvantum.gate.Hadamard`**
+### **`class qvantum.gate.Hadamard`**
 
 This class is an inherited class from the Gate class. It’s the implementation of the Hadamard gate. Its unitary matrix:
 
 <p align="center"><img src="/tex/fbdffe1a35fef45958e21f6c41477e99.svg?invert_in_darkmode&sanitize=true" align=middle width=78.21026565pt height=49.315569599999996pt/></p>
 
-**`def qvantum.gate.Hadamard.__init__()`**
+### **`def qvantum.gate.Hadamard.__init__()`**
 
 Method to initialize Hadamard gate.
 
@@ -1061,27 +1061,27 @@ Method to initialize Hadamard gate.
     >>>
     >>> h = qvantum.Hadamard()
 
-**`def qvantum.gate.Hadamard.set_matrix()`**
+### **`def qvantum.gate.Hadamard.set_matrix()`**
 
 Setter of matrix of Hadamard gate. Always raises BaseException.
 
 **Raises:**  
     *BaseException*
 
-**`def qvantum.gate.Hadamard.set_name()`**
+### **`def qvantum.gate.Hadamard.set_name()`**
 
 Setter of name of Hadamard gate. Always raises BaseException.
 
 **Raises:**  
     *BaseException*
 
-**`class qvantum.gate.Ising`**
+### **`class qvantum.gate.Ising`**
 
 This class is an inherited class from the Gate class. It’s the implementation of the Ising gate. Its unitary matrix:
 
 <p align="center"><img src="/tex/30a7661452606fce00430aa87b38e096.svg?invert_in_darkmode&sanitize=true" align=middle width=433.87934699999994pt height=78.9048876pt/></p>
 
-**`def qvantum.gate.Ising.__init__(phi)`**
+### **`def qvantum.gate.Ising.__init__(phi)`**
 
 Method to initialize Ising gate.
 
@@ -1097,27 +1097,27 @@ Method to initialize Ising gate.
     >>>
     >>> h = qvantum.Ising(1)
 
-**`def qvantum.gate.Ising.set_matrix()`**
+### **`def qvantum.gate.Ising.set_matrix()`**
 
 Setter of matrix of Ising gate. Always raises BaseException.
 
 **Raises:**  
     *BaseException*
 
-**`def qvantum.gate.Ising.set_name()`**
+### **`def qvantum.gate.Ising.set_name()`**
 
 Setter of name of Ising gate. Always raises BaseException.
 
 **Raises:**  
     *BaseException*
 
-**`class qvantum.gate.PauliX`**
+### **`class qvantum.gate.PauliX`**
 
 This class is an inherited class from the Gate class. It’s the implementation of the Pauli-X gate. Its unitary matrix:
 
 <p align="center"><img src="/tex/cb1d8591b83600d4a7a0b69d2e05e205.svg?invert_in_darkmode&sanitize=true" align=middle width=50.2284453pt height=39.452455349999994pt/></p>
     
-**`def qvantum.gate.PauliX.__init__()`**
+### **`def qvantum.gate.PauliX.__init__()`**
 
 Method to initialize Pauli-X gate.
 
@@ -1127,27 +1127,27 @@ Method to initialize Pauli-X gate.
     >>>
     >>> h = qvantum.PauliX()
 
-**`def qvantum.gate.PauliX.set_matrix()`**
+### **`def qvantum.gate.PauliX.set_matrix()`**
 
 Setter of matrix of Pauli-X gate. Always raises BaseException.
 
 **Raises:**  
     *BaseException*
 
-**`def qvantum.gate.PauliX.set_name()`**
+### **`def qvantum.gate.PauliX.set_name()`**
 
 Setter of name of Pauli-X gate. Always raises BaseException.
 
 **Raises:**  
     *BaseException*
 
-**`class qvantum.gate.PauliY`**
+### **`class qvantum.gate.PauliY`**
 
 This class is an inherited class from the Gate class. It’s the implementation of the Pauli-Y gate. Its unitary matrix:
 
 <p align="center"><img src="/tex/65b7d579ddbee867531d64ec3e42bebb.svg?invert_in_darkmode&sanitize=true" align=middle width=60.45789584999999pt height=39.452455349999994pt/></p>
     
-**`def qvantum.gate.PauliY.__init__()`**
+### **`def qvantum.gate.PauliY.__init__()`**
 
 Method to initialize Pauli-Y gate.
 
@@ -1157,27 +1157,27 @@ Method to initialize Pauli-Y gate.
     >>>
     >>> h = qvantum.PauliY()
 
-**`def qvantum.gate.PauliY.set_matrix()`**
+### **`def qvantum.gate.PauliY.set_matrix()`**
 
 Setter of matrix of Pauli-Y gate. Always raises BaseException.
 
 **Raises:**  
     *BaseException*
 
-**`def qvantum.gate.PauliY.set_name()`**
+### **`def qvantum.gate.PauliY.set_name()`**
 
 Setter of name of Pauli-Y gate. Always raises BaseException.
 
 **Raises:**  
     *BaseException*
 
-**`class qvantum.gate.PauliZ`**
+### **`class qvantum.gate.PauliZ`**
 
 This class is an inherited class from the Gate class. It’s the implementation of the Pauli-Z gate. Its unitary matrix:
 
 <p align="center"><img src="/tex/1be182f72cdd82702c1beb7ea0970958.svg?invert_in_darkmode&sanitize=true" align=middle width=63.0138729pt height=39.452455349999994pt/></p>
     
-**`def qvantum.gate.PauliZ.__init__()`**
+### **`def qvantum.gate.PauliZ.__init__()`**
 
 Method to initialize Pauli-Z gate.
 
@@ -1187,27 +1187,27 @@ Method to initialize Pauli-Z gate.
     >>>
     >>> h = qvantum.PauliZ()
 
-**`def qvantum.gate.PauliZ.set_matrix()`**
+### **`def qvantum.gate.PauliZ.set_matrix()`**
 
 Setter of matrix of Pauli-Z gate. Always raises BaseException.
 
 **Raises:**  
     *BaseException*
 
-**`def qvantum.gate.PauliZ.set_name()`**
+### **`def qvantum.gate.PauliZ.set_name()`**
 
 Setter of name of Pauli-Z gate. Always raises BaseException.
 
 **Raises:**  
     *BaseException*
 
-**`class qvantum.gate.Phase`**
+### **`class qvantum.gate.Phase`**
 
 This class is an inherited class from the Gate class. It’s the implementation of the Phase gate. Its unitary matrix:
 
 <p align="center"><img src="/tex/33e237af55add78cdfd704292f7b004b.svg?invert_in_darkmode&sanitize=true" align=middle width=50.2284453pt height=39.452455349999994pt/></p>
     
-**`def qvantum.gate.Phase.__init__()`**
+### **`def qvantum.gate.Phase.__init__()`**
 
 Method to initialize Phase gate.
 
@@ -1217,27 +1217,27 @@ Method to initialize Phase gate.
     >>>
     >>> h = qvantum.Phase()
 
-**`def qvantum.gate.Phase.set_matrix()`**
+### **`def qvantum.gate.Phase.set_matrix()`**
 
 Setter of matrix of Phase gate. Always raises BaseException.
 
 **Raises:**  
     *BaseException*
 
-**`def qvantum.gate.Phase.set_name()`**
+### **`def qvantum.gate.Phase.set_name()`**
 
 Setter of name of Phase gate. Always raises BaseException.
 
 **Raises:**  
     *BaseException*
 
-**`class qvantum.gate.Pi8`**
+### **`class qvantum.gate.Pi8`**
 
 This class is an inherited class from the Gate class. It’s the implementation of the Pi/8 gate. Its unitary matrix:
 
 <p align="center"><img src="/tex/3e8ee7c3be16e9416b938ebbbb95c863.svg?invert_in_darkmode&sanitize=true" align=middle width=150.95453835pt height=41.004310049999994pt/></p>
     
-**`def qvantum.gate.Pi8.__init__()`**
+### **`def qvantum.gate.Pi8.__init__()`**
 
 Method to initialize Pi/8 gate.
 
@@ -1247,27 +1247,27 @@ Method to initialize Pi/8 gate.
     >>>
     >>> h = qvantum.Pi8()
 
-**`def qvantum.gate.Pi8.set_matrix()`**
+### **`def qvantum.gate.Pi8.set_matrix()`**
 
 Setter of matrix of Pi/8 gate. Always raises BaseException.
 
 **Raises:**  
     *BaseException*
 
-**`def qvantum.gate.Pi8.set_name()`**
+### **`def qvantum.gate.Pi8.set_name()`**
 
 Setter of name of Pi/8 gate. Always raises BaseException.
 
 **Raises:**  
     *BaseException*
 
-**`class qvantum.gate.SquareNot`**
+### **`class qvantum.gate.SquareNot`**
 
 This class is an inherited class from the Gate class. It’s the implementation of the Square-Not gate. Its unitary matrix:
 
 <p align="center"><img src="/tex/a5d2af8d0f35e65bfc49fae795e34fe2.svg?invert_in_darkmode&sanitize=true" align=middle width=101.73726749999999pt height=39.452455349999994pt/></p>
     
-**`def qvantum.gate.SquareNot.__init__()`**
+### **`def qvantum.gate.SquareNot.__init__()`**
 
 Method to initialize Square-Not gate.
 
@@ -1277,27 +1277,27 @@ Method to initialize Square-Not gate.
     >>>
     >>> h = qvantum.SquareNot()
 
-**`def qvantum.gate.SquareNot.set_matrix()`**
+### **`def qvantum.gate.SquareNot.set_matrix()`**
 
 Setter of matrix of Square-Not gate. Always raises BaseException.
 
 **Raises:**  
     *BaseException*
 
-**`def qvantum.gate.SquareNot.set_name()`**
+### **`def qvantum.gate.SquareNot.set_name()`**
 
 Setter of name of Square-Not gate. Always raises BaseException.
 
 **Raises:**  
     *BaseException*
 
-**`class qvantum.gate.SquareSwap`**
+### **`class qvantum.gate.SquareSwap`**
 
 This class is an inherited class from the Gate class. It’s the implementation of the Square-Swap gate. Its unitary matrix:
 
 <p align="center"><img src="/tex/a09e9af305230f07c7b55ffd2f28b323.svg?invert_in_darkmode&sanitize=true" align=middle width=138.51658095pt height=78.9048876pt/></p>
     
-**`def qvantum.gate.SquareSwap.__init__()`**
+### **`def qvantum.gate.SquareSwap.__init__()`**
 
 Method to initialize Square-Swap gate.
 
@@ -1307,27 +1307,27 @@ Method to initialize Square-Swap gate.
     >>>
     >>> h = qvantum.SquareSwap()
 
-**`def qvantum.gate.SquareSwap.set_matrix()`**
+### **`def qvantum.gate.SquareSwap.set_matrix()`**
 
 Setter of matrix of Square-Swap gate. Always raises BaseException.
 
 **Raises:**  
     *BaseException*
 
-**`def qvantum.gate.SquareSwap.set_name()`**
+### **`def qvantum.gate.SquareSwap.set_name()`**
 
 Setter of name of Square-Swap gate. Always raises BaseException.
 
 **Raises:**  
     *BaseException*
 
-**`class qvantum.gate.Swap`**
+### **`class qvantum.gate.Swap`**
 
 This class is an inherited class from the Gate class. It’s the implementation of the Swap gate. Its unitary matrix:
 
 <p align="center"><img src="/tex/f76361edbba0f0bf33790f8c8209d6b6.svg?invert_in_darkmode&sanitize=true" align=middle width=104.10975959999999pt height=78.9048876pt/></p>
     
-**`def qvantum.gate.Swap.__init__()`**
+### **`def qvantum.gate.Swap.__init__()`**
 
 Method to initialize Swap gate.
 
@@ -1337,27 +1337,27 @@ Method to initialize Swap gate.
     >>>
     >>> h = qvantum.Swap()
 
-**`def qvantum.gate.Swap.set_matrix()`**
+### **`def qvantum.gate.Swap.set_matrix()`**
 
 Setter of matrix of Swap gate. Always raises BaseException.
 
 **Raises:**  
     *BaseException*
 
-**`def qvantum.gate.Swap.set_name()`**
+### **`def qvantum.gate.Swap.set_name()`**
 
 Setter of name of Swap gate. Always raises BaseException.
 
 **Raises:**  
     *BaseException*
 
-**`class qvantum.gate.Toffoli`**
+### **`class qvantum.gate.Toffoli`**
 
-This class is an inherited class from the Gate class. It’s the implementation of the Toffoli gate. It’s called on 3 qubits. The parameters determine which one is the target qubit – 0, 1 or 2.Its unitary matrix:
+This class is an inherited class from the Gate class. It’s the implementation of the Toffoli gate. It’s called on 3 qubits. The parameters determine which one is the target qubit – 0, 1 or 2. Its  unitary matrix:
 
 <p align="center"><img src="/tex/64183c5c95d641197230fbe0abe8683f.svg?invert_in_darkmode&sanitize=true" align=middle width=650.8606318499999pt height=157.80979994999998pt/></p>
     
-**`def qvantum.gate.Toffoli.__init__(target_qubit)`**
+### **`def qvantum.gate.Toffoli.__init__(target_qubit)`**
 
 Method to initialize Toffoli gate.
 
@@ -1373,14 +1373,14 @@ Method to initialize Toffoli gate.
     >>>
     >>> h = qvantum.Toffoli(0)
 
-**`def qvantum.gate.Toffoli.set_matrix()`**
+### **`def qvantum.gate.Toffoli.set_matrix()`**
 
 Setter of matrix of Toffoli gate. Always raises BaseException.
 
 **Raises:**  
     *BaseException*
 
-**`def qvantum.gate.Toffoli.set_name()`**
+### **`def qvantum.gate.Toffoli.set_name()`**
 
 Setter of name of Toffoli gate. Always raises BaseException.
 
@@ -1389,9 +1389,9 @@ Setter of name of Toffoli gate. Always raises BaseException.
 
 ### 3.4 qvantum.layer module
 
-**`class qvantum.layer.Layer`**
+### **`class qvantum.layer.Layer`**
 
-An instance of layer class represents one stage in a given quantum computional process. The layer is created by defining the gates which are contained by the given layer. The order of gates refers to that qubit which is affected by the given gate. Using the instances of layer class the user can build an instance of circuit class.
+An instance of layer class represents one stage in a given quantum computational process. The layer is created by defining the gates which are contained by the given layer. The order of gates refer to that qubit which is affected by the given gate. Using the instances of layer class the user can build an instance of circuit class.
 
 The instances of layer class have the following methods:
 
@@ -1405,7 +1405,7 @@ The instances of layer class have the following methods:
     - delete_gate()		- delete gate from layer
     - insert_gate()		- insert gate into layer
 
-**`def qvantum.layer.Layer.__init__(gate_list)`**
+### **`def qvantum.layer.Layer.__init__(gate_list)`**
 
 Method to initialize an instance of the Layer class. The argument must be a list of objects in the Gate class or in an inherited class such as: Hadamard, SquareNot, PauliX, PauliY, PauliZ, Phase, Pi8, Swap, SquareSwap, CNOT, ControlledZ, ControlledPhase, Ising, Toffoli, Fredkin.
 
@@ -1427,9 +1427,9 @@ Method to initialize an instance of the Layer class. The argument must be a list
     matrix([[0., 1.],
 		[1., 0.]])
 
-**`def qvantum.layer.Layer.delete_gate(nth)`**
+### **`def qvantum.layer.Layer.delete_gate(nth)`**
 
-Method to delete the n-th gate from the current Layer object. The parameter must be equal to or bigger than 0 and less than the actual size of the Layer.
+Method to delete the n-th gate from the current Layer object. The parameter must be equal to or greater than 0 and less than the actual size of the Layer.
 
 **Arguments:**  
     *nth* {int} -- Number of n-th possible gate
@@ -1465,7 +1465,7 @@ Method to delete the n-th gate from the current Layer object. The parameter must
     >>> l.get_gate_list()
     OrderedDict([(0, <qvantum.gate.Gate at 0x1cff211fda0>), (1, <qvantum.gate.PauliX at 0x1cff3f5f4a8>)])
 
-**`def qvantum.layer.Layer.get_gate_list()`**
+### **`def qvantum.layer.Layer.get_gate_list()`**
 
 Method to return the gates which are contained by the current Layer object.
 
@@ -1477,7 +1477,7 @@ Method to return the gates which are contained by the current Layer object.
     >>> l.get_gate_list()
     OrderedDict([(0, <qvantum.gate.Hadamard at 0x1ae588c2d68>), (1, <qvantum.gate.Gate at 0x1ae56a08a20>)])
 
-**`def qvantum.layer.Layer.get_gate_number()`**
+### **`def qvantum.layer.Layer.get_gate_number()`**
 
 Method to return the number of the gates which are contained by the current Layer object.
 
@@ -1489,7 +1489,7 @@ Method to return the number of the gates which are contained by the current Laye
     >>> l.get_gate_number()
     2
 
-**`def qvantum.layer.Layer.get_layer_matrix()`**
+### **`def qvantum.layer.Layer.get_layer_matrix()`**
 
 Method to return the result of the Kronecker multiplication of the gates’ matrices which are contained by the current Layer object. When the Layer is applied on a Register during one step of a calculation the state vector of the Register is multiplied by this 
 matrix.
@@ -1505,10 +1505,9 @@ matrix.
 		[ 0.70710678,  0., -0.70710678, -0.],
 		[ 0.,  0.70710678, -0., -0.70710678]])
 
-**`def qvantum.layer.Layer.get_layer_size()`**
+### **`def qvantum.layer.Layer.get_layer_size()`**
 
-Method to return the size of the current Layer object. Remember, it’s not the size of the matrix of the current Layer object but the size of a Register object which the 
-Layer can be applied on.
+Method to return the size of the current Layer object. Remember, it’s not the size of the matrix of the current Layer object but the size of a Register object which the Layer can be applied on.
 
 **Examples:**
 
@@ -1525,7 +1524,7 @@ Layer can be applied on.
     >>> l.get_layer_size()
     2
 
-**`def qvantum.layer.Layer.get_matrix_size()`**
+### **`def qvantum.layer.Layer.get_matrix_size()`**
 
 Method to return the size of the matrix of the current Layer object.
 
@@ -1542,7 +1541,7 @@ Method to return the size of the matrix of the current Layer object.
     >>> l.get_matrix_size()
     4
 
-**`def qvantum.layer.Layer.get_nth_gate(nth)`**
+### **`def qvantum.layer.Layer.get_nth_gate(nth)`**
 
 Method to return the n-th gate in the current Layer object. The parameter must be between 0 and the actual number of the gates.
 
@@ -1580,10 +1579,10 @@ Method to return the n-th gate in the current Layer object. The parameter must b
 	57     def get_layer_matrix(self):
     KeyError: 2
 
-**`def qvantum.layer.Layer.insert_gate(g, nth)`**
+### **`def qvantum.layer.Layer.insert_gate(g, nth)`**
 
 Method to insert a Gate object into the n-th place in the current Layer object. The first parameter must be a Gate object or an object in an inherited class such as: 
-Hadamard, SquareNot, PauliX, PauliY, PauliZ, Phase, Pi8, Swap, SquareSwap, CNOT, ControlledZ, ControlledPhase, Ising, Toffoli, Fredkin. The second parameter must be equal to or bigger than 0 and equal to or less than the actual size of the Layer.
+Hadamard, SquareNot, PauliX, PauliY, PauliZ, Phase, Pi8, Swap, SquareSwap, CNOT, ControlledZ, ControlledPhase, Ising, Toffoli, Fredkin. The second parameter must be equal to or greater than 0 and equal to or less than the actual size of the Layer.
 
 **Arguments:**  
     *g* {gate} -- The gate to be inserted  
@@ -1629,9 +1628,9 @@ Hadamard, SquareNot, PauliX, PauliY, PauliZ, Phase, Pi8, Swap, SquareSwap, CNOT,
 
 ### 3.5 qvantum.circuit module
 
-**`class qvantum.circuit.Circuit`**
+### **`class qvantum.circuit.Circuit`**
 
-An instance of circuit class represents a whole quantum computional process. The circuit is created by defining the layers which are contained by the given circuit. The order of layers refers to that stage which is ran by the given layer. Using the instances of circuit class the user can build a quantum algorithm.
+An instance of circuit class represents a whole quantum computational process. The circuit is created by defining the layers which are contained by the given circuit. The order of layers refers to that stage which is ran by the given layer. Using the instances of circuit class the user can build a quantum algorithm.
 
 The instances of circuit class have the following methods:
 
@@ -1644,7 +1643,7 @@ The instances of circuit class have the following methods:
     - insert_layer()	- insert layer into circuit
     - run()			- run circuit on starting register
 
-**`def qvantum.circuit.Circuit.__init__(layer_list)`**
+### **`def qvantum.circuit.Circuit.__init__(layer_list)`**
 
 Method to initialize an instance of the Circuit class. The argument must be a list of objects in the Layer class with the same size.
 
@@ -1666,9 +1665,9 @@ Method to initialize an instance of the Circuit class. The argument must be a li
     >>> c.get_nth_layer(0)
     <qvantum.layer.Layer at 0x27b474c2cf8>
 
-**`def qvantum.circuit.Circuit.delete_layer(nth)`**
+### **`def qvantum.circuit.Circuit.delete_layer(nth)`**
 
-Method to delete the n-th layer from the current Circuit object. The parameter must be equal to or bigger than 0 and less than the actual number of the layers in the Circuit.
+Method to delete the n-th layer from the current Circuit object. The parameter must be equal to or greater than 0 and less than the actual number of the layers in the Circuit.
 
 **Arguments:**  
     *nth* {int} -- Number of layer to be deleted
@@ -1706,7 +1705,7 @@ Method to delete the n-th layer from the current Circuit object. The parameter m
     >>> c.get_layer_list()
     OrderedDict([(0, <qvantum.layer.Layer at 0x27b47e65cc0>)])
 
-**`def qvantum.circuit.Circuit.get_circuit_size()`**
+### **`def qvantum.circuit.Circuit.get_circuit_size()`**
 
 Method to return the size of the current Circuit object. It’s the size of the Register object which the Circuit can be applied on.
 
@@ -1722,7 +1721,7 @@ Method to return the size of the current Circuit object. It’s the size of the 
     >>> c.get_circuit_size()
     2
 
-**`def qvantum.circuit.Circuit.get_layer_list()`**
+### **`def qvantum.circuit.Circuit.get_layer_list()`**
 
 Method to return the layers which are contained by the current Circuit object.
 
@@ -1736,9 +1735,9 @@ Method to return the layers which are contained by the current Circuit object.
     >>> c.get_layer_list()
     OrderedDict([(0, <qvantum.layer.Layer at 0x27b474c2cf8>), (1, <qvantum.layer.Layer at 0x27b47bf2198>)])
 
-**`def qvantum.circuit.Circuit.get_layer_number()`**
+### **`def qvantum.circuit.Circuit.get_layer_number()`**
 
-Method returnd the number of the layers which are contained by the current Circuit object.
+Method to return the number of the layers which are contained by the current Circuit object.
 
 **Examples:**
 
@@ -1752,7 +1751,7 @@ Method returnd the number of the layers which are contained by the current Circu
     >>> c.get_layer_number()
     2
 
-**`def qvantum.circuit.Circuit.get_nth_layer(nth)`**
+### **`def qvantum.circuit.Circuit.get_nth_layer(nth)`**
 
 Method to return the n-th layer in the current Circuit object. The parameter must be between 0 and the actual number of the layers.
 
@@ -1792,9 +1791,9 @@ Method to return the n-th layer in the current Circuit object. The parameter mus
 	61     def get_circuit_size(self):
     KeyError: 2
 
-**`def qvantum.circuit.Circuit.insert_layer(l, nth)`**
+### **`def qvantum.circuit.Circuit.insert_layer(l, nth)`**
 
-Method to insert a Layer object into the n-th place in the current Circuit object. The first parameter must be a Layer object while the second parameter must be equal to or bigger than 0 and equal to or less than the actual size of the layers in the Circuit. The size of the Layer object must be equal to the size of the already used Layers in the Circuit.
+Method to insert a Layer object into the n-th place in the current Circuit object. The first parameter must be a Layer object while the second parameter must be equal to or greater than 0 and equal to or less than the actual size of the layers in the Circuit. The size of the Layer object must be equal to the size of the already used Layers in the Circuit.
 
 **Arguments:**  
     *l* {layer} -- Layer to be inserted  
@@ -1833,7 +1832,7 @@ Method to insert a Layer object into the n-th place in the current Circuit objec
     >>> c.get_layer_list()
     OrderedDict([(0, <qvantum.layer.Layer at 0x27b47de9898>), (1, <qvantum.layer.Layer at 0x27b47e5dc50>), (2, <qvantum.layer.Layer at 0x27b47de9550>)])
 
-**`def qvantum.circuit.Circuit.run(r)`**
+### **`def qvantum.circuit.Circuit.run(r)`**
 
 Method to perform the computational process on a Register object as input and returns the result. The size of the Register object and the size of the Circuit object must be equal.
 
@@ -1874,7 +1873,7 @@ The following functions are the Bloch Sphere related functions in the package:
 	- bloch_sphere_plot()	- plot bloch representation
 	- phase_test()		- compute phase between two complex numbers
 
-**`def qvantum.bloch.bloch_coords(q)`**
+### **`def qvantum.bloch.bloch_coords(q)`**
 
 This function calculates the coordinates of the Bloch representation from the state vector of a Qubit object.
     
@@ -1894,7 +1893,7 @@ This function calculates the coordinates of the Bloch representation from the st
     >>> qvantum.bloch_coords(q)
     (-0.31632342351128423, 0.5899599386821074, 0.7428908146479567)
 
-**`def qvantum.bloch.bloch_qubit(u, v, w)`**
+### **`def qvantum.bloch.bloch_qubit(u, v, w)`**
 
 This function calculates the state vector of a Qubit object from the given Bloch coordinates.
 
@@ -1917,7 +1916,7 @@ This function calculates the state vector of a Qubit object from the given Bloch
     >>> qvantum.bloch_qubit(u, v, w).show()
     '|Ψ> = (0.9239+0.0000i)|0> + (0.0000+0.3827i)|1>'
 
-**`def qvantum.bloch.bloch_sphere_plot(u, v, w, xfigsize=15, yfigsize=7.5, frame_on=False, tight_layout_on=False, style='dark_background', surface_on=True, wireframe_on=True, surface_cmap='Blues_r', surface_alpha=0.3, wireframe_color='#d3d3d3', wireframe_linewidth=0.075, quiver_color='#ffffff', quiver_linewidth=1.5, quiver_ratio=0.1, line_color='#d3d3d3', line_linewidth=0.3, circle_edgecolor='#d3d3d3', circle_facecolor='none', circle_linewidth=0.3)`**
+### **`def qvantum.bloch.bloch_sphere_plot(u, v, w, xfigsize=15, yfigsize=7.5, frame_on=False, tight_layout_on=False, style='dark_background', surface_on=True, wireframe_on=True, surface_cmap='Blues_r', surface_alpha=0.3, wireframe_color='#d3d3d3', wireframe_linewidth=0.075, quiver_color='#ffffff', quiver_linewidth=1.5, quiver_ratio=0.1, line_color='#d3d3d3', line_linewidth=0.3, circle_edgecolor='#d3d3d3', circle_facecolor='none', circle_linewidth=0.3)`**
 
 This function visualizes the qubit using its bloch coordinates and the matplotlib module.
     
@@ -1962,7 +1961,7 @@ This function visualizes the qubit using its bloch coordinates and the matplotli
     >>> w = qvantum.bloch_coords(q)[2]
     >>> qvantum.bloch_sphere_plot(u, v, w)
 
-**`def qvantum.bloch.phase_test(c1, c2)`**
+### **`def qvantum.bloch.phase_test(c1, c2)`**
 
 Computes the phase between two complex number.
     
@@ -2130,7 +2129,7 @@ And the same circuit can be represented this way by using qvantum module:
 
 ### 5.1 Module reading error
 
-If there is some error after the installation of the module then it’s possible that there is some missconfiguration in the local variable parameters. In that case try to load the module using the actual path in the local system
+If there is some error after the installation of the module then it’s possible that there is some misconfiguration in the local variable parameters. In that case try to load the module using the actual path in the local system
 
 	>>> import sys
 	>>> sys.path.append(’path\to\your\module’)
@@ -2138,8 +2137,8 @@ If there is some error after the installation of the module then it’s possible
 
 ### 5.2 Deleting a qubit from register
 
-it is possible that using the delete method of an object of the Register class the result is not what was expected. It’s because in quantum mechanics there are states which are cannot be described by the product of two different quantum states. This states are called quantum entanglement. Please be careful during using this method. Developing alternative ways to come over this problem is in progress.
+It is possible when using the delete method of an object of the Register class the result is not what was expected. It’s because in quantum mechanics there are states which are not possible to be described by the product of two different quantum states. These states are called quantum entanglement. Please be careful during using this method. Developing alternative ways to come over this problem are in progress.
 
 ### 5.3 Ѱ sign in python2
 
-Using python2, the state symbol Ѱ may not be displayed correctly. Unfortunatley this problem can not be solved on just the code level, the display also depends on the current local system parameters. Try to modify that if you encounter this problem.
+Using python2, the state symbol Ѱ may not be displayed correctly. Unfortunately this problem cannot be solved on just the code level, the display also depends on the current local system parameters. Try to modify that if you face this problem.
