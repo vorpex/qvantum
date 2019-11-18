@@ -71,27 +71,6 @@ def get_nth_gate_check(function):
             <qvantum.gate.Hadamard at 0x1ae588c2d68>
             >>> l.get_nth_gate(1)
             <qvantum.gate.Gate at 0x1ae56a08a20>
-            >>> l.get_nth_gate(2)
-            ---------------------------------------------------------------------------
-            KeyError                                  Traceback (most recent call last)
-            <ipython-input-18-5075d5884ea2> in <module>
-            ----> 1 l1.get_nth_gate(2)
-
-            c:\ProgramData\Anaconda3\Lib\site-packages\qvantum\check_layer.py in wrapper(self, nth)
-                27 
-                28         if isinstance(nth, int):
-            ---> 29             return function(self, nth)
-                30 
-                31         else:
-
-            c:\ProgramData\Anaconda3\Lib\site-packages\qvantum\layer.py in get_nth_gate(self, nth)
-                53         ''' getter of n-th gate '''
-                54 
-            ---> 55         return self.__gate_list[nth]
-                56 
-                57     def get_layer_matrix(self):
-
-            KeyError: 2
         """
 
         if isinstance(nth, int):
@@ -126,27 +105,6 @@ def delete_gate_check(function):
             >>> l = qvantum.Layer([qvantum.Hadamard(), qvantum.Gate(), qvantum.PauliX()])
             >>> l.get_gate_list()
             OrderedDict([(0, <qvantum.gate.Hadamard at 0x1ae59262ba8>), (1, <qvantum.gate.Gate at 0x1ae58146ba8>), (2, <qvantum.gate.PauliX at 0x1ae59262d30>)])
-            >>> l.delete_gate(3)
-            ---------------------------------------------------------------------------
-            ValueError                                Traceback (most recent call last)
-            <ipython-input-24-9e9f639d1d88> in <module>
-            ----> 1 l.delete_gate(3)
-
-            c:\ProgramData\Anaconda3\Lib\site-packages\qvantum\check_layer.py in wrapper(self, nth)
-                41 
-                42         if isinstance(nth, int):
-            ---> 43             return function(self, nth)
-                44 
-                45         else:
-
-            c:\ProgramData\Anaconda3\Lib\site-packages\qvantum\layer.py in delete_gate(self, nth)
-                98         else:
-                99             raise ValueError('Invalid input! Argument must be greater or equal to 0 and ' +\
-            --> 100                 'less or equal to ' + str(len(self.__gate_list) - 1) + '.')
-                101 
-                102     @check_layer.insert_gate_check
-
-            ValueError: Invalid input! Argument must be greater or equal to 0 and less or equal to 2.
             >>> l.delete_gate(0)
             >>> l.get_gate_list()
             OrderedDict([(0, <qvantum.gate.Gate at 0x1cff211fda0>), (1, <qvantum.gate.PauliX at 0x1cff3f5f4a8>)])
@@ -187,25 +145,6 @@ def insert_gate_check(function):
             >>> l = qvantum.Layer([qvantum.Hadamard(), qvantum.Gate(), qvantum.PauliX()])
             >>> l.get_gate_list()
             OrderedDict([(0, <qvantum.gate.Hadamard at 0x1ae59262ba8>), (1, <qvantum.gate.Gate at 0x1ae58146ba8>), (2, <qvantum.gate.PauliX at 0x1ae59262d30>)])
-            >>> l.insert_gate(qvantum.PauliY(), 4)
-            ---------------------------------------------------------------------------
-            ValueError                                Traceback (most recent call last)
-            <ipython-input-32-16da0a14a92d> in <module>
-            ----> 1 l.insert_gate(qvantum.PauliY(), 4)
-
-            c:\ProgramData\Anaconda3\Lib\site-packages\qvantum\check_layer.py in wrapper(self, g, nth)
-                57             gate.ControlledZ, gate.ControlledPhase, gate.Ising, gate.Toffoli, gate.Fredkin)) \
-                58             and isinstance(nth, int):
-            ---> 59             return function(self, g, nth)
-                60 
-                61         else:
-
-            c:\ProgramData\Anaconda3\Lib\site-packages\qvantum\layer.py in insert_gate(self, g, nth)
-                123         else:
-                124             raise ValueError('Invalid input! Argument must be greater or equal to 0 and ' +\
-            --> 125                 'less or equal to ' + str(len(self.__gate_list)) + '.')
-
-            ValueError: Invalid input! Argument must be greater or equal to 0 and less or equal to 2.
             >>> l.insert_gate(qvantum.PauliY(), 1)
             >>> l.get_gate_list()
             OrderedDict([(0, <qvantum.gate.Hadamard at 0x1ae59266470>),

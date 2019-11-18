@@ -1,4 +1,3 @@
-README.md
 setup.py
 qvantum/__init__.py
 qvantum/bloch.py

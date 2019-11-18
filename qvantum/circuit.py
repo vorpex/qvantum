@@ -113,27 +113,6 @@ class Circuit(object):
             OrderedDict([(0, <qvantum.layer.Layer at 0x27b474c2cf8>), (1, <qvantum.layer.Layer at 0x27b47bf2198>)])
             >>> c.get_nth_layer(1)
             <qvantum.layer.Layer at 0x27b47bf2198>
-            >>> c.get_nth_layer(2)
-            ---------------------------------------------------------------------------
-            KeyError                                  Traceback (most recent call last)
-            <ipython-input-16-a2c18bd79e3d> in <module>
-            ----> 1 c.get_nth_layer(2)
-
-            c:\ProgramData\Anaconda3\Lib\site-packages\qvantum\check_circuit.py in wrapper(self, nth)
-                26 
-                27         if isinstance(nth, int):
-            ---> 28             return function(self, nth)
-                29 
-                30         else:
-
-            c:\ProgramData\Anaconda3\Lib\site-packages\qvantum\circuit.py in get_nth_layer(self, nth)
-                57         ''' getter of n-th layer '''
-                58 
-            ---> 59         return self.__layer_list[nth]
-                60 
-                61     def get_circuit_size(self):
-
-            KeyError: 2
         """
 
         return self.__layer_list[nth]
@@ -175,27 +154,6 @@ class Circuit(object):
             >>> c = qvantum.Circuit([l1, l2])
             >>> c.get_layer_list()
             OrderedDict([(0, <qvantum.layer.Layer at 0x27b47e65630>), (1, <qvantum.layer.Layer at 0x27b47e65cc0>)])
-            >>> c.delete_layer(2)
-            ---------------------------------------------------------------------------
-            ValueError                                Traceback (most recent call last)
-            <ipython-input-23-2ef6caf8af8a> in <module>
-            ----> 1 c.delete_layer(2)
-
-            c:\ProgramData\Anaconda3\Lib\site-packages\qvantum\check_circuit.py in wrapper(self, nth)
-                39 
-                40         if isinstance(nth, int):
-            ---> 41             return function(self, nth)
-                42 
-                43         else:
-
-            c:\ProgramData\Anaconda3\Lib\site-packages\qvantum\circuit.py in delete_layer(self, nth)
-                82         else:
-                83             raise ValueError('Invalid input! Argument must be greater or equal to 0 and ' +\
-            ---> 84                 'less or equal to ' + str(len(self.__layer_list) - 1) + '.')
-                85 
-                86     @check_circuit.insert_layer_check
-
-            ValueError: Invalid input! Argument must be greater or equal to 0 and less or equal to 1.
             >>> c.delete_layer(0)
             >>> c.get_layer_list()
             OrderedDict([(0, <qvantum.layer.Layer at 0x27b47e65cc0>)])
@@ -241,27 +199,6 @@ class Circuit(object):
             >>> c.get_layer_list()
             OrderedDict([(0, <qvantum.layer.Layer at 0x27b47de9898>), (1, <qvantum.layer.Layer at 0x27b47de9550>)])
             >>> l3 = qvantum.Layer([qvantum.Swap()])
-            >>> c.insert_layer(3)
-            ---------------------------------------------------------------------------
-            ValueError                                Traceback (most recent call last)
-            <ipython-input-31-3fd723aee9a2> in <module>
-            ----> 1 c.insert_layer(l3, 3)
-
-            c:\ProgramData\Anaconda3\Lib\site-packages\qvantum\check_circuit.py in wrapper(self, l, nth)
-                52 
-                53         if isinstance(l, layer.Layer) and isinstance(nth, int):
-            ---> 54             return function(self, l, nth)
-                55 
-                56         else:
-
-            c:\ProgramData\Anaconda3\Lib\site-packages\qvantum\circuit.py in insert_layer(self, l, nth)
-                109             raise ValueError('Invalid input! Layer and circuit size must be the same. ' +\
-                110                 'Argument must be greater or equal to 0 and less or equal to ' +\
-            --> 111                 str(len(self.__layer_list)) + '.')
-                112 
-                113     @check_circuit.run_check
-
-            ValueError: Invalid input! Layer and circuit size must be the same. Argument must be greater or equal to 0 and less or equal to 2.
             >>> c.insert_layer(l3, 1)
             >>> c.get_layer_list()
             OrderedDict([(0, <qvantum.layer.Layer at 0x27b47de9898>), (1, <qvantum.layer.Layer at 0x27b47e5dc50>), (2, <qvantum.layer.Layer at 0x27b47de9550>)])
