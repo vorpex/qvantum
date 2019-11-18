@@ -103,22 +103,6 @@ Method to initialize an instance of the qubit class. The squared sum of alpha an
     '|Ψ> = (1.0000+0.0000i)|0> + (0.0000+0.0000i)|1>'
     >>> qvantum.Qubit(1 / math.sqrt(2), 1 / math.sqrt(2)).show()
     '|Ψ> = (0.7071+0.0000i)|0> + (0.7071+0.0000i)|1>'
-    >>> q = qvantum.Qubit(5, 2)
-    ---------------------------------------------------------------------------
-    ValueErrorTraceback (most recent call last)
-    <ipython-input-5-9536e50fb31e> in <module>
-    ----> 1 q = qvantum.Qubit(5, 2)
-    c:\ProgramData\Anaconda3\Lib\site-packages\qvantum\check_qubit.py in wrapper(self, alpha, beta)
-	14     else:
-	15 raise ValueError('Invalid input! Alpha and beta must satisfy: ' +    ---> 16     '|alpha|² + |beta|² = 1.')
-	17 
-	18 else:
-	ValueError: Invalid input! Alpha and beta must satisfy: |alpha|² + |beta|² = 1.
-    >>> q = qvantum.Qubit(1, ’shoe’)
-      File "<ipython-input-6-7c844cc7dd1e>", line 1
-    q = qvantum.Qubit(1, ’shoe’)
-     ^
-    SyntaxError: invalid character in identifier
 
 ### **`def qvantum.qubit.Qubit.bra()`**
 
@@ -286,36 +270,8 @@ Method to initialize an instance of the register class. The input is a list of e
     >>> q1 = qvantum.Random_Qubit()
     >>> q2 = qvantum.Random_Qubit()
     >>>
-    >>> r1 = qvantum.Register([q1])
-    ---------------------------------------------------------------------------
-    ValueErrorTraceback (most recent call last)
-    <ipython-input-28-3c854882d136> in <module>
-    ----> 1 r1 = qvantum.Register([q1])
-    c:\ProgramData\Anaconda3\Lib\site-packages\qvantum\check_register.py in wrapper(self, qubit_list)
-	18     else:
-	19 raise ValueError('Invalid input! Qubit list must contain at least 2 qubit ' +    ---> 20     'object.')
-	21 
-	22 else:
-    ValueError: Invalid input! Qubit list must contain at least 2 qubit object.
-    >>> r1 = qvantum.Register([q1, ’shoe’])
-      File "<ipython-input-29-5fa49e76c5fb>", line 1
-	r1 = qvantum.Register([q1, ’shoe’])
-	^
-    SyntaxError: invalid character in identifier
-    >>> r1 = qvantum.Register({q1, q2})
-    ---------------------------------------------------------------------------
-    TypeError Traceback (most recent call last)
-    <ipython-input-30-ac8d1c1cef5d> in <module>
-    ----> 1 r1 = qvantum.Register({q1, q2})
-    c:\ProgramData\Anaconda3\Lib\site-packages\qvantum\check_register.py in wrapper(self, qubit_list)
-	21 
-	22 else:
-    ---> 23     raise TypeError('Invalid input! Argument must be a list of qubit objects.')
-	24 
-	25     return wrapper
-    TypeError: Invalid input! Argument must be a list of qubit objects.
-    >>> r2 = qvantum.Register([q1, q2])
-    >>> r2.show()
+    >>> r = qvantum.Register([q1, q2])
+    >>> r.show()
     '|Ψ> = (-0.4171-0.2953i)|00> + (-0.4106-0.7059i)|01> + (-0.1120-0.0875i)|10> + (-0.1049-0.2015i)|11>'
 
 ### **`def qvantum.register.Register.bra()`**
@@ -356,31 +312,7 @@ Method to delete the n-th qubit from the register. This method has some drawback
     >>> r = qvantum.Register([q1, q2, q3])
     >>> r.show()
     '|Ψ> = (-0.0414-0.7876i)|000> + (-0.3986-0.4355i)|001> + (-0.0142+0.0084i)|010> + (-0.0042+0.0116i)|011> + (0.1003-0.0924i)|100> + (0.0140-0.1011i)|101> + (-0.0027-0.0010i)|110> + (-0.0020+0.0007i)|111>'
-    >>> r.delete_qubit(3)
-    ---------------------------------------------------------------------------
-    ValueErrorTraceback (most recent call last)
-    <ipython-input-96-60bd02f79762> in <module>
-    ----> 1 r.delete_qubit(3)
-    c:\ProgramData\Anaconda3\Lib\site-packages\qvantum\check_register.py in wrapper(self, nth)
-	90 
-	91 if isinstance(nth, int):
-    ---> 92     return function(self, nth)
-	93 
-	94 else:
-    c:\ProgramData\Anaconda3\Lib\site-packages\qvantum
-	egister.py in delete_qubit(self, nth)
-	219 else:
-	220     raise ValueError('Invalid input! Argument must be greater or equal to 0 and ' +    --> 221 'less or equal to ' + str(self.get_qubit_number() - 1) + '.')
-	222 
-	223     @check_register.insert_qubit_check
-    ValueError: Invalid input! Argument must be greater or equal to 0 and less or equal to 2.
-    >>> r.delete_qubit()
-    ---------------------------------------------------------------------------
-    TypeError Traceback (most recent call last)
-    <ipython-input-97-82d89a96f88c> in <module>
-    ----> 1 r.delete_qubit()
-    TypeError: wrapper() missing 1 required positional argument: 'nth'
-    >>> r.delete_qubit()
+    >>> r.delete_qubit(2)
     >>> r.show()
     '|Ψ> = (0.4927-0.6160i)|00> + (-0.0083-0.5904i)|01> + (0.1364-0.0024i)|10> + (0.0777-0.0663i)|11>'
 
@@ -406,37 +338,6 @@ Method to return with the coefficient of the n-th possible state for the registe
     '|Ψ> = (0.1075+0.7037i)|00> + (0.6331-0.0247i)|01> + (0.2171-0.0638i)|10> + (-0.0347-0.1983i)|11>'
     >>> r.get_amplitudes(2)
     (-0.10034614628094177-0.1325886060571926j)
-    >>> r.get_amplitudes(6)
-    ---------------------------------------------------------------------------
-    IndexErrorTraceback (most recent call last)
-    <ipython-input-60-102f3b99b88f> in <module>
-    ----> 1 r.get_amplitudes(6)
-    c:\ProgramData\Anaconda3\Lib\site-packages\qvantum\check_register.py in wrapper(self, nth)
-	44 
-	45 if isinstance(nth, int) or nth is None:
-    ---> 46     return function(self, nth)
-	47 
-	48 else:
-    c:\ProgramData\Anaconda3\Lib\site-packages\qvantum
-	egister.py in get_amplitudes(self, nth)
-	97 
-	98 else:
-    ---> 99     return list(self.__state_vector.values())[nth]
-	100 
-	101     @check_register.set_amplitudes_check
-    IndexError: list index out of range
-    >>> r.get_amplitudes('shoe')
-    ---------------------------------------------------------------------------
-    TypeError Traceback (most recent call last)
-    <ipython-input-61-7cf70dfde286> in <module>
-    ----> 1 r.get_amplitudes('shoe')
-    c:\ProgramData\Anaconda3\Lib\site-packages\qvantum\check_register.py in wrapper(self, nth)
-	47 
-	48 else:
-    ---> 49     raise TypeError('Invalid input! Argument must be integer or None type.')
-	50 
-	51     return wrapper
-    TypeError: Invalid input! Argument must be integer or None type.
 
 ### **`def qvantum.register.Register.get_coeff_list()`**
 
@@ -516,37 +417,6 @@ Method to return with the n-th possible state for the register if the parameter 
     ['00', '01', '10', '11']
     >>> r.get_states(2)
     '10'
-    >>> r.get_states(6)
-    ---------------------------------------------------------------------------
-    IndexErrorTraceback (most recent call last)
-    <ipython-input-54-96382c883aac> in <module>
-    ----> 1 r.get_states(6)
-    c:\ProgramData\Anaconda3\Lib\site-packages\qvantum\check_register.py in wrapper(self, nth)
-	31 
-	32 if isinstance(nth, int) or nth is None:
-    ---> 33     return function(self, nth)
-	34 
-	35 else:
-    c:\ProgramData\Anaconda3\Lib\site-packages\qvantum
-	egister.py in get_states(self, nth)
-	87 
-	88 else:
-    ---> 89     return list(self.__state_vector.keys())[nth]
-	90 
-	91     @check_register.get_amplitudes_check
-    IndexError: list index out of range
-    >>> r.get_states('shoe')
-    ---------------------------------------------------------------------------
-    TypeError Traceback (most recent call last)
-    <ipython-input-55-613fb9d4ee8b> in <module>
-    ----> 1 r.get_states('shoe')
-    c:\ProgramData\Anaconda3\Lib\site-packages\qvantum\check_register.py in wrapper(self, nth)
-	34 
-	35 else:
-    ---> 36     raise TypeError('Invalid input! Argument must be integer.')
-	37 
-	38     return wrapper
-    TypeError: Invalid input! Argument must be integer.
 
 ### **`def qvantum.register.Register.insert_qubit(q, nth)`**
 
@@ -570,22 +440,6 @@ Method to insert a given qubit into a register. The input parameter must be an i
     >>> r.show()
     '|Ψ> = (0.2206+0.0465i)|00> + (0.1222-0.4511i)|01> + (0.1796+0.3251i)|10> + (0.6939-0.3335i)|11>'
     >>> q3 = qvantum.Random_Qubit()
-    >>> r.insert_qubit(q3, 3)
-    ---------------------------------------------------------------------------
-    ValueErrorTraceback (most recent call last)
-    <ipython-input-103-9f4b9a58253e> in <module>
-    ----> 1 r.insert_qubit(q3, 3)
-    c:\ProgramData\Anaconda3\Lib\site-packages\qvantum\check_register.py in wrapper(self, q, nth)
-	103 
-	104 if isinstance(q, (qubit.Qubit, qubit.Random_Qubit)) and isinstance(nth, int):
-    --> 105     return function(self, q, nth)
-	106 
-	107 else:
-    c:\ProgramData\Anaconda3\Lib\site-packages\qvantum
-	egister.py in insert_qubit(self, q, nth)
-	241 else:
-	242     raise ValueError('Invalid input! Argument must be greater or equal to 0 and ' +    --> 243 'less or equal to ' + str(self.get_qubit_number()) + '.')
-    ValueError: Invalid input! Argument must be greater or equal to 0 and less or equal to 2.
     >>> r.insert_qubit(q3, 2)
     >>> r.show()
     '|Ψ> = (-0.0764+0.1775i)|000> + (-0.0002-0.1162i)|001> + (0.3584+0.1790i)|010> + (-0.2404-0.0133i)|011> + (-0.3035+0.0960i)|100> + (0.1446-0.1253i)|101> + (0.1629+0.6394i)|110> + (-0.2424-0.3140i)|111>'
@@ -634,37 +488,6 @@ Method to perform a measurement on the n-th qubit in the register and return the
     >>> r = qvantum.Register([q1, q2, q3])
     >>> r.show()
     '|Ψ> = (-0.5585-0.0451i)|000> + (0.2304+0.3353i)|001> + (0.0120+0.0257i)|010> + (0.0090-0.0185i)|011> + (-0.3614+0.4567i)|100> + (0.4228-0.0056i)|101> + (0.0291+0.0045i)|110> + (-0.0108-0.0185i)|111>'
-    >>> r.measure_nth_qubit(3)
-    ---------------------------------------------------------------------------
-    IndexErrorTraceback (most recent call last)
-    <ipython-input-81-3e4cf8e71cdd> in <module>
-    ----> 1 r.measure_nth_qubit(3)
-    c:\ProgramData\Anaconda3\Lib\site-packages\qvantum\check_register.py in wrapper(self, nth)
-	77 
-	78 if isinstance(nth, int):
-    ---> 79     return function(self, nth)
-	80 
-	81 else:
-    c:\ProgramData\Anaconda3\Lib\site-packages\qvantum
-	egister.py in measure_nth_qubit(self, nth)
-	152 for key in self.__state_vector:
-	153 
-    --> 154     if key[nth] == '0':
-	155 result0.append(self.__state_vector[key])
-	156 
-    IndexError: string index out of range
-    >>> r.measure_nth_qubit('shoe')
-    ---------------------------------------------------------------------------
-    TypeError Traceback (most recent call last)
-    <ipython-input-82-72a46a88351a> in <module>
-    ----> 1 r.measure_nth_qubit('shoe')
-    c:\ProgramData\Anaconda3\Lib\site-packages\qvantum\check_register.py in wrapper(self, nth)
-	80 
-	81 else:
-    ---> 82     raise TypeError('Invalid input! Argument must be integer.')
-	83 
-	84     return wrapper
-    TypeError: Invalid input! Argument must be integer.
     >>> r.measure_nth_qubit(2)
     1
     >>> r.show()
@@ -1444,23 +1267,6 @@ Method to delete the n-th gate from the current Layer object. The parameter must
     >>> l = qvantum.Layer([qvantum.Hadamard(), qvantum.Gate(), qvantum.PauliX()])
     >>> l.get_gate_list()
     OrderedDict([(0, <qvantum.gate.Hadamard at 0x1ae59262ba8>), (1, <qvantum.gate.Gate at 0x1ae58146ba8>), (2, <qvantum.gate.PauliX at 0x1ae59262d30>)])
-    >>> l.delete_gate(3)
-    ---------------------------------------------------------------------------
-    ValueErrorTraceback (most recent call last)
-    <ipython-input-24-9e9f639d1d88> in <module>
-    ----> 1 l.delete_gate(3)
-    c:\ProgramData\Anaconda3\Lib\site-packages\qvantum\check_layer.py in wrapper(self, nth)
-	41 
-	42 if isinstance(nth, int):
-    ---> 43     return function(self, nth)
-	44 
-	45 else:
-    c:\ProgramData\Anaconda3\Lib\site-packages\qvantum\layer.py in delete_gate(self, nth)
-	98 else:
-	99     raise ValueError('Invalid input! Argument must be greater or equal to 0 and ' +    --> 100 'less or equal to ' + str(len(self.__gate_list) - 1) + '.')
-	101 
-	102     @check_layer.insert_gate_check
-    ValueError: Invalid input! Argument must be greater or equal to 0 and less or equal to 2.
     >>> l.delete_gate(0)
     >>> l.get_gate_list()
     OrderedDict([(0, <qvantum.gate.Gate at 0x1cff211fda0>), (1, <qvantum.gate.PauliX at 0x1cff3f5f4a8>)])
@@ -1560,24 +1366,6 @@ Method to return the n-th gate in the current Layer object. The parameter must b
     <qvantum.gate.Hadamard at 0x1ae588c2d68>
     >>> l.get_nth_gate(1)
     <qvantum.gate.Gate at 0x1ae56a08a20>
-    >>> l.get_nth_gate(2)
-    ---------------------------------------------------------------------------
-    KeyError  Traceback (most recent call last)
-    <ipython-input-18-5075d5884ea2> in <module>
-    ----> 1 l1.get_nth_gate(2)
-    c:\ProgramData\Anaconda3\Lib\site-packages\qvantum\check_layer.py in wrapper(self, nth)
-	27 
-	28 if isinstance(nth, int):
-    ---> 29     return function(self, nth)
-	30 
-	31 else:
-    c:\ProgramData\Anaconda3\Lib\site-packages\qvantum\layer.py in get_nth_gate(self, nth)
-	53 ''' getter of n-th gate '''
-	54 
-    ---> 55 return self.__gate_list[nth]
-	56 
-	57     def get_layer_matrix(self):
-    KeyError: 2
 
 ### **`def qvantum.layer.Layer.insert_gate(g, nth)`**
 
@@ -1598,20 +1386,6 @@ Hadamard, SquareNot, PauliX, PauliY, PauliZ, Phase, Pi8, Swap, SquareSwap, CNOT,
     >>> l = qvantum.Layer([qvantum.Hadamard(), qvantum.Gate(), qvantum.PauliX()])
     >>> l.get_gate_list()
     OrderedDict([(0, <qvantum.gate.Hadamard at 0x1ae59262ba8>), (1, <qvantum.gate.Gate at 0x1ae58146ba8>), (2, <qvantum.gate.PauliX at 0x1ae59262d30>)])
-    >>> l.insert_gate(qvantum.PauliY(), 4)
-    ---------------------------------------------------------------------------
-    ValueErrorTraceback (most recent call last)
-    <ipython-input-32-16da0a14a92d> in <module>
-    ----> 1 l.insert_gate(qvantum.PauliY(), 4)
-    c:\ProgramData\Anaconda3\Lib\site-packages\qvantum\check_layer.py in wrapper(self, g, nth)
-	57     gate.ControlledZ, gate.ControlledPhase, gate.Ising, gate.Toffoli, gate.Fredkin)) 58     and isinstance(nth, int):
-    ---> 59     return function(self, g, nth)
-	60 
-	61 else:
-    c:\ProgramData\Anaconda3\Lib\site-packages\qvantum\layer.py in insert_gate(self, g, nth)
-	123 else:
-	124     raise ValueError('Invalid input! Argument must be greater or equal to 0 and ' +    --> 125 'less or equal to ' + str(len(self.__gate_list)) + '.')
-    ValueError: Invalid input! Argument must be greater or equal to 0 and less or equal to 2.
     >>> l.insert_gate(qvantum.PauliY(), 1)
     >>> l.get_gate_list()
     OrderedDict([(0, <qvantum.gate.Hadamard at 0x1ae59266470>),
@@ -1684,23 +1458,6 @@ Method to delete the n-th layer from the current Circuit object. The parameter m
     >>> c = qvantum.Circuit([l1, l2])
     >>> c.get_layer_list()
     OrderedDict([(0, <qvantum.layer.Layer at 0x27b47e65630>), (1, <qvantum.layer.Layer at 0x27b47e65cc0>)])
-    >>> c.delete_layer(2)
-    ---------------------------------------------------------------------------
-    ValueErrorTraceback (most recent call last)
-    <ipython-input-23-2ef6caf8af8a> in <module>
-    ----> 1 c.delete_layer(2)
-    c:\ProgramData\Anaconda3\Lib\site-packages\qvantum\check_circuit.py in wrapper(self, nth)
-	39 
-	40 if isinstance(nth, int):
-    ---> 41     return function(self, nth)
-	42 
-	43 else:
-    c:\ProgramData\Anaconda3\Lib\site-packages\qvantum\circuit.py in delete_layer(self, nth)
-	82 else:
-	83     raise ValueError('Invalid input! Argument must be greater or equal to 0 and ' +    ---> 84 'less or equal to ' + str(len(self.__layer_list) - 1) + '.')
-	85 
-	86     @check_circuit.insert_layer_check
-    ValueError: Invalid input! Argument must be greater or equal to 0 and less or equal to 1.
     >>> c.delete_layer(0)
     >>> c.get_layer_list()
     OrderedDict([(0, <qvantum.layer.Layer at 0x27b47e65cc0>)])
@@ -1772,24 +1529,6 @@ Method to return the n-th layer in the current Circuit object. The parameter mus
     OrderedDict([(0, <qvantum.layer.Layer at 0x27b474c2cf8>), (1, <qvantum.layer.Layer at 0x27b47bf2198>)])
     >>> c.get_nth_layer(1)
     <qvantum.layer.Layer at 0x27b47bf2198>
-    >>> c.get_nth_layer(2)
-    ---------------------------------------------------------------------------
-    KeyError  Traceback (most recent call last)
-    <ipython-input-16-a2c18bd79e3d> in <module>
-    ----> 1 c.get_nth_layer(2)
-    c:\ProgramData\Anaconda3\Lib\site-packages\qvantum\check_circuit.py in wrapper(self, nth)
-	26 
-	27 if isinstance(nth, int):
-    ---> 28     return function(self, nth)
-	29 
-	30 else:
-    c:\ProgramData\Anaconda3\Lib\site-packages\qvantum\circuit.py in get_nth_layer(self, nth)
-	57 ''' getter of n-th layer '''
-	58 
-    ---> 59 return self.__layer_list[nth]
-	60 
-	61     def get_circuit_size(self):
-    KeyError: 2
 
 ### **`def qvantum.circuit.Circuit.insert_layer(l, nth)`**
 
@@ -1812,22 +1551,6 @@ Method to insert a Layer object into the n-th place in the current Circuit objec
     >>> c.get_layer_list()
     OrderedDict([(0, <qvantum.layer.Layer at 0x27b47de9898>), (1, <qvantum.layer.Layer at 0x27b47de9550>)])
     >>> l3 = qvantum.Layer([qvantum.Swap()])
-    >>> c.insert_layer(3)
-    ---------------------------------------------------------------------------
-    ValueErrorTraceback (most recent call last)
-    <ipython-input-31-3fd723aee9a2> in <module>
-    ----> 1 c.insert_layer(l3, 3)
-    c:\ProgramData\Anaconda3\Lib\site-packages\qvantum\check_circuit.py in wrapper(self, l, nth)
-	52 
-	53 if isinstance(l, layer.Layer) and isinstance(nth, int):
-    ---> 54     return function(self, l, nth)
-	55 
-	56 else:
-    c:\ProgramData\Anaconda3\Lib\site-packages\qvantum\circuit.py in insert_layer(self, l, nth)
-	109     raise ValueError('Invalid input! Layer and circuit size must be the same. ' +110 'Argument must be greater or equal to 0 and less or equal to ' +    --> 111 str(len(self.__layer_list)) + '.')
-	112 
-	113     @check_circuit.run_check
-    ValueError: Invalid input! Layer and circuit size must be the same. Argument must be greater or equal to 0 and less or equal to 2.
     >>> c.insert_layer(l3, 1)
     >>> c.get_layer_list()
     OrderedDict([(0, <qvantum.layer.Layer at 0x27b47de9898>), (1, <qvantum.layer.Layer at 0x27b47e5dc50>), (2, <qvantum.layer.Layer at 0x27b47de9550>)])
