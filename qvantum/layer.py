@@ -1,9 +1,10 @@
-'''layer class'''
+﻿'''layer class'''
 
 # pylint: disable=E1101, W1401
 
 from . import check_layer
 import collections
+import copy
 import numpy
 
 class Layer(object):
@@ -198,7 +199,7 @@ class Layer(object):
         """
 
         if nth >= 0 and nth <= len(self.__gate_list) - 1:
-            gl = self.__gate_list.copy()
+            gl = copy.deepcopy(self.__gate_list)
             for key in gl:
 
                 if int(key) == nth:

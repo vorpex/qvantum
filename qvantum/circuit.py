@@ -1,9 +1,10 @@
-'''circuit class'''
+﻿'''circuit class'''
 
 # pylint: disable=E1101, W1401
 
 from . import check_circuit
 import collections
+import copy
 import numpy
 
 class Circuit(object):
@@ -160,7 +161,7 @@ class Circuit(object):
         """
 
         if nth >= 0 and nth <= len(self.__layer_list) - 1:
-            ll = self.__layer_list.copy()
+            ll = copy.deepcopy(self.__layer_list)
             for key in ll:
 
                 if int(key) == nth:
